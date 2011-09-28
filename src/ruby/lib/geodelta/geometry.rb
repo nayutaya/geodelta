@@ -62,5 +62,25 @@ module GeoDelta
       yy = (y + [-6.0, -0.0, -6.0, -6.0][id]) * 2
       return [xx, yy]
     end
+
+    def self.get_delta_ids(x, y, level)
+      ids    = [self.get_world_delta_id(x, y)]
+      xx, yy = self.transform_world_delta(ids.last, x, y)
+      upper  = self.upper_world_delta?(ids.last)
+
+      (level - 1).times {
+        if upper
+          ids   << self.get_upper_delta_id(xx, yy)
+          xx, yy = self.transform_upper_delta(ids.last, xx, yy)
+          upper  = self.upper_sub_delta?(upper, ids.last)
+        else
+          ids   << self.get_lower_delta_id(xx, yy)
+          xx, yy = self.transform_lower_delta(ids.last, xx, yy)
+          upper  = self.upper_sub_delta?(upper, ids.last)
+        end
+      }
+
+      return ids
+    end
   end
 end

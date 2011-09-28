@@ -142,4 +142,49 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal([+6.0, +8.0], @mod.transform_lower_delta(2, +3.0, +10.0))
     assert_equal([+6.0, +8.0], @mod.transform_lower_delta(3, +9.0, +10.0))
   end
+
+  def test_get_delta_ids__level1
+    assert_equal([0], @mod.get_delta_ids( 0.0, +6.0, 1))
+    assert_equal([1], @mod.get_delta_ids( 6.0, +6.0, 1))
+    assert_equal([2], @mod.get_delta_ids(12.0, +6.0, 1))
+    assert_equal([3], @mod.get_delta_ids(18.0, +6.0, 1))
+    assert_equal([4], @mod.get_delta_ids( 0.0, -6.0, 1))
+    assert_equal([5], @mod.get_delta_ids( 6.0, -6.0, 1))
+    assert_equal([6], @mod.get_delta_ids(12.0, -6.0, 1))
+    assert_equal([7], @mod.get_delta_ids(18.0, -6.0, 1))
+  end
+
+  def test_get_delta_ids__level2
+    assert_equal([0, 0], @mod.get_delta_ids( +0.0,  +8.0, 2))
+    assert_equal([0, 1], @mod.get_delta_ids( +0.0,  +4.0, 2))
+    assert_equal([0, 2], @mod.get_delta_ids( -3.0, +10.0, 2))
+    assert_equal([0, 3], @mod.get_delta_ids( +3.0, +10.0, 2))
+    assert_equal([1, 0], @mod.get_delta_ids( +6.0,  +4.0, 2))
+    assert_equal([1, 1], @mod.get_delta_ids( +6.0,  +8.0, 2))
+    assert_equal([1, 2], @mod.get_delta_ids( +9.0,  +2.0, 2))
+    assert_equal([1, 3], @mod.get_delta_ids( +3.0,  +2.0, 2))
+    assert_equal([2, 2], @mod.get_delta_ids( +9.0, +10.0, 2))
+    assert_equal([3, 3], @mod.get_delta_ids(+15.0,  +2.0, 2))
+
+    assert_equal([4, 0], @mod.get_delta_ids( +0.0,  -8.0, 2))
+    assert_equal([4, 1], @mod.get_delta_ids( +0.0,  -4.0, 2))
+    assert_equal([4, 2], @mod.get_delta_ids( +3.0, -10.0, 2))
+    assert_equal([4, 3], @mod.get_delta_ids( -3.0, -10.0, 2))
+    assert_equal([5, 0], @mod.get_delta_ids( +6.0,  -4.0, 2))
+    assert_equal([5, 1], @mod.get_delta_ids( +6.0,  -8.0, 2))
+    assert_equal([5, 2], @mod.get_delta_ids( +3.0,  -2.0, 2))
+    assert_equal([5, 3], @mod.get_delta_ids( +9.0,  -2.0, 2))
+    assert_equal([6, 2], @mod.get_delta_ids(+15.0, -10.0, 2))
+    assert_equal([7, 3], @mod.get_delta_ids(+21.0,  -2.0, 2))
+  end
+
+  def test_get_delta_ids__level3
+    assert_equal([0, 0, 0], @mod.get_delta_ids(+0.0, +8.0, 3))
+    assert_equal([1, 0, 0], @mod.get_delta_ids(+6.0, +4.0, 3))
+  end
+
+  def test_get_delta_ids__level4
+    assert_equal([0, 0, 0, 0], @mod.get_delta_ids(+0.0, +8.0, 4))
+    assert_equal([1, 0, 0, 0], @mod.get_delta_ids(+6.0, +4.0, 4))
+  end
 end
