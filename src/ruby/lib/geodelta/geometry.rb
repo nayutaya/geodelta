@@ -34,5 +34,10 @@ module GeoDelta
       return 1 if y < 6.0
       return 0
     end
+
+    # 指定されたワールドデルタが上向きかどうかを返す
+    def self.upper_world_delta?(id)
+      return (id % 2 == (id < 4 ? 1 : 0))
+    end
   end
 end

@@ -95,4 +95,15 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal(0, @mod.get_lower_delta_id( 7.5,  9.0))
     assert_equal(0, @mod.get_lower_delta_id( 9.0,  6.0))
   end
+
+  def test_upper_world_delta?
+    assert_equal(false, @mod.upper_world_delta?(0))
+    assert_equal(true , @mod.upper_world_delta?(1))
+    assert_equal(false, @mod.upper_world_delta?(2))
+    assert_equal(true , @mod.upper_world_delta?(3))
+    assert_equal(true , @mod.upper_world_delta?(4))
+    assert_equal(false, @mod.upper_world_delta?(5))
+    assert_equal(true , @mod.upper_world_delta?(6))
+    assert_equal(false, @mod.upper_world_delta?(7))
+  end
 end
