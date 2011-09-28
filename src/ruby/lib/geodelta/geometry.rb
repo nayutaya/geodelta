@@ -25,5 +25,14 @@ module GeoDelta
       return 1 if y > 6.0
       return 0
     end
+
+    # 指定された座標(x,y)に該当する下向きのサブデルタの番号を返す
+    # ただし、0.0 <= x <= +12.0、0.0 <= y <= +12.0
+    def self.get_lower_delta_id(x, y)
+      return 3 if y > -2.0 * (x - 12.0)
+      return 2 if y > +2.0 * x
+      return 1 if y < 6.0
+      return 0
+    end
   end
 end
