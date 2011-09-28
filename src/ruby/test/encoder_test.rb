@@ -155,4 +155,16 @@ class GeoDeltaEncoderTest < Test::Unit::TestCase
     assert_equal("RHM", @mod.encode([7, 3, 2, 1]))
     assert_raise(RuntimeError) { @mod.encode([]) }
   end
+
+  def test_decode
+    assert_equal([0],          @mod.decode("Z"))
+    assert_equal([0, 1],       @mod.decode("ZM"))
+    assert_equal([0, 1, 2],    @mod.decode("Z8"))
+    assert_equal([0, 1, 2, 3], @mod.decode("Z8P"))
+    assert_equal([7],          @mod.decode("R"))
+    assert_equal([7, 3],       @mod.decode("RP"))
+    assert_equal([7, 3, 2],    @mod.decode("RH"))
+    assert_equal([7, 3, 2, 1], @mod.decode("RHM"))
+    assert_raise(RuntimeError) { @mod.encode("") }
+  end
 end

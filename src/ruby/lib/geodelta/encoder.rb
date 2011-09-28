@@ -68,5 +68,12 @@ module GeoDelta
       result += self.encode_sub_delta(ids[1..-1]) if ids.size >= 2
       return result
     end
+
+    def self.decode(codes)
+      raise("delta codes is empty") if codes.empty?
+      result  = [self.decode_world_delta(codes[0])]
+      result += self.decode_sub_delta(codes[1..-1]) if codes.size >= 2
+      return result
+    end
   end
 end
