@@ -35,4 +35,17 @@ class GeoDeltaProjectorTest < Test::Unit::TestCase
     assert_equal( -90.0, @mod.mx_to_lng(-0.5))
     assert_equal(-180.0, @mod.mx_to_lng(-1.0))
   end
+
+  def test_my_to_ny
+    max = @mod::DELTA_HEIGHT
+    assert_equal(+12.0, @mod.my_to_ny(+max))
+    assert_equal(  0.0, @mod.my_to_ny( 0.0))
+    assert_equal(-12.0, @mod.my_to_ny(-max))
+  end
+
+  def test_mx_to_nx
+    assert_equal(+12.0, @mod.mx_to_nx(+1.0))
+    assert_equal(  0.0, @mod.mx_to_nx( 0.0))
+    assert_equal(-12.0, @mod.mx_to_nx(-1.0))
+  end
 end
