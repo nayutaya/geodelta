@@ -13,9 +13,14 @@ module GeoDelta
       [7, "R"],
     ].each(&:freeze).freeze
     WORLD_ID_TO_CHAR = WORLD_DELTA_TABLE.inject({}) { |memo, (num, char)| memo[num] = char; memo }.freeze
+    WORLD_CHAR_TO_ID = WORLD_DELTA_TABLE.inject({}) { |memo, (num, char)| memo[char] = num; memo }.freeze
 
     def self.encode_world_delta(id)
       return WORLD_ID_TO_CHAR[id] || raise("invalid world delta id -- #{id}")
+    end
+
+    def self.decode_world_delta(code)
+      return WORLD_CHAR_TO_ID[code] || raise("invalid world delta code -- #{code}")
     end
   end
 end
