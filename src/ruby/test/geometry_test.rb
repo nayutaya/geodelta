@@ -251,4 +251,18 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal([ -1.5, +11.0], @mod.get_xy([0, 2, 3]))
     assert_equal([ +3.0, +10.0], @mod.get_xy([0, 3, 0]))
   end
+
+  def test_rush__xy
+    1000.times {
+      x1     = (rand * 24) - 12
+      y1     = (rand * 24) - 12
+      level  = rand(20) + 1
+      ids1   = @mod.get_delta_ids(x1, y1, level)
+      x2, y2 = @mod.get_xy(ids1)
+      ids2   = @mod.get_delta_ids(x2, y2, level)
+      x3, y3 = @mod.get_xy(ids2)
+      assert_equal(ids1, ids2)
+      assert_equal([x2, y2], [x3, y3])
+    }
+  end
 end
