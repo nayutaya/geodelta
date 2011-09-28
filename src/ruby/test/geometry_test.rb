@@ -212,4 +212,43 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal([-3.0, +2.0], @mod.get_lower_sub_delta_xy_distance(2))
     assert_equal([+3.0, +2.0], @mod.get_lower_sub_delta_xy_distance(3))
   end
+
+  def test_get_xy__level1
+    assert_equal([+0.0, +8.0], @mod.get_xy([0]))
+    assert_equal([+6.0, +4.0], @mod.get_xy([1]))
+    assert_equal([+0.0, -8.0], @mod.get_xy([4]))
+    assert_equal([+6.0, -4.0], @mod.get_xy([5]))
+  end
+
+  def test_get_xy__level2
+    assert_equal([ +0.0,  +8.0], @mod.get_xy([0, 0]))
+    assert_equal([ +0.0,  +4.0], @mod.get_xy([0, 1]))
+    assert_equal([ -3.0, +10.0], @mod.get_xy([0, 2]))
+    assert_equal([ +3.0, +10.0], @mod.get_xy([0, 3]))
+    assert_equal([ +6.0,  +4.0], @mod.get_xy([1, 0]))
+    assert_equal([ +6.0,  +8.0], @mod.get_xy([1, 1]))
+    assert_equal([ +9.0,  +2.0], @mod.get_xy([1, 2]))
+    assert_equal([ +3.0,  +2.0], @mod.get_xy([1, 3]))
+    assert_equal([ +9.0, +10.0], @mod.get_xy([2, 2]))
+    assert_equal([ -9.0,  +2.0], @mod.get_xy([3, 3]))
+
+    assert_equal([ +0.0,  -8.0], @mod.get_xy([4, 0]))
+    assert_equal([ +0.0,  -4.0], @mod.get_xy([4, 1]))
+    assert_equal([ +3.0, -10.0], @mod.get_xy([4, 2]))
+    assert_equal([ -3.0, -10.0], @mod.get_xy([4, 3]))
+    assert_equal([ +6.0,  -4.0], @mod.get_xy([5, 0]))
+    assert_equal([ +6.0,  -8.0], @mod.get_xy([5, 1]))
+    assert_equal([ +3.0,  -2.0], @mod.get_xy([5, 2]))
+    assert_equal([ +9.0,  -2.0], @mod.get_xy([5, 3]))
+    assert_equal([ -9.0, -10.0], @mod.get_xy([6, 2]))
+    assert_equal([ -3.0,  -2.0], @mod.get_xy([7, 3]))
+  end
+
+  def test_get_xy__level3
+    assert_equal([ +0.0,  +8.0], @mod.get_xy([0, 0, 0]))
+    assert_equal([ +0.0, +10.0], @mod.get_xy([0, 0, 1]))
+    assert_equal([ -1.5,  +5.0], @mod.get_xy([0, 1, 2]))
+    assert_equal([ -1.5, +11.0], @mod.get_xy([0, 2, 3]))
+    assert_equal([ +3.0, +10.0], @mod.get_xy([0, 3, 0]))
+  end
 end

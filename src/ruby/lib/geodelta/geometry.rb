@@ -113,5 +113,40 @@ module GeoDelta
       when 3 then [+3.0, +2.0]
       end
     end
+
+    # no test
+    def self.get_sub_delta_xy_distance(parent_is_upper, id)
+      if parent_is_upper
+        return self.get_upper_sub_delta_xy_distance(id)
+      else
+        return self.get_lower_sub_delta_xy_distance(id)
+      end
+    end
+
+    def self.get_xy(ids)
+      xs, ys = [], []
+      upper  = nil
+
+      ids.each_with_index { |id, index|
+        if index == 0
+          x, y  = self.get_world_delta_xy(id)
+          upper = self.upper_world_delta?(id)
+          xs << x
+          ys << y
+        else
+          x, y  = self.get_sub_delta_xy_distance(upper, id)
+          upper = self.upper_sub_delta?(upper, id)
+          xs << (x / (2 ** (index - 1)))
+          ys << (y / (2 ** (index - 1)))
+        end
+      }
+
+      x = xs.sort.inject(0.0, &:+)
+      y = ys.sort.inject(0.0, &:+)
+
+      x -= 24.0 if x > 12.0
+
+      return [x, y]
+    end
   end
 end
