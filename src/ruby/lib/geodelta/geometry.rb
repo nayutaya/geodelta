@@ -95,5 +95,23 @@ module GeoDelta
       when 7 then [+18.0, -4.0]
       end
     end
+
+    def self.get_upper_sub_delta_xy_distance(id)
+      case id
+      when 0 then [+0.0, +0.0]
+      when 1 then [+0.0, +4.0]
+      when 2 then [+3.0, -2.0]
+      when 3 then [-3.0, -2.0]
+      end
+    end
+
+    def self.get_lower_sub_delta_xy_distance(id)
+      case id
+      when 0 then [+0.0, +0.0]
+      when 1 then [+0.0, -4.0]
+      when 2 then [-3.0, +2.0]
+      when 3 then [+3.0, +2.0]
+      end
+    end
   end
 end

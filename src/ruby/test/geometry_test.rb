@@ -198,4 +198,18 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal([+12.0, -8.0], @mod.get_world_delta_xy(6))
     assert_equal([+18.0, -4.0], @mod.get_world_delta_xy(7))
   end
+
+  def test_get_upper_sub_delta_xy_distance
+    assert_equal([+0.0, +0.0], @mod.get_upper_sub_delta_xy_distance(0))
+    assert_equal([+0.0, +4.0], @mod.get_upper_sub_delta_xy_distance(1))
+    assert_equal([+3.0, -2.0], @mod.get_upper_sub_delta_xy_distance(2))
+    assert_equal([-3.0, -2.0], @mod.get_upper_sub_delta_xy_distance(3))
+  end
+
+  def test_get_lower_sub_delta_xy_distance
+    assert_equal([+0.0, +0.0], @mod.get_lower_sub_delta_xy_distance(0))
+    assert_equal([+0.0, -4.0], @mod.get_lower_sub_delta_xy_distance(1))
+    assert_equal([-3.0, +2.0], @mod.get_lower_sub_delta_xy_distance(2))
+    assert_equal([+3.0, +2.0], @mod.get_lower_sub_delta_xy_distance(3))
+  end
 end
