@@ -39,5 +39,10 @@ module GeoDelta
     def self.upper_world_delta?(id)
       return (id % 2 == (id < 4 ? 1 : 0))
     end
+
+    # 指定されたサブデルタが上向きかどうか返す
+    def self.upper_sub_delta?(parent_is_upper, id)
+      return (parent_is_upper ? (id != 0) : (id == 0))
+    end
   end
 end
