@@ -33,4 +33,14 @@ class GeoDeltaEncoderTest < Test::Unit::TestCase
     assert_raise(RuntimeError) { @mod.decode_world_delta("z") }
     assert_raise(RuntimeError) { @mod.decode_world_delta("A") }
   end
+
+  def test_encode_and_decode_world_delta
+    (0..7).each { |id|
+      encoded1 = @mod.encode_world_delta(id)
+      decoded1 = @mod.decode_world_delta(encoded1)
+      encoded2 = @mod.encode_world_delta(decoded1)
+      assert_equal(id, decoded1)
+      assert_equal(encoded1, encoded2)
+    }
+  end
 end
