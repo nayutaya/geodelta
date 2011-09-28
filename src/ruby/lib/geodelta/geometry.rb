@@ -44,5 +44,23 @@ module GeoDelta
     def self.upper_sub_delta?(parent_is_upper, id)
       return (parent_is_upper ? (id != 0) : (id == 0))
     end
+
+    def self.transform_world_delta(id, x, y)
+      xx = (x + [+6.0, +0.0, -6.0, -12.0,  +6.0,  +0.0,  -6.0, -12.0][id]) % 12
+      yy = (y + [+0.0, +0.0, +0.0,  +0.0, +12.0, +12.0, +12.0, +12.0][id]) % 12
+      return [xx, yy]
+    end
+
+    def self.transform_upper_delta(id, x, y)
+      xx = (x + [-3.0, -3.0, -6.0, -0.0][id]) * 2
+      yy = (y + [-0.0, -6.0, -0.0, -0.0][id]) * 2
+      return [xx, yy]
+    end
+
+    def self.transform_lower_delta(id, x, y)
+      xx = (x + [-3.0, -3.0, -0.0, -6.0][id]) * 2
+      yy = (y + [-6.0, -0.0, -6.0, -6.0][id]) * 2
+      return [xx, yy]
+    end
   end
 end

@@ -117,4 +117,29 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal(false, @mod.upper_sub_delta?(false, 2))
     assert_equal(false, @mod.upper_sub_delta?(false, 3))
   end
+
+  def test_transform_world_delta
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(0,  +0.0, +4.0))
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(1,  +6.0, +4.0))
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(2, +12.0, +4.0))
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(3, +18.0, +4.0))
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(4,  +0.0, -8.0))
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(5,  +6.0, -8.0))
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(6, +12.0, -8.0))
+    assert_equal([+6.0, +4.0], @mod.transform_world_delta(7, +18.0, -8.0))
+  end
+
+  def test_transform_upper_delta
+    assert_equal([+6.0, +8.0], @mod.transform_upper_delta(0, +6.0, +4.0))
+    assert_equal([+6.0, +4.0], @mod.transform_upper_delta(1, +6.0, +8.0))
+    assert_equal([+6.0, +4.0], @mod.transform_upper_delta(2, +9.0, +2.0))
+    assert_equal([+6.0, +4.0], @mod.transform_upper_delta(3, +3.0, +2.0))
+  end
+
+  def test_transform_lower_delta
+    assert_equal([+6.0, +4.0], @mod.transform_lower_delta(0, +6.0,  +8.0))
+    assert_equal([+6.0, +8.0], @mod.transform_lower_delta(1, +6.0,  +4.0))
+    assert_equal([+6.0, +8.0], @mod.transform_lower_delta(2, +3.0, +10.0))
+    assert_equal([+6.0, +8.0], @mod.transform_lower_delta(3, +9.0, +10.0))
+  end
 end
