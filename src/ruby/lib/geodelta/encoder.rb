@@ -38,6 +38,7 @@ module GeoDelta
       [[3]   , "P"],
     ].each(&:freeze).freeze
     SUB_IDS_TO_CHAR = SUB_DELTA_TABLE.inject({}) { |memo, (nums, char)| memo[nums] = char; memo }.freeze
+    SUB_CHAR_TO_IDS = SUB_DELTA_TABLE.inject({}) { |memo, (nums, char)| memo[char] = nums; memo }.freeze
 
     def self.encode_world_delta(id)
       return WORLD_ID_TO_CHAR[id] || raise("invalid world delta id -- #{id}")
@@ -52,6 +53,13 @@ module GeoDelta
       return ids.each_slice(2).map { |part|
         SUB_IDS_TO_CHAR[part] || raise("invalid sub delta ids -- #{part}")
       }.join("")
+    end
+
+    def self.decode_sub_delta(codes)
+      raise("sub delta codes is empty") if codes.empty?
+      return codes.chars.inject([]) { |memo, char|
+        memo + (SUB_CHAR_TO_IDS[char] || raise("invalid sub delta code -- #{char}"))
+      }
     end
   end
 end

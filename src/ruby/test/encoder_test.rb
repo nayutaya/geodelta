@@ -82,4 +82,43 @@ class GeoDeltaEncoderTest < Test::Unit::TestCase
     assert_raise(RuntimeError) { @mod.encode_sub_delta([-1]) }
     assert_raise(RuntimeError) { @mod.encode_sub_delta([4]) }
   end
+
+  def test_decode_sub_delta__1
+    assert_equal([0, 0], @mod.decode_sub_delta("2"))
+    assert_equal([0, 1], @mod.decode_sub_delta("3"))
+    assert_equal([0, 2], @mod.decode_sub_delta("4"))
+    assert_equal([0, 3], @mod.decode_sub_delta("5"))
+    assert_equal([1, 0], @mod.decode_sub_delta("6"))
+    assert_equal([1, 1], @mod.decode_sub_delta("7"))
+    assert_equal([1, 2], @mod.decode_sub_delta("8"))
+    assert_equal([1, 3], @mod.decode_sub_delta("A"))
+    assert_equal([2, 0], @mod.decode_sub_delta("B"))
+    assert_equal([2, 1], @mod.decode_sub_delta("C"))
+    assert_equal([2, 2], @mod.decode_sub_delta("D"))
+    assert_equal([2, 3], @mod.decode_sub_delta("E"))
+    assert_equal([3, 0], @mod.decode_sub_delta("F"))
+    assert_equal([3, 1], @mod.decode_sub_delta("G"))
+    assert_equal([3, 2], @mod.decode_sub_delta("H"))
+    assert_equal([3, 3], @mod.decode_sub_delta("J"))
+  end
+
+  def test_decode_sub_delta__2
+    assert_equal([0], @mod.decode_sub_delta("K"))
+    assert_equal([1], @mod.decode_sub_delta("M"))
+    assert_equal([2], @mod.decode_sub_delta("N"))
+    assert_equal([3], @mod.decode_sub_delta("P"))
+  end
+
+  def test_decode_sub_delta__3
+    assert_equal([0, 0, 0],    @mod.decode_sub_delta("2K"))
+    assert_equal([0, 0, 0, 0], @mod.decode_sub_delta("22"))
+    assert_equal([0, 1, 2],    @mod.decode_sub_delta("3N"))
+    assert_equal([0, 1, 2, 3], @mod.decode_sub_delta("3E"))
+  end
+
+  def test_decode_sub_delta__4
+    assert_raise(RuntimeError) { @mod.decode_sub_delta("") }
+    assert_raise(RuntimeError) { @mod.decode_sub_delta("a") }
+    assert_raise(RuntimeError) { @mod.decode_sub_delta("Z") }
+  end
 end
