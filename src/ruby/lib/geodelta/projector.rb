@@ -47,5 +47,19 @@ module GeoDelta
     def self.mx_to_nx(mx)
       return mx * 12.0
     end
+
+    # 正規化Y座標からメルカトルY座標に変換する
+    #   -12.0 <= ny <= +12.0
+    #    -1.0 <= my <=  +1.0
+    def self.ny_to_my(my)
+      return my / 12.0 * DELTA_HEIGHT
+    end
+
+    # 正規化X座標からメルカトルX座標に変換する
+    #   -12.0 <= ny <= +12.0
+    #    -1.0 <= my <=  +1.0
+    def self.nx_to_mx(ny)
+      return ny / 12.0
+    end
   end
 end
