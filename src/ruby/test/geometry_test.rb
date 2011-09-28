@@ -187,4 +187,15 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal([0, 0, 0, 0], @mod.get_delta_ids(+0.0, +8.0, 4))
     assert_equal([1, 0, 0, 0], @mod.get_delta_ids(+6.0, +4.0, 4))
   end
+
+  def test_get_world_delta_xy
+    assert_equal([ +0.0, +8.0], @mod.get_world_delta_xy(0))
+    assert_equal([ +6.0, +4.0], @mod.get_world_delta_xy(1))
+    assert_equal([+12.0, +8.0], @mod.get_world_delta_xy(2))
+    assert_equal([+18.0, +4.0], @mod.get_world_delta_xy(3))
+    assert_equal([ +0.0, -8.0], @mod.get_world_delta_xy(4))
+    assert_equal([ +6.0, -4.0], @mod.get_world_delta_xy(5))
+    assert_equal([+12.0, -8.0], @mod.get_world_delta_xy(6))
+    assert_equal([+18.0, -4.0], @mod.get_world_delta_xy(7))
+  end
 end

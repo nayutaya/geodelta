@@ -82,5 +82,18 @@ module GeoDelta
 
       return ids
     end
+
+    def self.get_world_delta_xy(id)
+      case id
+      when 0 then [ +0.0, +8.0]
+      when 1 then [ +6.0, +4.0]
+      when 2 then [+12.0, +8.0]
+      when 3 then [+18.0, +4.0]
+      when 4 then [ +0.0, -8.0]
+      when 5 then [ +6.0, -4.0]
+      when 6 then [+12.0, -8.0]
+      when 7 then [+18.0, -4.0]
+      end
+    end
   end
 end
