@@ -61,5 +61,12 @@ module GeoDelta
         memo + (SUB_CHAR_TO_IDS[char] || raise("invalid sub delta code -- #{char}"))
       }
     end
+
+    def self.encode(ids)
+      raise("delta ids is empty") if ids.empty?
+      result  = self.encode_world_delta(ids[0])
+      result += self.encode_sub_delta(ids[1..-1]) if ids.size >= 2
+      return result
+    end
   end
 end
