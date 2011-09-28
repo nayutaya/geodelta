@@ -121,4 +121,26 @@ class GeoDeltaEncoderTest < Test::Unit::TestCase
     assert_raise(RuntimeError) { @mod.decode_sub_delta("a") }
     assert_raise(RuntimeError) { @mod.decode_sub_delta("Z") }
   end
+
+  def test_encode_and_decode_sub_delta__1
+    (0..3).each { |id1|
+      encoded1 = @mod.encode_sub_delta([id1])
+      decoded1 = @mod.decode_sub_delta(encoded1)
+      encoded2 = @mod.encode_sub_delta(decoded1)
+      assert_equal([id1], decoded1)
+      assert_equal(encoded1, encoded2)
+    }
+  end
+
+  def test_encode_and_decode_sub_delta__2
+    (0..3).each { |id1|
+      (0..3).each { |id2|
+        encoded1 = @mod.encode_sub_delta([id1, id2])
+        decoded1 = @mod.decode_sub_delta(encoded1)
+        encoded2 = @mod.encode_sub_delta(decoded1)
+        assert_equal([id1, id2], decoded1)
+        assert_equal(encoded1, encoded2)
+      }
+    }
+  end
 end
