@@ -167,4 +167,17 @@ class GeoDeltaEncoderTest < Test::Unit::TestCase
     assert_equal([7, 3, 2, 1], @mod.decode("RHM"))
     assert_raise(RuntimeError) { @mod.encode("") }
   end
+
+  def test_encode_and_decode__rush
+    world = (0..7).to_a
+    sub   = (0..3).to_a
+    1000.times {
+      ids = [world[rand(world.size)]] + rand(20).times.map { sub[rand(sub.size)] }
+      encoded1 = @mod.encode(ids)
+      decoded1 = @mod.decode(encoded1)
+      encoded2 = @mod.encode(decoded1)
+      assert_equal(ids, decoded1)
+      assert_equal(encoded1, encoded2)
+    }
+  end
 end
