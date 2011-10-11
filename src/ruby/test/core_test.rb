@@ -115,4 +115,20 @@ class GeoDeltaTest < Test::Unit::TestCase
     assert_in_delta(+71.480, lat, 1.0E-3)
     assert_in_delta( +0.000, lng, 1.0E-3)
   end
+
+  def test_rush
+    1000.times {
+      lat1  = rand * 180.0 -  90.0
+      lng1  = rand * 360.0 - 180.0
+      level = rand(30) + 1
+      code1 = @mod.get_delta_code(lat1, lng1, level)
+      lat2,
+      lng2  = @mod.get_center_latlng_from_delta_code(code1)
+      code2 = @mod.get_delta_code(lat2, lng2, level)
+      lat3,
+      lng3  = @mod.get_center_latlng_from_delta_code(code2)
+      assert_equal(code1, code2)
+      assert_equal([lat2, lng2], [lat3, lng3])
+    }
+  end
 end
