@@ -45,4 +45,39 @@ class GeoDeltaTest < Test::Unit::TestCase
     assert_equal("Z7",  @mod.get_delta_code(+0.0, +0.0, 3))
     assert_equal("Z7M", @mod.get_delta_code(+0.0, +0.0, 4))
   end
+
+  def test_get_center_latlng_from_delta_ids
+    lat, lng = @mod.get_center_latlng_from_delta_ids([0])
+    assert_in_delta( +71.480, lat, 1.0E-3)
+    assert_in_delta(  +0.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_ids([1])
+    assert_in_delta( +46.024, lat, 1.0E-3)
+    assert_in_delta( +90.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_ids([2])
+    assert_in_delta( +71.480, lat, 1.0E-3)
+    assert_in_delta(+180.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_ids([3])
+    assert_in_delta( +46.024, lat, 1.0E-3)
+    assert_in_delta( -90.000, lng, 1.0E-3)
+
+    lat, lng = @mod.get_center_latlng_from_delta_ids([4])
+    assert_in_delta( -71.480, lat, 1.0E-3)
+    assert_in_delta(  +0.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_ids([5])
+    assert_in_delta( -46.024, lat, 1.0E-3)
+    assert_in_delta( +90.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_ids([6])
+    assert_in_delta( -71.480, lat, 1.0E-3)
+    assert_in_delta(+180.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_ids([7])
+    assert_in_delta( -46.024, lat, 1.0E-3)
+    assert_in_delta( -90.000, lng, 1.0E-3)
+
+    lat, lng = @mod.get_center_latlng_from_delta_ids([0, 0])
+    assert_in_delta(+71.480, lat, 1.0E-3)
+    assert_in_delta( +0.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_ids([0, 0, 0])
+    assert_in_delta(+71.480, lat, 1.0E-3)
+    assert_in_delta( +0.000, lng, 1.0E-3)
+  end
 end

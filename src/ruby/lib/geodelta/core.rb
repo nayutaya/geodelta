@@ -19,4 +19,13 @@ module GeoDelta
     code = GeoDelta::Encoder.encode(ids)
     return code
   end
+
+  def self.get_center_latlng_from_delta_ids(ids)
+    nx, ny = GeoDelta::Geometry.get_xy(ids)
+    mx  = GeoDelta::Projector.nx_to_mx(nx)
+    my  = GeoDelta::Projector.ny_to_my(ny)
+    lng = GeoDelta::Projector.mx_to_lng(mx)
+    lat = GeoDelta::Projector.my_to_lat(my)
+    return [lat, lng]
+  end
 end
