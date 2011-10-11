@@ -28,4 +28,10 @@ module GeoDelta
     lat = GeoDelta::Projector.my_to_lat(my)
     return [lat, lng]
   end
+
+  def self.get_center_latlng_from_delta_code(code)
+    ids    = GeoDelta::Encoder.decode(code)
+    latlng = self.get_center_latlng_from_delta_ids(ids)
+    return latlng
+  end
 end

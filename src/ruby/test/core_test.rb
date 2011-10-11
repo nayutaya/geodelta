@@ -80,4 +80,39 @@ class GeoDeltaTest < Test::Unit::TestCase
     assert_in_delta(+71.480, lat, 1.0E-3)
     assert_in_delta( +0.000, lng, 1.0E-3)
   end
+
+  def test_get_center_latlng_from_delta_code
+    lat, lng = @mod.get_center_latlng_from_delta_code("Z")
+    assert_in_delta( +71.480, lat, 1.0E-3)
+    assert_in_delta(  +0.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_code("Y")
+    assert_in_delta( +46.024, lat, 1.0E-3)
+    assert_in_delta( +90.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_code("X")
+    assert_in_delta( +71.480, lat, 1.0E-3)
+    assert_in_delta(+180.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_code("W")
+    assert_in_delta( +46.024, lat, 1.0E-3)
+    assert_in_delta( -90.000, lng, 1.0E-3)
+
+    lat, lng = @mod.get_center_latlng_from_delta_code("V")
+    assert_in_delta( -71.480, lat, 1.0E-3)
+    assert_in_delta(  +0.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_code("T")
+    assert_in_delta( -46.024, lat, 1.0E-3)
+    assert_in_delta( +90.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_code("S")
+    assert_in_delta( -71.480, lat, 1.0E-3)
+    assert_in_delta(+180.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_code("R")
+    assert_in_delta( -46.024, lat, 1.0E-3)
+    assert_in_delta( -90.000, lng, 1.0E-3)
+
+    lat, lng = @mod.get_center_latlng_from_delta_code("ZK")
+    assert_in_delta(+71.480, lat, 1.0E-3)
+    assert_in_delta( +0.000, lng, 1.0E-3)
+    lat, lng = @mod.get_center_latlng_from_delta_code("Z2")
+    assert_in_delta(+71.480, lat, 1.0E-3)
+    assert_in_delta( +0.000, lng, 1.0E-3)
+  end
 end
