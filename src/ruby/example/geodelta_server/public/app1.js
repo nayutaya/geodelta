@@ -9,14 +9,18 @@ $(function() {
   var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
   google.maps.event.addListener(map, "click", function(e) {
-    //alert("click lat:" + e.latLng.lat() + " lng:" + e.latLng.lng());
     var params = {
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
-      level: 1
+      level: 10
     }
     $.get("/api/encode", params, function(data) {
-      alert("ret code:" + data.response.code);
+      var center = new google.maps.LatLng(data.response.center.lat, data.response.center.lng);
+      var marker = new google.maps.Marker({
+        position: center,
+        map: map, 
+        title: "code=data.response.code"
+      });
     });
   });
 });
