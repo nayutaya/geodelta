@@ -6,6 +6,8 @@ require "json"
 require_relative "../../lib/geodelta"
 
 class GeoDeltaServer < Sinatra::Base
+  set :public_folder, File.dirname(__FILE__) + "/public"
+
   get "/api/encode" do
     lat   = (params["lat"]   || "0.0").to_f
     lng   = (params["lng"]   || "0.0").to_f
