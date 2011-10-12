@@ -8,7 +8,15 @@ $(function() {
   };
   var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-  google.maps.event.addListener(map, "click", function() {
-    alert("click");
+  google.maps.event.addListener(map, "click", function(e) {
+    //alert("click lat:" + e.latLng.lat() + " lng:" + e.latLng.lng());
+    var params = {
+      lat: e.latLng.lat(),
+      lng: e.latLng.lng(),
+      level: 1
+    }
+    $.get("/api/encode", params, function(data) {
+      alert("ret code:" + data.response.code);
+    });
   });
 });
