@@ -19,7 +19,7 @@ $(function() {
       var marker = new google.maps.Marker({
         position: center,
         map: map, 
-        title: "code=data.response.code"
+        title: "code=" + data.response.code
       });
     });
   });
