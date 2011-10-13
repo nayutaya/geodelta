@@ -20,7 +20,7 @@ module GeoDelta
     return code
   end
 
-  def self.get_center_latlng_from_delta_ids(ids)
+  def self.get_center_from_delta_ids(ids)
     nx, ny = GeoDelta::Geometry.get_xy(ids)
     mx  = GeoDelta::Projector.nx_to_mx(nx)
     my  = GeoDelta::Projector.ny_to_my(ny)
@@ -29,9 +29,9 @@ module GeoDelta
     return [lat, lng]
   end
 
-  def self.get_center_latlng_from_delta_code(code)
+  def self.get_center_from_delta_code(code)
     ids    = GeoDelta::Encoder.decode(code)
-    latlng = self.get_center_latlng_from_delta_ids(ids)
+    latlng = self.get_center_from_delta_ids(ids)
     return latlng
   end
 end
