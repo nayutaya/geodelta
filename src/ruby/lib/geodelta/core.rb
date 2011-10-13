@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-require File.expand_path(File.join(File.dirname(__FILE__), "projector"))
-require File.expand_path(File.join(File.dirname(__FILE__), "geometry"))
-require File.expand_path(File.join(File.dirname(__FILE__), "encoder"))
+require_relative "projector"
+require_relative "geometry"
+require_relative "encoder"
 
 module GeoDelta
   def self.get_delta_ids(lat, lng, level)
@@ -20,8 +20,8 @@ module GeoDelta
     return code
   end
 
-  def self.get_center_latlng_from_delta_ids(ids)
-    nx, ny = GeoDelta::Geometry.get_xy(ids)
+  def self.get_center_from_delta_ids(ids)
+    nx, ny = GeoDelta::Geometry.get_center(ids)
     mx  = GeoDelta::Projector.nx_to_mx(nx)
     my  = GeoDelta::Projector.ny_to_my(ny)
     lng = GeoDelta::Projector.mx_to_lng(mx)
@@ -29,9 +29,9 @@ module GeoDelta
     return [lat, lng]
   end
 
-  def self.get_center_latlng_from_delta_code(code)
+  def self.get_center_from_delta_code(code)
     ids    = GeoDelta::Encoder.decode(code)
-    latlng = self.get_center_latlng_from_delta_ids(ids)
+    latlng = self.get_center_from_delta_ids(ids)
     return latlng
   end
 end

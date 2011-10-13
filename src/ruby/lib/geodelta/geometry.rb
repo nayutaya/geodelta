@@ -83,7 +83,7 @@ module GeoDelta
       return ids
     end
 
-    def self.get_world_delta_xy(id)
+    def self.get_world_delta_center(id)
       case id
       when 0 then [ +0.0, +8.0]
       when 1 then [ +6.0, +4.0]
@@ -96,7 +96,7 @@ module GeoDelta
       end
     end
 
-    def self.get_upper_sub_delta_xy_distance(id)
+    def self.get_upper_sub_delta_distance(id)
       case id
       when 0 then [+0.0, +0.0]
       when 1 then [+0.0, +4.0]
@@ -105,7 +105,7 @@ module GeoDelta
       end
     end
 
-    def self.get_lower_sub_delta_xy_distance(id)
+    def self.get_lower_sub_delta_distance(id)
       case id
       when 0 then [+0.0, +0.0]
       when 1 then [+0.0, -4.0]
@@ -114,27 +114,26 @@ module GeoDelta
       end
     end
 
-    # no test
-    def self.get_sub_delta_xy_distance(parent_is_upper, id)
+    def self.get_sub_delta_distance(parent_is_upper, id)
       if parent_is_upper
-        return self.get_upper_sub_delta_xy_distance(id)
+        return self.get_upper_sub_delta_distance(id)
       else
-        return self.get_lower_sub_delta_xy_distance(id)
+        return self.get_lower_sub_delta_distance(id)
       end
     end
 
-    def self.get_xy(ids)
+    def self.get_center(ids)
       xs, ys = [], []
       upper  = nil
 
       ids.each_with_index { |id, index|
         if index == 0
-          x, y  = self.get_world_delta_xy(id)
+          x, y  = self.get_world_delta_center(id)
           upper = self.upper_world_delta?(id)
           xs << x
           ys << y
         else
-          x, y  = self.get_sub_delta_xy_distance(upper, id)
+          x, y  = self.get_sub_delta_distance(upper, id)
           upper = self.upper_sub_delta?(upper, id)
           xs << (x / (2 ** (index - 1)))
           ys << (y / (2 ** (index - 1)))
