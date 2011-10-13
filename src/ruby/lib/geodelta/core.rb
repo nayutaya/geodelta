@@ -21,7 +21,7 @@ module GeoDelta
   end
 
   def self.get_center_from_delta_ids(ids)
-    nx, ny = GeoDelta::Geometry.get_xy(ids)
+    nx, ny = GeoDelta::Geometry.get_center(ids)
     mx  = GeoDelta::Projector.nx_to_mx(nx)
     my  = GeoDelta::Projector.ny_to_my(ny)
     lng = GeoDelta::Projector.mx_to_lng(mx)
