@@ -1,8 +1,8 @@
 # encoding: utf-8
 
-require File.expand_path(File.join(File.dirname(__FILE__), "projector"))
-require File.expand_path(File.join(File.dirname(__FILE__), "geometry"))
-require File.expand_path(File.join(File.dirname(__FILE__), "encoder"))
+require_relative "projector"
+require_relative "geometry"
+require_relative "encoder"
 
 module GeoDelta
   def self.get_delta_ids(lat, lng, level)
