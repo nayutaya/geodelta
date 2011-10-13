@@ -212,6 +212,13 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal([-3.0, +2.0], @mod.get_lower_sub_delta_distance(2))
     assert_equal([+3.0, +2.0], @mod.get_lower_sub_delta_distance(3))
   end
+  
+  def test_get_sub_delta_distance
+    assert_equal([+0.0, +4.0], @mod.get_sub_delta_distance(true,  1))
+    assert_equal([+3.0, -2.0], @mod.get_sub_delta_distance(true,  2))
+    assert_equal([+0.0, -4.0], @mod.get_sub_delta_distance(false, 1))
+    assert_equal([-3.0, +2.0], @mod.get_sub_delta_distance(false, 2))
+  end
 
   def test_get_center__level1
     assert_equal([+0.0, +8.0], @mod.get_center([0]))

@@ -114,7 +114,6 @@ module GeoDelta
       end
     end
 
-    # no test
     def self.get_sub_delta_distance(parent_is_upper, id)
       if parent_is_upper
         return self.get_upper_sub_delta_distance(id)
