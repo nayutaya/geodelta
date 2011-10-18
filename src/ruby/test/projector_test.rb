@@ -29,11 +29,13 @@ class GeoDeltaProjectorTest < Test::Unit::TestCase
   end
 
   def test_mx_to_lng
-    assert_equal(+180.0, @mod.mx_to_lng(+1.0))
+    assert_equal( -90.0, @mod.mx_to_lng(+1.5))
+    assert_equal(-180.0, @mod.mx_to_lng(+1.0))
     assert_equal( +90.0, @mod.mx_to_lng(+0.5))
     assert_equal(   0.0, @mod.mx_to_lng( 0.0))
     assert_equal( -90.0, @mod.mx_to_lng(-0.5))
     assert_equal(-180.0, @mod.mx_to_lng(-1.0))
+    assert_equal( +90.0, @mod.mx_to_lng(-1.5))
   end
 
   def test_my_to_ny
