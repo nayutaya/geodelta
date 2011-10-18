@@ -143,6 +143,29 @@ class GeoDeltaTest < Test::Unit::TestCase
     assert_in_delta( -90.000, delta4[3][1], 1.0E-3)
   end
 
+  def test_get_coordinates_from_ids__2
+    delta = (0..7).map { |id| @mod.get_coordinates_from_ids([id]) }
+
+    assert_equal(delta[0][1], delta[1][3])
+    assert_equal(delta[0][1], delta[3][2])
+    assert_equal(delta[0][1], delta[4][1])
+    assert_equal(delta[0][1], delta[5][2])
+    assert_equal(delta[0][1], delta[7][3])
+#    assert_equal(delta[0][2], delta[2][3]) # roundtrip
+    assert_equal(delta[0][2], delta[3][1])
+    assert_equal(delta[0][3], delta[1][1])
+    assert_equal(delta[0][3], delta[2][2])
+    assert_equal(delta[1][2], delta[2][1])
+#    assert_equal(delta[1][2], delta[3][3]) # roundtrip
+    assert_equal(delta[1][2], delta[5][3])
+    assert_equal(delta[1][2], delta[6][1])
+#    assert_equal(delta[1][2], delta[7][2]) # roundtrip
+#    assert_equal(delta[4][3], delta[6][2]) # roundtrip
+    assert_equal(delta[4][3], delta[7][1])
+    assert_equal(delta[4][2], delta[5][1])
+    assert_equal(delta[4][2], delta[6][3])
+  end
+
   def test_rush
     1000.times {
       lat1  = rand * 180.0 -  90.0
