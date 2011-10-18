@@ -157,5 +157,24 @@ module GeoDelta
 
       return [x, y]
     end
+
+    def self.get_coordinates(ids)
+      cx, cy = self.get_center(ids)
+      level  = ids.size
+      sign   = (self.upper_delta?(ids) ? +1 : -1)
+      scale  = 1.0 / (2 ** (level - 1)) * sign
+
+      dx1 = 0.0
+      dy1 = 8.0 * scale
+      dx2 = 6.0 * scale
+      dy2 = 4.0 * scale
+
+      return [
+        [cx,       cy      ],
+        [cx + dx1, cy + dy1],
+        [cx + dx2, cy - dy2],
+        [cx - dx2, cy - dy2],
+      ]
+    end
   end
 end

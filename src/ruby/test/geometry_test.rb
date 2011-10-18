@@ -280,6 +280,124 @@ class GeoDeltaGeometryTest < Test::Unit::TestCase
     assert_equal([ +3.0, +10.0], @mod.get_center([0, 3, 0]))
   end
 
+  def test_get_coordinates__level1
+    expected = [
+      [+0.0,  +8.0],
+      [+0.0,  +0.0], # +0.0, -8.0
+      [-6.0, +12.0], # -6.0, +4.0
+      [+6.0, +12.0], # +6.0, +4.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([0]))
+
+    expected = [
+      [ +6.0,  +4.0],
+      [ +6.0, +12.0], # +0.0, +8.0
+      [+12.0,  +0.0], # +6.0, -4.0
+      [ +0.0,  +0.0], # -6.0, -4.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([1]))
+
+    expected = [
+      [+0.0,  -8.0],
+      [+0.0,  +0.0], # +0.0, +8.0
+      [+6.0, -12.0], # +6.0, -4.0
+      [-6.0, -12.0], # -6.0, -4.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([4]))
+
+    expected = [
+      [ +6.0,  -4.0],
+      [ +6.0, -12.0], # +0.0, -8.0
+      [ +0.0,  +0.0], # -6.0, +4.0
+      [+12.0,  +0.0], # +6.0, +4.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([5]))
+  end
+
+  def test_get_coordinates__level2
+    expected = [
+      [ +0.0,  +8.0],
+      [ +0.0, +12.0], # +0.0, +4.0
+      [ +3.0,  +6.0], # +3.0, -2.0
+      [ -3.0,  +6.0], # -3.0, -2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 0]))
+
+    expected = [
+      [ +0.0,  +4.0], 
+      [ +0.0,  +0.0], # +0.0, -4.0
+      [ -3.0,  +6.0], # -3.0, +2.0
+      [ +3.0,  +6.0], # +3.0, +2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 1]))
+
+    expected = [
+      [ -3.0, +10.0],
+      [ -3.0,  +6.0], # +0.0, -4.0
+      [ -6.0, +12.0], # -3.0, +2.0
+      [ +0.0, +12.0], # +3.0, +2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 2]))
+
+    expected = [
+      [ +3.0, +10.0],
+      [ +3.0,  +6.0], # +0.0, -4.0
+      [ +0.0, +12.0], # -3.0, +2.0
+      [ +6.0, +12.0], # +3.0, +2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 3]))
+
+    expected = [
+      [ +0.0,  -8.0],
+      [ +0.0, -12.0], # +0.0, -4.0
+      [ -3.0,  -6.0], # -3.0, +2.0
+      [ +3.0,  -6.0], # +3.0, +2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([4, 0]))
+
+    expected = [
+      [ +0.0,  -4.0],
+      [ +0.0,  +0.0], # +0.0, +4.0
+      [ +3.0,  -6.0], # +3.0, -2.0
+      [ -3.0,  -6.0], # -3.0, -2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([4, 1]))
+
+    expected = [
+      [ +3.0, -10.0],
+      [ +3.0,  -6.0], # +0.0, +4.0
+      [ +6.0, -12.0], # +3.0, -2.0
+      [ +0.0, -12.0], # -3.0, -2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([4, 2]))
+
+    expected = [
+      [ -3.0, -10.0],
+      [ -3.0,  -6.0], # +0.0, +4.0
+      [ +0.0, -12.0], # +3.0, -2.0
+      [ -6.0, -12.0], # -3.0, -2.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([4, 3]))
+  end
+
+  def test_get_coordinates__level3
+    expected = [
+      [ +0.0,  +8.0],
+      [ +0.0,  +6.0], # +0.0, -2.0
+      [ -1.5,  +9.0], # -1.5, +1.0
+      [ +1.5,  +9.0], # +1.5, +1.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 0, 0]))
+
+    expected = [
+      [ -1.5,  +5.0],
+      [ -1.5,  +3.0], # +0.0, -2.0
+      [ -3.0,  +6.0], # -1.5, +1.0
+      [ +0.0,  +6.0], # +1.5, +1.0
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 1, 2]))
+  end
+
   def test_rush__center
     1000.times {
       x1     = (rand * 24) - 12
