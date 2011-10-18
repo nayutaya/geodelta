@@ -13,8 +13,8 @@ class GeoDeltaServer < Sinatra::Base
     lng   = (params["lng"]   || "0.0").to_f
     level = (params["level"] || "1"  ).to_i
 
-    code       = GeoDelta.get_delta_code(lat, lng, level)
-    clat, clng = GeoDelta.get_center_latlng_from_delta_code(code)
+    code        = GeoDelta.get_delta_code(lat, lng, level)
+    coordinates = GeoDelta.get_coordinates_from_code(code)
 
     response = {
       "request" => {
@@ -23,8 +23,10 @@ class GeoDeltaServer < Sinatra::Base
         "level" => level,
       },
       "response" => {
-        "code"   => code,
-        "center" => {"lat" => clat, "lng" => clng},
+        "code"        => code,
+        "coordinates" => coordinates.map { |lat, lng|
+          {"lat" => lat, "lng" => lng}
+        },
       },
     }
 
