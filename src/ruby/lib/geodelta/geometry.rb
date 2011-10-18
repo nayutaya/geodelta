@@ -45,6 +45,16 @@ module GeoDelta
       return (parent_is_upper ? (id != 0) : (id == 0))
     end
 
+    def self.upper_delta?(ids)
+      return ids.inject(nil) { |upper, id|
+        if upper.nil?
+          self.upper_world_delta?(id)
+        else
+          self.upper_sub_delta?(upper, id)
+        end
+      }
+    end
+
     def self.transform_world_delta(id, x, y)
       xx = (x + [+6.0, +0.0, -6.0, -12.0,  +6.0,  +0.0,  -6.0, -12.0][id]) % 12
       yy = (y + [+0.0, +0.0, +0.0,  +0.0, +12.0, +12.0, +12.0, +12.0][id]) % 12
