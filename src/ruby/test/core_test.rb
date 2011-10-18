@@ -116,21 +116,31 @@ class GeoDeltaTest < Test::Unit::TestCase
     assert_in_delta( +0.000, lng, 1.0E-3)
   end
 
-  def test_get_coordinates_from_ids
-    actual = @mod.get_coordinates_from_ids([0])
-    assert_equal(4, actual.size)
-    assert_equal(2, actual[0].size)
-    assert_equal(2, actual[1].size)
-    assert_equal(2, actual[2].size)
-    assert_equal(2, actual[3].size)
-    assert_in_delta( +71.480, actual[0][0], 1.0E-3)
-    assert_in_delta(  +0.000, actual[0][1], 1.0E-3)
-    assert_in_delta(  +0.000, actual[1][0], 1.0E-3)
-    assert_in_delta(  +0.000, actual[1][1], 1.0E-3)
-    assert_in_delta( +82.467, actual[2][0], 1.0E-3)
-    assert_in_delta( -90.000, actual[2][1], 1.0E-3)
-    assert_in_delta( +82.467, actual[3][0], 1.0E-3)
-    assert_in_delta( +90.000, actual[3][1], 1.0E-3)
+  def test_get_coordinates_from_ids__1
+    delta0 = @mod.get_coordinates_from_ids([0])
+    assert_equal(4, delta0.size)
+    assert_equal(2, delta0[0].size)
+    assert_equal(2, delta0[1].size)
+    assert_equal(2, delta0[2].size)
+    assert_equal(2, delta0[3].size)
+    assert_in_delta( +71.480, delta0[0][0], 1.0E-3)
+    assert_in_delta(  +0.000, delta0[0][1], 1.0E-3)
+    assert_in_delta(  +0.000, delta0[1][0], 1.0E-3)
+    assert_in_delta(  +0.000, delta0[1][1], 1.0E-3)
+    assert_in_delta( +82.467, delta0[2][0], 1.0E-3)
+    assert_in_delta( -90.000, delta0[2][1], 1.0E-3)
+    assert_in_delta( +82.467, delta0[3][0], 1.0E-3)
+    assert_in_delta( +90.000, delta0[3][1], 1.0E-3)
+
+    delta4 = @mod.get_coordinates_from_ids([4])
+    assert_in_delta( -71.480, delta4[0][0], 1.0E-3)
+    assert_in_delta(  +0.000, delta4[0][1], 1.0E-3)
+    assert_in_delta(  +0.000, delta4[1][0], 1.0E-3)
+    assert_in_delta(  +0.000, delta4[1][1], 1.0E-3)
+    assert_in_delta( -82.467, delta4[2][0], 1.0E-3)
+    assert_in_delta( +90.000, delta4[2][1], 1.0E-3)
+    assert_in_delta( -82.467, delta4[3][0], 1.0E-3)
+    assert_in_delta( -90.000, delta4[3][1], 1.0E-3)
   end
 
   def test_rush
