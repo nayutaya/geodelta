@@ -145,7 +145,6 @@ class GeoDeltaTest < Test::Unit::TestCase
 
   def test_get_coordinates_from_ids__2
     delta = (0..7).map { |id| @mod.get_coordinates_from_ids([id]) }
-
     assert_equal(delta[0][1], delta[1][3])
     assert_equal(delta[0][1], delta[3][2])
     assert_equal(delta[0][1], delta[4][1])
@@ -164,6 +163,16 @@ class GeoDeltaTest < Test::Unit::TestCase
     assert_equal(delta[4][3], delta[7][1])
     assert_equal(delta[4][2], delta[5][1])
     assert_equal(delta[4][2], delta[6][3])
+  end
+
+  def test_get_coordinates_from_ids__3
+    delta = (0..3).map { |id| @mod.get_coordinates_from_ids([0, id]) }
+    assert_equal(delta[0][1], delta[2][3])
+    assert_equal(delta[0][1], delta[3][2])
+    assert_equal(delta[0][2], delta[1][3])
+    assert_equal(delta[0][2], delta[3][1])
+    assert_equal(delta[0][3], delta[1][2])
+    assert_equal(delta[0][3], delta[2][1])
   end
 
   def test_rush
