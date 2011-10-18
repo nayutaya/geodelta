@@ -15,7 +15,7 @@ $(function() {
       level: 10
     }
     $.get("/api/encode", params, function(data) {
-      var center = new google.maps.LatLng(data.response.center.lat, data.response.center.lng);
+      var center = new google.maps.LatLng(data.response.coordinates[0].lat, data.response.coordinates[0].lng);
       var marker = new google.maps.Marker({
         position: center,
         map: map, 
