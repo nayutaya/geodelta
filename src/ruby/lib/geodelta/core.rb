@@ -45,4 +45,9 @@ module GeoDelta
       [lat, lng]
     }
   end
+
+  def self.get_coordinates_from_code(code)
+    ids = GeoDelta::Encoder.decode(code)
+    return self.get_coordinates_from_ids(ids)
+  end
 end

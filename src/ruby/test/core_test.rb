@@ -175,6 +175,15 @@ class GeoDeltaTest < Test::Unit::TestCase
     assert_equal(delta[0][3], delta[2][1])
   end
 
+  def test_get_coordinates_from_code
+    assert_equal(
+      @mod.get_coordinates_from_ids([0]),
+      @mod.get_coordinates_from_code("Z"))
+    assert_equal(
+      @mod.get_coordinates_from_ids([0, 1, 2]),
+      @mod.get_coordinates_from_code("Z8"))
+  end
+
   def test_rush
     1000.times {
       lat1  = rand * 180.0 -  90.0
