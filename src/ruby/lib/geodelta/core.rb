@@ -34,4 +34,15 @@ module GeoDelta
     latlng = self.get_center_from_delta_ids(ids)
     return latlng
   end
+
+  def self.get_coordinates_from_ids(ids)
+    coordinates = GeoDelta::Geometry.get_coordinates(ids)
+    return coordinates.map { |nx, ny|
+      mx  = GeoDelta::Projector.nx_to_mx(nx)
+      my  = GeoDelta::Projector.ny_to_my(ny)
+      lng = GeoDelta::Projector.mx_to_lng(mx)
+      lat = GeoDelta::Projector.my_to_lat(my)
+      [lat, lng]
+    }
+  end
 end
