@@ -39,8 +39,15 @@ public class EncoderTest
 
     // TODO: test_encode_and_decode_world_delta
     /*
-     * def test_encode_and_decode_world_delta (0..7).each { |id| encoded1 = @mod.encode_world_delta(id) decoded1 = @mod.decode_world_delta(encoded1)
-     * encoded2 = @mod.encode_world_delta(decoded1) assert_equal(id, decoded1) assert_equal(encoded1, encoded2) } end
+     * def test_encode_and_decode_world_delta
+     * (0..7).each { |id|
+     * encoded1 = @mod.encode_world_delta(id)
+     * decoded1 = @mod.decode_world_delta(encoded1)
+     * encoded2 = @mod.encode_world_delta(decoded1)
+     * assert_equal(id, decoded1)
+     * assert_equal(encoded1, encoded2)
+     * }
+     * end
      */
 
     @Test
@@ -84,8 +91,11 @@ public class EncoderTest
 
     // TODO: test_encode_sub_delta__4
     /*
-     * def test_encode_sub_delta__4 assert_raise(RuntimeError) { @mod.encode_sub_delta([]) } assert_raise(RuntimeError) { @mod.encode_sub_delta([-1])
-     * } assert_raise(RuntimeError) { @mod.encode_sub_delta([4]) } end
+     * def test_encode_sub_delta__4
+     * assert_raise(RuntimeError) { @mod.encode_sub_delta([]) }
+     * assert_raise(RuntimeError) { @mod.encode_sub_delta([-1]) }
+     * assert_raise(RuntimeError) { @mod.encode_sub_delta([4]) }
+     * end
      */
 
     @Test
@@ -129,21 +139,39 @@ public class EncoderTest
 
     // TODO: test_decode_sub_delta__4
     /*
-     * def test_decode_sub_delta__4 assert_raise(RuntimeError) { @mod.decode_sub_delta("") } assert_raise(RuntimeError) { @mod.decode_sub_delta("a") }
-     * assert_raise(RuntimeError) { @mod.decode_sub_delta("Z") } end
+     * def test_decode_sub_delta__4
+     * assert_raise(RuntimeError) { @mod.decode_sub_delta("") }
+     * assert_raise(RuntimeError) { @mod.decode_sub_delta("a") }
+     * assert_raise(RuntimeError) { @mod.decode_sub_delta("Z") }
+     * end
      */
 
     // TODO: test_encode_and_decode_sub_delta__1
     /*
-     * def test_encode_and_decode_sub_delta__1 (0..3).each { |id1| encoded1 = @mod.encode_sub_delta([id1]) decoded1 = @mod.decode_sub_delta(encoded1)
-     * encoded2 = @mod.encode_sub_delta(decoded1) assert_equal([id1], decoded1) assert_equal(encoded1, encoded2) } end
+     * def test_encode_and_decode_sub_delta__1
+     * (0..3).each { |id1|
+     * encoded1 = @mod.encode_sub_delta([id1])
+     * decoded1 = @mod.decode_sub_delta(encoded1)
+     * encoded2 = @mod.encode_sub_delta(decoded1)
+     * assert_equal([id1], decoded1)
+     * assert_equal(encoded1, encoded2)
+     * }
+     * end
      */
 
     // TODO: test_encode_and_decode_sub_delta__1
     /*
-     * def test_encode_and_decode_sub_delta__2 (0..3).each { |id1| (0..3).each { |id2| encoded1 = @mod.encode_sub_delta([id1, id2]) decoded1 =
-     * @mod.decode_sub_delta(encoded1) encoded2 = @mod.encode_sub_delta(decoded1) assert_equal([id1, id2], decoded1) assert_equal(encoded1, encoded2)
-     * } } end
+     * def test_encode_and_decode_sub_delta__2
+     * (0..3).each { |id1|
+     * (0..3).each { |id2|
+     * encoded1 = @mod.encode_sub_delta([id1, id2])
+     * decoded1 = @mod.decode_sub_delta(encoded1)
+     * encoded2 = @mod.encode_sub_delta(decoded1)
+     * assert_equal([id1, id2], decoded1)
+     * assert_equal(encoded1, encoded2)
+     * }
+     * }
+     * end
      */
 
     @Test
@@ -176,8 +204,17 @@ public class EncoderTest
 
     // TODO: test_encode_and_decode__rush
     /*
-     * def test_encode_and_decode__rush world = (0..7).to_a sub = (0..3).to_a 1000.times { ids = [world[rand(world.size)]] + rand(20).times.map {
-     * sub[rand(sub.size)] } encoded1 = @mod.encode(ids) decoded1 = @mod.decode(encoded1) encoded2 = @mod.encode(decoded1) assert_equal(ids, decoded1)
-     * assert_equal(encoded1, encoded2) } end
+     * def test_encode_and_decode__rush
+     * world = (0..7).to_a
+     * sub = (0..3).to_a
+     * 1000.times {
+     * ids = [world[rand(world.size)]] + rand(20).times.map { sub[rand(sub.size)] }
+     * encoded1 = @mod.encode(ids)
+     * decoded1 = @mod.decode(encoded1)
+     * encoded2 = @mod.encode(decoded1)
+     * assert_equal(ids, decoded1)
+     * assert_equal(encoded1, encoded2)
+     * }
+     * end
      */
 }
