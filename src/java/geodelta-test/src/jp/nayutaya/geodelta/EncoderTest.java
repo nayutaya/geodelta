@@ -18,8 +18,18 @@ public class EncoderTest
         assertEquals('T', Encoder.encodeWorldDelta((byte)5));
         assertEquals('S', Encoder.encodeWorldDelta((byte)6));
         assertEquals('R', Encoder.encodeWorldDelta((byte)7));
-        // TODO: assert_raise(RuntimeError) { @mod.encode_world_delta(-1) }
-        // TODO: assert_raise(RuntimeError) { @mod.encode_world_delta(8) }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void encodeWorldDelta__invalidArg1()
+    {
+        Encoder.encodeWorldDelta((byte)-1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void encodeWorldDelta__invalidArg2()
+    {
+        Encoder.encodeWorldDelta((byte)8);
     }
 
     @Test
