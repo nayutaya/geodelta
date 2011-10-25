@@ -1,6 +1,7 @@
 
 package jp.nayutaya.geodelta;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -149,19 +150,18 @@ public class GeometryTest
         assertEquals(false, Geometry.isUpperDelta(new byte[] {0, 0, 0, 0, 0}));
     }
 
-    // TODO: test_transform_world_delta
-    /*
-     * def test_transform_world_delta
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(0, +0.0, +4.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(1, +6.0, +4.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(2, +12.0, +4.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(3, +18.0, +4.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(4, +0.0, -8.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(5, +6.0, -8.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(6, +12.0, -8.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_world_delta(7, +18.0, -8.0))
-     * end
-     */
+    @Test
+    public void transformWorldDelta()
+    {
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(0, +0.0, +4.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(1, +6.0, +4.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(2, +12.0, +4.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(3, +18.0, +4.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(4, +0.0, -8.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(5, +6.0, -8.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(6, +12.0, -8.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(7, +18.0, -8.0), 1.0E-15);
+    }
 
     // TODO: test_transform_upper_delta
     /*

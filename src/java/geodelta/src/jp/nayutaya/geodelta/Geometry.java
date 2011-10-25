@@ -127,14 +127,14 @@ public class Geometry
         return upper;
     }
 
-    // TODO:
-    /*
-     * def self.transform_world_delta(id, x, y)
-     * xx = (x + [+6.0, +0.0, -6.0, -12.0, +6.0, +0.0, -6.0, -12.0][id]) % 12
-     * yy = (y + [+0.0, +0.0, +0.0, +0.0, +12.0, +12.0, +12.0, +12.0][id]) % 12
-     * return [xx, yy]
-     * end
-     */
+    public static double[] transformWorldDelta(final int id, final double x, final double y)
+    {
+        final double[] xs = {+6.0, +0.0, -6.0, -12.0, +6.0, +0.0, -6.0, -12.0};
+        final double[] ys = {+0.0, +0.0, +0.0, +0.0, +12.0, +12.0, +12.0, +12.0};
+        final double xx = Utility.mod((x + xs[id]), 12);
+        final double yy = Utility.mod((y + ys[id]), 12);
+        return new double[] {xx, yy};
+    }
 
     // TODO:
     /*
