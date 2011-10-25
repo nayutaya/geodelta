@@ -113,19 +113,18 @@ public class GeometryTest
         assertEquals(false, Geometry.isUpperWorldDelta(7));
     }
 
-    // TODO: test_upper_sub_delta?
-    /*
-     * def test_upper_sub_delta?
-     * assert_equal(false, @mod.upper_sub_delta?(true, 0))
-     * assert_equal(true, @mod.upper_sub_delta?(true, 1))
-     * assert_equal(true, @mod.upper_sub_delta?(true, 2))
-     * assert_equal(true, @mod.upper_sub_delta?(true, 3))
-     * assert_equal(true, @mod.upper_sub_delta?(false, 0))
-     * assert_equal(false, @mod.upper_sub_delta?(false, 1))
-     * assert_equal(false, @mod.upper_sub_delta?(false, 2))
-     * assert_equal(false, @mod.upper_sub_delta?(false, 3))
-     * end
-     */
+    @Test
+    public void isUpperSubDelta()
+    {
+        assertEquals(false, Geometry.isUpperSubDelta(true, 0));
+        assertEquals(true, Geometry.isUpperSubDelta(true, 1));
+        assertEquals(true, Geometry.isUpperSubDelta(true, 2));
+        assertEquals(true, Geometry.isUpperSubDelta(true, 3));
+        assertEquals(true, Geometry.isUpperSubDelta(false, 0));
+        assertEquals(false, Geometry.isUpperSubDelta(false, 1));
+        assertEquals(false, Geometry.isUpperSubDelta(false, 2));
+        assertEquals(false, Geometry.isUpperSubDelta(false, 3));
+    }
 
     // TODO: test_upper_delta?
     /*

@@ -88,7 +88,7 @@ public class Geometry
     }
 
     /**
-     * 指定されたワールドデルタが上向きかどうかを返す
+     * 指定されたワールドデルタが上向きかどうかを返す。
      *
      * @param id
      * @return
@@ -98,13 +98,17 @@ public class Geometry
         return (id % 2 == (id < 4 ? 1 : 0));
     }
 
-    // TODO:
-    /*
-     * # 指定されたサブデルタが上向きかどうか返す
-     * def self.upper_sub_delta?(parent_is_upper, id)
-     * return (parent_is_upper ? (id != 0) : (id == 0))
-     * end
+    /**
+     * 指定されたサブデルタが上向きかどうか返す。
+     *
+     * @param upper
+     * @param id
+     * @return
      */
+    public static boolean isUpperSubDelta(final boolean parentIsUpper, final int id)
+    {
+        return (parentIsUpper ? (id != 0) : (id == 0));
+    }
 
     // TODO:
     /*
