@@ -110,18 +110,22 @@ public class Geometry
         return (parentIsUpper ? (id != 0) : (id == 0));
     }
 
-    // TODO:
-    /*
-     * def self.upper_delta?(ids)
-     * return ids.inject(nil) { |upper, id|
-     * if upper.nil?
-     * self.upper_world_delta?(id)
-     * else
-     * self.upper_sub_delta?(upper, id)
-     * end
-     * }
-     * end
-     */
+    public static boolean isUpperDelta(final byte[] ids)
+    {
+        boolean upper = false;
+        for ( int i = 0, len = ids.length; i < len; i++ )
+        {
+            if ( i == 0 )
+            {
+                upper = isUpperWorldDelta(ids[i]);
+            }
+            else
+            {
+                upper = isUpperSubDelta(upper, ids[i]);
+            }
+        }
+        return upper;
+    }
 
     // TODO:
     /*

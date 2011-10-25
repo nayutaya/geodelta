@@ -126,29 +126,28 @@ public class GeometryTest
         assertEquals(false, Geometry.isUpperSubDelta(false, 3));
     }
 
-    // TODO: test_upper_delta?
-    /*
-     * def test_upper_delta?
-     * assert_equal(false, @mod.upper_delta?([0]))
-     * assert_equal(true, @mod.upper_delta?([1]))
-     * assert_equal(true, @mod.upper_delta?([4]))
-     * assert_equal(false, @mod.upper_delta?([5]))
-     *
-     * assert_equal(true, @mod.upper_delta?([0, 0]))
-     * assert_equal(false, @mod.upper_delta?([0, 1]))
-     * assert_equal(false, @mod.upper_delta?([0, 2]))
-     * assert_equal(false, @mod.upper_delta?([0, 3]))
-     *
-     * assert_equal(false, @mod.upper_delta?([4, 0]))
-     * assert_equal(true, @mod.upper_delta?([4, 1]))
-     * assert_equal(true, @mod.upper_delta?([4, 2]))
-     * assert_equal(true, @mod.upper_delta?([4, 3]))
-     *
-     * assert_equal(false, @mod.upper_delta?([0, 0, 0]))
-     * assert_equal(true, @mod.upper_delta?([0, 0, 0, 0]))
-     * assert_equal(false, @mod.upper_delta?([0, 0, 0, 0, 0]))
-     * end
-     */
+    @Test
+    public void isUpperDelta()
+    {
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {0}));
+        assertEquals(true, Geometry.isUpperDelta(new byte[] {1}));
+        assertEquals(true, Geometry.isUpperDelta(new byte[] {4}));
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {5}));
+
+        assertEquals(true, Geometry.isUpperDelta(new byte[] {0, 0}));
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {0, 1}));
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {0, 2}));
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {0, 3}));
+
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {4, 0}));
+        assertEquals(true, Geometry.isUpperDelta(new byte[] {4, 1}));
+        assertEquals(true, Geometry.isUpperDelta(new byte[] {4, 2}));
+        assertEquals(true, Geometry.isUpperDelta(new byte[] {4, 3}));
+
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {0, 0, 0}));
+        assertEquals(true, Geometry.isUpperDelta(new byte[] {0, 0, 0, 0}));
+        assertEquals(false, Geometry.isUpperDelta(new byte[] {0, 0, 0, 0, 0}));
+    }
 
     // TODO: test_transform_world_delta
     /*
