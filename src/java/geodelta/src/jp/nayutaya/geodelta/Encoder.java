@@ -6,6 +6,11 @@ import java.util.List;
 
 public class Encoder
 {
+    private Encoder()
+    {
+        // nop
+    }
+
     public static char encodeWorldDelta(final byte id)
     {
         switch ( id )
@@ -27,7 +32,7 @@ public class Encoder
         case 7:
             return 'R';
         }
-        return '\0';
+        throw new IllegalArgumentException("id");
     }
 
     public static byte decodeWorldDelta(final char code)
