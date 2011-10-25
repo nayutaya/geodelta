@@ -100,19 +100,18 @@ public class GeometryTest
         assertEquals(0, Geometry.getLowerDeltaId(9.0, 6.0));
     }
 
-    // TODO: test_upper_world_delta?
-    /*
-     * def test_upper_world_delta?
-     * assert_equal(false, @mod.upper_world_delta?(0))
-     * assert_equal(true , @mod.upper_world_delta?(1))
-     * assert_equal(false, @mod.upper_world_delta?(2))
-     * assert_equal(true , @mod.upper_world_delta?(3))
-     * assert_equal(true , @mod.upper_world_delta?(4))
-     * assert_equal(false, @mod.upper_world_delta?(5))
-     * assert_equal(true , @mod.upper_world_delta?(6))
-     * assert_equal(false, @mod.upper_world_delta?(7))
-     * end
-     */
+    @Test
+    public void isUpperWorldDelta()
+    {
+        assertEquals(false, Geometry.isUpperWorldDelta(0));
+        assertEquals(true, Geometry.isUpperWorldDelta(1));
+        assertEquals(false, Geometry.isUpperWorldDelta(2));
+        assertEquals(true, Geometry.isUpperWorldDelta(3));
+        assertEquals(true, Geometry.isUpperWorldDelta(4));
+        assertEquals(false, Geometry.isUpperWorldDelta(5));
+        assertEquals(true, Geometry.isUpperWorldDelta(6));
+        assertEquals(false, Geometry.isUpperWorldDelta(7));
+    }
 
     // TODO: test_upper_sub_delta?
     /*

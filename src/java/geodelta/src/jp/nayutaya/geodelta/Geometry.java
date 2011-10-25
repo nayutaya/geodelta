@@ -87,13 +87,16 @@ public class Geometry
         return 0;
     }
 
-    // TODO:
-    /*
-     * # 指定されたワールドデルタが上向きかどうかを返す
-     * def self.upper_world_delta?(id)
-     * return (id % 2 == (id < 4 ? 1 : 0))
-     * end
+    /**
+     * 指定されたワールドデルタが上向きかどうかを返す
+     *
+     * @param id
+     * @return
      */
+    public static boolean isUpperWorldDelta(final int id)
+    {
+        return (id % 2 == (id < 4 ? 1 : 0));
+    }
 
     // TODO:
     /*
