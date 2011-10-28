@@ -17,7 +17,6 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       [4, [7, 3, 3]],
       [5, [3, 2, 2]],
     ]
-    p :center
     assert_equal(
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
@@ -32,7 +31,6 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       [4, [0, 1, 2]],
       [5, [0, 0, 3]],
     ]
-    p :upper
     assert_equal(
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
@@ -47,7 +45,6 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       [4, [1, 3, 0]],
       [5, [1, 3, 1]],
     ]
-    p :upper_right
     assert_equal(
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
@@ -62,7 +59,6 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       [4, [5, 2, 1]],
       [5, [5, 2, 0]],
     ]
-    p :lower_right
     assert_equal(
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
@@ -77,7 +73,6 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       [4, [4, 0, 2]],
       [5, [4, 1, 3]],
     ]
-    p :lower
     assert_equal(
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
@@ -92,7 +87,6 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       [4, [7, 0, 0]],
       [5, [7, 0, 1]],
     ]
-    p :lower_left
     assert_equal(
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
@@ -107,7 +101,6 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       [4, [3, 0, 1]],
       [5, [3, 0, 0]],
     ]
-    p :upper_left
     assert_equal(
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
