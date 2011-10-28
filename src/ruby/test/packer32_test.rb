@@ -131,4 +131,13 @@ class GeoDeltaPacker32Test < Test::Unit::TestCase
       [7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
       @packer.unpack(0b01111111111111111111111111111101))
   end
+
+  def test_pack_and_unpack
+    1000.times {
+      ids1   = [rand(8)] + ((13 - 1).times.map { rand(4) })[0, rand(13)]
+      packed = @packer.pack(ids1)
+      ids2   = @packer.unpack(packed)
+      assert_equal(ids1, ids2)
+    }
+  end
 end
