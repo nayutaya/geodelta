@@ -7,12 +7,10 @@ module GeoDelta
     def self.get_hex_position(ids)
       level = ids.size
       unit  = 12.0 / (2 ** (level - 1))
-      xu    = unit / 2.0
-      yu    = unit
 
       x, y = GeoDelta::Geometry.get_center(ids)
-      i = (x / xu).floor % 6
-      j = (y / yu).floor % 2
+      i = (x / unit * 2.0).floor % 6
+      j = (y / unit      ).floor % 2
 
       case [i, j]
       when [0, 0] then return 0
