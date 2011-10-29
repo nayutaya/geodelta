@@ -30,5 +30,28 @@ module GeoDelta
       else raise "BUG [#{i}, #{j}]"
       end
     end
+
+    def self.get_base_delta_ids(ids)
+      level = ids.size
+      unit  = 12.0 / (2 ** (level - 1))
+      x, y  = GeoDelta::Geometry.get_center(ids)
+      pos   = self.get_hex_position(ids)
+
+      ux = unit / 2.0
+      uy = unit / 3.0
+
+      sx, sy =
+        case pos
+        when 0 then [0.0, 0.0]
+        when 1 then [-ux, +uy]
+        when 2 then [-ux, +uy * 3]
+        when 3 then [0.0, +uy * 4]
+        when 4 then [+ux, +uy * 3]
+        when 5 then [+ux, +uy]
+        else raise "BUG [#{pos}]"
+        end
+
+      return GeoDelta::Geometry.get_delta_ids(x + sx, y + sy, ids.size)
+    end
   end
 end
