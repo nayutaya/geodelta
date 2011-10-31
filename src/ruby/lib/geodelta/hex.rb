@@ -5,14 +5,12 @@ require_relative "geometry"
 module GeoDelta
   module Hex
     def self.get_hex_position(ids)
-      level = ids.size
-      unit  = 12.0 / (2 ** (level - 1))
-
+      unit = get_unit(ids)
       x, y = GeoDelta::Geometry.get_center(ids)
-      i = (x / unit * 2.0).floor % 6
-      j = (y / unit      ).floor % 2
+      ix   = (x / unit * 2.0).floor % 6
+      iy   = (y / unit      ).floor % 2
 
-      case [i, j]
+      case [ix, iy]
       when [0, 0] then return 0
       when [0, 1] then return 3
       when [1, 0] then return 1
@@ -30,22 +28,20 @@ module GeoDelta
     end
 
     def self.get_base_delta_ids(ids)
-      level = ids.size
-      unit  = 12.0 / (2 ** (level - 1))
-      x, y  = GeoDelta::Geometry.get_center(ids)
-      pos   = self.get_hex_position(ids)
-
-      ux = unit / 2.0
-      uy = unit / 3.0
+      unit = get_unit(ids)
+      ux   = unit / 2.0
+      uy   = unit / 3.0
+      pos  = self.get_hex_position(ids)
+      x, y = GeoDelta::Geometry.get_center(ids)
 
       sx, sy =
         case pos
-        when 0 then [0.0, 0.0]
-        when 1 then [-ux, +uy]
+        when 0 then [0.0, 0.0    ]
+        when 1 then [-ux, +uy    ]
         when 2 then [-ux, +uy * 3]
         when 3 then [0.0, +uy * 4]
         when 4 then [+ux, +uy * 3]
-        when 5 then [+ux, +uy]
+        when 5 then [+ux, +uy    ]
         else raise "BUG [#{pos}]"
         end
 
@@ -53,22 +49,26 @@ module GeoDelta
     end
 
     def self.get_coordinates(base_ids)
-      level = base_ids.size
-      unit  = 12.0 / (2 ** (level - 1))
-      ux1   = unit / 2.0
-      ux2   = unit
-      uy    = unit
-
-      cx, cy = GeoDelta::Geometry.get_coordinates(base_ids)[1]
+      unit = get_unit(base_ids)
+      ux1  = unit / 2.0
+      ux2  = unit
+      uy3  = unit
+      x, y = GeoDelta::Geometry.get_coordinates(base_ids)[1]
 
       return [
-        [cx + ux1, cy + uy],
-        [cx + ux2, cy     ],
-        [cx + ux1, cy - uy],
-        [cx - ux1, cy - uy],
-        [cx - ux2, cy     ],
-        [cx - ux1, cy + uy],
+        [x + ux1, y + uy3],
+        [x + ux2, y      ],
+        [x + ux1, y - uy3],
+        [x - ux1, y - uy3],
+        [x - ux2, y      ],
+        [x - ux1, y + uy3],
       ]
     end
+
+    def self.get_unit(ids)
+      level = ids.size
+      return 12.0 / (2 ** (level - 1))
+    end
+    private_class_method :get_unit
   end
 end
