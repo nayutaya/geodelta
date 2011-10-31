@@ -161,4 +161,28 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       expected,
       expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
   end
+
+  def test_get_coordinates__level3_1
+    expected = [
+      [+1.5, +3.0],
+      [+3.0, +0.0],
+      [+1.5, -3.0],
+      [-1.5, -3.0],
+      [-3.0, +0.0],
+      [-1.5, +3.0],
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 1, 1]))
+  end
+
+  def test_get_coordinates__level3_2
+    expected = [
+      [ -7.5, -3.0],
+      [ -6.0, -6.0],
+      [ -7.5, -9.0],
+      [-10.5, -9.0],
+      [-12.0, -6.0],
+      [-10.5, -3.0],
+    ]
+    assert_equal(expected, @mod.get_coordinates([7, 2, 1]))
+  end
 end
