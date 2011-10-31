@@ -55,18 +55,19 @@ module GeoDelta
     def self.get_coordinates(base_ids)
       level = base_ids.size
       unit  = 12.0 / (2 ** (level - 1))
-      ux    = unit / 2.0
-      uy    = unit / 3.0
+      ux1   = unit / 2.0
+      ux2   = unit
+      uy    = unit
 
       cx, cy = GeoDelta::Geometry.get_coordinates(base_ids)[1]
 
       return [
-        [cx + ux,     cy + uy * 3],
-        [cx + ux * 2, cy         ],
-        [cx + ux,     cy - uy * 3],
-        [cx - ux,     cy - uy * 3],
-        [cx - ux * 2, cy         ],
-        [cx - ux,     cy + uy * 3],
+        [cx + ux1, cy + uy],
+        [cx + ux2, cy     ],
+        [cx + ux1, cy - uy],
+        [cx - ux1, cy - uy],
+        [cx - ux2, cy     ],
+        [cx - ux1, cy + uy],
       ]
     end
   end
