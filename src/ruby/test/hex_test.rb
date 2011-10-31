@@ -105,4 +105,84 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       expected,
       expected.map { |pos, ids| [@mod.get_hex_position(ids), ids] })
   end
+
+  def test_get_base_delta_ids__level3_center
+    expected = [
+      [[0, 1, 1], [0, 1, 1]],
+      [[0, 1, 1], [1, 3, 3]],
+      [[0, 1, 1], [5, 2, 2]],
+      [[0, 1, 1], [4, 1, 1]],
+      [[0, 1, 1], [7, 3, 3]],
+      [[0, 1, 1], [3, 2, 2]],
+    ]
+    assert_equal(
+      expected,
+      expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
+  end
+
+  def test_get_base_delta_ids__level3_upper
+    expected = [
+      [[0, 0, 0], [0, 0, 0]],
+      [[0, 0, 0], [0, 0, 2]],
+      [[0, 0, 0], [0, 1, 3]],
+      [[0, 0, 0], [0, 1, 0]],
+      [[0, 0, 0], [0, 1, 2]],
+      [[0, 0, 0], [0, 0, 3]],
+    ]
+    assert_equal(
+      expected,
+      expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
+  end
+
+  def test_get_base_delta_ids__level3_upper_right
+    expected = [
+      [[1, 0, 2], [1, 0, 2]],
+      [[1, 0, 2], [1, 0, 0]],
+      [[1, 0, 2], [1, 0, 1]],
+      [[1, 0, 2], [1, 3, 2]],
+      [[1, 0, 2], [1, 3, 0]],
+      [[1, 0, 2], [1, 3, 1]],
+    ]
+    assert_equal(
+      expected,
+      expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
+  end
+
+  def test_get_base_delta_ids__level4_center
+    expected = [
+      [[0, 1, 1, 1], [0, 1, 1, 1]],
+      [[0, 1, 1, 1], [1, 3, 3, 3]],
+      [[0, 1, 1, 1], [5, 2, 2, 2]],
+      [[0, 1, 1, 1], [4, 1, 1, 1]],
+      [[0, 1, 1, 1], [7, 3, 3, 3]],
+      [[0, 1, 1, 1], [3, 2, 2, 2]],
+    ]
+    assert_equal(
+      expected,
+      expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
+  end
+
+  def test_get_coordinates__level3_1
+    expected = [
+      [+1.5, +3.0],
+      [+3.0, +0.0],
+      [+1.5, -3.0],
+      [-1.5, -3.0],
+      [-3.0, +0.0],
+      [-1.5, +3.0],
+    ]
+    assert_equal(expected, @mod.get_coordinates([0, 1, 1]))
+  end
+
+  def test_get_coordinates__level3_2
+    expected = [
+      [ -7.5, -3.0],
+      [ -6.0, -6.0],
+      [ -7.5, -9.0],
+      [-10.5, -9.0],
+      [-12.0, -6.0],
+      [-10.5, -3.0],
+    ]
+    assert_equal(expected, @mod.get_coordinates([7, 2, 1]))
+  end
 end
