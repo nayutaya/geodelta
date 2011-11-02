@@ -45,6 +45,9 @@ module GeoDelta
         else raise "BUG [#{pos}]"
         end
 
+      return nil if x + sx > +12.0
+      return nil if y + sy > +12.0
+
       return GeoDelta::Geometry.get_delta_ids(x + sx, y + sy, ids.size)
     end
 

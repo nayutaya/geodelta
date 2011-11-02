@@ -148,6 +148,50 @@ class GeoDeltaHexTest < Test::Unit::TestCase
       expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
   end
 
+  def test_get_base_delta_ids__level3_center_top
+    expected = [
+      [nil, [0, 2, 3]],
+      [nil, [0, 0, 1]],
+      [nil, [0, 3, 2]],
+    ]
+    assert_equal(
+      expected,
+      expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
+  end
+
+  def test_get_base_delta_ids__level3_left_top
+    expected = [
+      [nil, [2, 3, 2]],
+      [nil, [2, 3, 0]],
+      [nil, [2, 3, 3]],
+    ]
+    assert_equal(
+      expected,
+      expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
+  end
+
+  def test_get_base_delta_ids__level3_right_top
+    expected = [
+      [nil, [2, 2, 2]],
+      [nil, [2, 2, 0]],
+      [nil, [2, 2, 3]],
+    ]
+    assert_equal(
+      expected,
+      expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
+  end
+
+  def test_get_base_delta_ids__level3_roundtrip
+    assert_equal(nil, @mod.get_base_delta_ids([2, 0, 1]))
+    assert_equal(nil, @mod.get_base_delta_ids([2, 0, 0]))
+    assert_equal(nil, @mod.get_base_delta_ids([2, 1, 0]))
+    assert_equal(nil, @mod.get_base_delta_ids([2, 1, 1]))
+    assert_equal(nil, @mod.get_base_delta_ids([6, 1, 1]))
+    assert_equal(nil, @mod.get_base_delta_ids([6, 1, 0]))
+    assert_equal(nil, @mod.get_base_delta_ids([6, 0, 0]))
+    assert_equal(nil, @mod.get_base_delta_ids([6, 0, 0]))
+  end
+
   def test_get_base_delta_ids__level4_center
     expected = [
       [[0, 1, 1, 1], [0, 1, 1, 1]],
