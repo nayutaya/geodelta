@@ -229,4 +229,10 @@ class GeoDeltaHexTest < Test::Unit::TestCase
     ]
     assert_equal(expected, @mod.get_coordinates([7, 2, 1]))
   end
+
+  def test_get_coordinates__level3_3
+    assert_equal(nil, @mod.get_coordinates([6, 2, 0]))
+    assert_equal(nil, @mod.get_coordinates([4, 0, 1]))
+    assert_equal(nil, @mod.get_coordinates([6, 3, 0]))
+  end
 end

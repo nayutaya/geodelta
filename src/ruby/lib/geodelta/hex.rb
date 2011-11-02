@@ -58,6 +58,8 @@ module GeoDelta
       uy3  = unit
       x, y = GeoDelta::Geometry.get_coordinates(base_ids)[1]
 
+      return nil if y - uy3 < -12.0
+
       return [
         [x + ux1, y + uy3],
         [x + ux2, y      ],
