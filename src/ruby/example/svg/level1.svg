@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="190mm" height="190mm" viewBox="-12.0 -12.0 30.0 24.0" xmlns="http://www.w3.org/2000/svg">
+ <polygon points="0.0,-0.0 -6.0,-12.0 6.0,-12.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="0.0" y="-8.0" font-size="4" text-anchor="middle" dominant-baseline="central">0</text>
+ <polygon points="6.0,-12.0 12.0,-0.0 0.0,-0.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="6.0" y="-4.0" font-size="4" text-anchor="middle" dominant-baseline="central">1</text>
+ <polygon points="12.0,-0.0 6.0,-12.0 18.0,-12.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="12.0" y="-8.0" font-size="4" text-anchor="middle" dominant-baseline="central">2</text>
+ <polygon points="-6.0,-12.0 0.0,-0.0 -12.0,-0.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="-6.0" y="-4.0" font-size="4" text-anchor="middle" dominant-baseline="central">3</text>
+ <polygon points="0.0,-0.0 6.0,12.0 -6.0,12.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="0.0" y="8.0" font-size="4" text-anchor="middle" dominant-baseline="central">4</text>
+ <polygon points="6.0,12.0 0.0,-0.0 12.0,-0.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="6.0" y="4.0" font-size="4" text-anchor="middle" dominant-baseline="central">5</text>
+ <polygon points="12.0,-0.0 18.0,12.0 6.0,12.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="12.0" y="8.0" font-size="4" text-anchor="middle" dominant-baseline="central">6</text>
+ <polygon points="-6.0,12.0 -12.0,-0.0 0.0,-0.0" fill="none" stroke="black" stroke-width="0.2" />
+ <text x="-6.0" y="4.0" font-size="4" text-anchor="middle" dominant-baseline="central">7</text>
+</svg>
