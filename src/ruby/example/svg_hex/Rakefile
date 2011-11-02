@@ -1,0 +1,168 @@
+# encoding: utf-8
+
+require "set"
+require "../../lib/geodelta"
+require "../../lib/geodelta/hex"
+
+def get_delta_coordinates(ids)
+  return GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+end
+
+def get_hex_coordinates(ids)
+  coord = GeoDelta::Hex.get_coordinates(ids)
+  return nil if coord.nil?
+  return coord.map { |x, y| [x, -y] }
+end
+
+def write_svg(io, deltas, hexes)
+  xs    = deltas.map { |delta| delta[:points].map { |x, y| x } }.flatten
+  xs   += hexes.map  { |hex  | hex[:points].map   { |x, y| x } }.flatten
+  ys    = deltas.map { |delta| delta[:points].map { |x, y| y } }.flatten
+  ys   += hexes.map  { |hex  | hex[:points].map   { |x, y| y } }.flatten
+  x_min = xs.min
+  x_max = xs.max
+  y_min = ys.min
+  y_max = ys.max
+  dx    = x_max - x_min
+  dy    = y_max - y_min
+
+  io.puts(%|<?xml version="1.0" encoding="utf-8"?>|)
+  io.puts(%|<svg width="190mm" height="190mm" viewBox="#{x_min} #{y_min} #{dx} #{dy}" xmlns="http://www.w3.org/2000/svg">|)
+
+  deltas.each { |delta|
+    polygon_points = delta[:points][1, 3].map { |x, y| "#{x},#{y}" }.join(" ")
+    polygon_color  = delta[:color]
+    polygon_width  = delta[:width]
+    io.puts(%| <polygon points="#{polygon_points}" fill="none" stroke="#{polygon_color}" stroke-width="#{polygon_width}" />|)
+
+    if delta[:label]
+      label_x    = delta[:points][0][0]
+      label_y    = delta[:points][0][1]
+      label_text = delta[:label][:text]
+      label_size = delta[:label][:size]
+      io.puts(%| <text x="#{label_x}" y="#{label_y}" font-size="#{label_size}" text-anchor="middle" dominant-baseline="central">#{label_text}</text>|)
+    end
+  }
+
+  hexes.each { |hex|
+    polygon_points = hex[:points].map { |x, y| "#{x},#{y}" }.join(" ")
+    polygon_color  = hex[:color]
+    polygon_width  = hex[:width]
+    io.puts(%| <polygon points="#{polygon_points}" fill="none" stroke="#{polygon_color}" stroke-width="#{polygon_width}" />|)
+  }
+
+  io.puts(%|</svg>|)
+end
+
+task :default => :all
+task :all => ["hex_level3.svg", "hex_level4.svg", "hex_level5.svg"]
+
+file "hex_level3.svg" => ["Rakefile"] do |t|
+  deltas       = []
+  hexes        = []
+  hex_base_ids = Set.new
+
+  (0..7).each { |id1|
+    (0..3).each { |id2|
+      (0..3).each { |id3|
+        ids = [id1, id2, id3]
+        deltas << {
+          :points => get_delta_coordinates(ids),
+          :color  => "black",
+          :width  => 0.025,
+          :label  => {
+            :text => ids.join(","),
+            :size => 0.75,
+          },
+        }
+        hex_base_ids << GeoDelta::Hex.get_base_delta_ids(ids)
+      }
+    }
+  }
+
+  hex_base_ids.to_a.compact.sort.each { |ids|
+    hexes << {
+      :points => get_hex_coordinates(ids) || next,
+      :color  => "black",
+      :width  => 0.1,
+    }
+  }
+
+  File.open(t.name, "wb") { |file|
+    write_svg(file, deltas, hexes)
+  }
+end
+
+file "hex_level4.svg" => ["Rakefile"] do |t|
+  deltas       = []
+  hexes        = []
+  hex_base_ids = Set.new
+
+  (0..7).each { |id1|
+    (0..3).each { |id2|
+      (0..3).each { |id3|
+        (0..3).each { |id4|
+          ids = [id1, id2, id3, id4]
+          deltas << {
+            :points => get_delta_coordinates(ids),
+            :color  => "black",
+            :width  => 0.025,
+            :label  => {
+              :text => ids.join(","),
+              :size => 0.25,
+            },
+          }
+          hex_base_ids << GeoDelta::Hex.get_base_delta_ids(ids)
+        }
+      }
+    }
+  }
+
+  hex_base_ids.to_a.compact.sort.each { |ids|
+    hexes << {
+      :points => get_hex_coordinates(ids) || next,
+      :color  => "black",
+      :width  => 0.1,
+    }
+  }
+
+  File.open(t.name, "wb") { |file|
+    write_svg(file, deltas, hexes)
+  }
+end
+
+file "hex_level5.svg" => ["Rakefile"] do |t|
+  deltas       = []
+  hexes        = []
+  hex_base_ids = Set.new
+
+  (0..7).each { |id1|
+    (0..3).each { |id2|
+      (0..3).each { |id3|
+        (0..3).each { |id4|
+          (0..3).each { |id5|
+            ids = [id1, id2, id3, id4, id5]
+            deltas << {
+              :points => get_delta_coordinates(ids),
+              :color  => "black",
+              :width  => 0.025,
+            }
+            hex_base_ids << GeoDelta::Hex.get_base_delta_ids(ids)
+          }
+        }
+      }
+    }
+  }
+
+  hex_base_ids.to_a.compact.sort.each { |ids|
+    hexes << {
+      :points => get_hex_coordinates(ids) || next,
+      :color  => "black",
+      :width  => 0.1,
+    }
+  }
+
+  File.open(t.name, "wb") { |file|
+    write_svg(file, deltas, hexes)
+  }
+end
