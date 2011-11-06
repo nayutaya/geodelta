@@ -10,17 +10,17 @@ module GeoDelta
       sx, sy = GeoDelta::Geometry.get_center(s_ids)
       ex, ey = GeoDelta::Geometry.get_center(e_ids)
 
-      #unit = 12.0 / (2 ** (level - 1))
-      sy += (GeoDelta::Geometry.upper_delta?(s_ids) ? +2.0 : -2.0)
-      ey += (GeoDelta::Geometry.upper_delta?(e_ids) ? +2.0 : -2.0)
-      dx = ex - sx
-      dy = sy - ey
+      unit = 12.0 / (2 ** (level - 1))
+      sy  += (unit / 6) * (GeoDelta::Geometry.upper_delta?(s_ids) ? +1 : -1)
+      ey  += (unit / 6) * (GeoDelta::Geometry.upper_delta?(e_ids) ? +1 : -1)
+      dx   = ex - sx
+      dy   = sy - ey
 
       ids = []
-      (0..((dy / 12.0).floor)).each { |j|
-        yy = sy - (12.0 * j)
-        (0..((dx / 6.0).floor)).each { |i|
-          xx = sx + (6.0 * i)
+      (0..((dy / unit).floor)).each { |j|
+        yy = sy - (unit * j)
+        (0..((dx / (unit / 2)).floor)).each { |i|
+          xx = sx + ((unit / 2) * i)
           ids << GeoDelta::Geometry.get_delta_ids(xx, yy, level)
         }
       }
