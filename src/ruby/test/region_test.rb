@@ -52,4 +52,16 @@ class GeoDeltaRegionTest < Test::Unit::TestCase
     ]
     assert_equal(expected, @mod.get_delta_ids_in_region(-3.0, +9.0, +3.0, -9.0, 2))
   end
+
+  def test_get_delta_ids_in_region__level3
+    expected = [
+      [0, 1, 1],
+      [1, 3, 3],
+      [3, 2, 2],
+      [4, 1, 1],
+      [5, 2, 2],
+      [7, 3, 3],
+    ]
+    assert_equal(expected, @mod.get_delta_ids_in_region(-1.5, +1.5, +1.5, -1.5, 3))
+  end
 end
