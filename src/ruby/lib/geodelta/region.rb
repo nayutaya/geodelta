@@ -13,6 +13,10 @@ module GeoDelta
       unit = 12.0 / (2 ** (level - 1))
       sy  += (unit / 6) * (GeoDelta::Geometry.upper_delta?(s_ids) ? +1 : -1)
       ey  += (unit / 6) * (GeoDelta::Geometry.upper_delta?(e_ids) ? +1 : -1)
+
+      sx = (x1 / (unit / 2)).floor * (unit / 2)
+      ex = (x2 / (unit / 2)).ceil  * (unit / 2)
+
       dx   = ex - sx
       dy   = sy - ey
 
