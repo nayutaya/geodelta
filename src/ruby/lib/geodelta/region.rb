@@ -14,13 +14,19 @@ module GeoDelta
       sy  += (unit / 6) * (GeoDelta::Geometry.upper_delta?(s_ids) ? +1 : -1)
       ey  += (unit / 6) * (GeoDelta::Geometry.upper_delta?(e_ids) ? +1 : -1)
 
-      sx = (x1 / (unit / 2)).floor * (unit / 2)
-      ex = (x2 / (unit / 2)).ceil  * (unit / 2)
+      ex += 24 if ex < sx
+#      sx = (x1 / (unit / 2)).floor * (unit / 2)
+#      ex = (x2 / (unit / 2)).ceil  * (unit / 2)
 
       dx   = ex - sx
       dy   = sy - ey
 
       ids = []
+      ids << s_ids
+      ids << e_ids
+      ids << GeoDelta::Geometry.get_delta_ids(x2, y1, level)
+      ids << GeoDelta::Geometry.get_delta_ids(x1, y2, level)
+
       (0..((dy / unit).floor)).each { |j|
         yy = sy - (unit * j)
         (0..((dx / (unit / 2)).floor)).each { |i|
