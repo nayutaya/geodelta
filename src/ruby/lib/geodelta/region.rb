@@ -43,21 +43,35 @@ module GeoDelta
           xx = xi * u2
           ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
         }
+      }#.call
+
+      # 下辺の一列
+      proc {
+        sx, y = GeoDelta::Geometry.get_center(sw)
+        ex, _ = GeoDelta::Geometry.get_center(se)
+
+        sxi = (sx / u2).floor
+        exi = (ex / u2).ceil
+
+        if GeoDelta::Geometry.upper_delta?(sw)
+          if x1 < sx && nw != sw
+            sxi -= 1
+          end
+        end
+
+        if GeoDelta::Geometry.upper_delta?(se)
+          if x2 > ex && ne != se
+            exi += 1
+          end
+        end
+
+        (sxi..exi).each { |xi|
+          xx = xi * u2
+          ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
+        }
       }.call
 
 =begin
-      # 下辺の一列
-      sx, y = GeoDelta::Geometry.get_center(sw)
-      ex, _ = GeoDelta::Geometry.get_center(se)
-
-      y += (unit / 6) * (GeoDelta::Geometry.upper_delta?(nw) ? +1 : -1)
-      dx = ex - sx
-
-      (0..((dx / (unit / 2)).floor)).each { |i|
-        xx = sx + ((unit / 2) * i)
-        ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
-      }
-
       yi1 = (y1 / unit).floor
       yi2 = (y2 / unit).ceil + 1
       xi1 = (x1 / (unit / 2)).floor
