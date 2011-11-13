@@ -43,7 +43,7 @@ module GeoDelta
           xx = xi * u2
           ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
         }
-      }#.call
+      }.call
 
       # 下辺の一列
       proc {
@@ -71,19 +71,19 @@ module GeoDelta
         }
       }.call
 
-=begin
-      yi1 = (y1 / unit).floor
-      yi2 = (y2 / unit).ceil + 1
-      xi1 = (x1 / (unit / 2)).floor
-      xi2 = (x2 / (unit / 2)).ceil
-      (yi2..yi1).each { |yi|
-        yy = yi * unit - (unit / 2)
-        (xi1..xi2).each { |xi|
-          xx = xi * (unit / 2)
-          ids << GeoDelta::Geometry.get_delta_ids(xx, yy, level)
+      proc {
+        syi = (y1 / u1).floor
+        eyi = (y2 / u1).ceil + 1
+        sxi = (x1 / u2).floor
+        exi = (x2 / u2).ceil
+        (eyi..syi).each { |yi|
+          yy = yi * unit - u2
+          (sxi..exi).each { |xi|
+            xx = xi * u2
+            ids << GeoDelta::Geometry.get_delta_ids(xx, yy, level)
+          }
         }
-      }
-=end
+      }.call
 
 =begin
       s_ids  = GeoDelta::Geometry.get_delta_ids(x1, y1, level)
