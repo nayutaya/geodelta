@@ -7,10 +7,6 @@ require_relative "example/svg"
 
 x1, x2 = [(rand * 24) - 12, (rand * 24) - 12].sort
 y1, y2 = [(rand * 24) - 12, (rand * 24) - 12].sort.reverse
-
-#x1, y1 = -4.0, +1.0
-#x2, y2 = +4.0, -1.0
-
 dx = x2 - x1
 dy = y1 - y2
 
@@ -35,7 +31,7 @@ svg.style(
   "text-anchor"       => "middle",
   "dominant-baseline" => "central")
 
-regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, 2)
+regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, 3)
 regional_ids.each { |ids|
   coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
@@ -44,7 +40,7 @@ regional_ids.each { |ids|
     "class"  => "a")
 }
 
-all_ids = GeoDelta::IdUtil.get_all_delta_ids(2)
+all_ids = GeoDelta::IdUtil.get_all_delta_ids(3)
 all_ids.each { |ids|
   coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
@@ -56,7 +52,7 @@ all_ids.each { |ids|
     ids.join(","),
     "x"         => coordinates[0][0],
     "y"         => coordinates[0][1],
-    "font-size" => "1.5")
+    "font-size" => "0.75")
 }
 
 svg.rect(
@@ -68,6 +64,6 @@ svg.rect(
   "stroke"       => "red",
   "stroke-width" => 0.1)
 
-File.open("random_region_level2.svg", "wb") { |file|
+File.open("random_region_level3.svg", "wb") { |file|
   svg.write(file)
 }
