@@ -8,15 +8,12 @@ module GeoDelta
       ids = []
       unit = 12.0 / (2 ** (level - 1))
 
-#=begin
       ids << (nw = GeoDelta::Geometry.get_delta_ids(x1, y1, level))
       ids << (ne = GeoDelta::Geometry.get_delta_ids(x2, y1, level))
       ids << (sw = GeoDelta::Geometry.get_delta_ids(x1, y2, level))
       ids << (se = GeoDelta::Geometry.get_delta_ids(x2, y2, level))
-#=end
 
-# 上辺の一列
-=begin
+      # 上辺の一列
       sx, y = GeoDelta::Geometry.get_center(nw)
       ex, _ = GeoDelta::Geometry.get_center(ne)
 
@@ -27,10 +24,8 @@ module GeoDelta
         xx = sx + ((unit / 2) * i)
         ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
       }
-=end
 
-# 下辺の一列
-=begin
+      # 下辺の一列
       sx, y = GeoDelta::Geometry.get_center(sw)
       ex, _ = GeoDelta::Geometry.get_center(se)
 
@@ -41,32 +36,17 @@ module GeoDelta
         xx = sx + ((unit / 2) * i)
         ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
       }
-=end
 
-# 左側の一列
-=begin
-      p syi = (y1 / unit).floor
-      p eyi = (y2 / unit).ceil + 1
-      p xx1  = (x1 / (unit / 2)).floor * (unit / 2)
-      p xx2  = (x1 / (unit / 2)).ceil  * (unit / 2)
-      (eyi..syi).each { |i|
-        yy = i * unit - (unit / 2)
-        ids << GeoDelta::Geometry.get_delta_ids(xx1, yy, level)
-        ids << GeoDelta::Geometry.get_delta_ids(xx2, yy, level)
-      }
-=end
-
-# 右側の一列
-      p syi = (y1 / unit).floor
-      p eyi = (y2 / unit).ceil + 1
-      p xxi3  = (x2 / (unit / 2)).floor
-      p xxi4  = (x2 / (unit / 2)).ceil
-      (eyi..syi).each { |i|
-        yy = i * unit - (unit / 2)
-        xx3 = xxi3 * (unit / 2)
-        xx4 = xxi4 * (unit / 2)
-        ids << GeoDelta::Geometry.get_delta_ids(xx3, yy, level)
-        ids << GeoDelta::Geometry.get_delta_ids(xx4, yy, level)
+      yi1 = (y1 / unit).floor
+      yi2 = (y2 / unit).ceil + 1
+      xi1 = (x1 / (unit / 2)).floor
+      xi2 = (x2 / (unit / 2)).ceil
+      (yi2..yi1).each { |yi|
+        yy = yi * unit - (unit / 2)
+        (xi1..xi2).each { |xi|
+          xx = xi * (unit / 2)
+          ids << GeoDelta::Geometry.get_delta_ids(xx, yy, level)
+        }
       }
 
 =begin
