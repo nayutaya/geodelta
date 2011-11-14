@@ -38,7 +38,7 @@ class GeoDeltaServer < Sinatra::Base
     return JSON.dump(response)
   end
 
-  get "/demo/delta_level.svg" do
+  get "/demo/delta.svg" do
     level = (params["level"] || "1").to_i
     font_size =
       case level
@@ -69,7 +69,7 @@ class GeoDeltaServer < Sinatra::Base
     return svg.to_s
   end
 
-  get "/demo/random_region_delta_level.svg" do
+  get "/demo/random_region_delta.svg" do
     level = (params["level"] || "1").to_i
     font_size =
       case level
