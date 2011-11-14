@@ -3,8 +3,10 @@
 require "sinatra/base"
 require "json"
 require "stringio"
+require "set"
 
 require_relative "../../lib/geodelta"
+require_relative "../../lib/geodelta/hex"
 require_relative "../../lib/geodelta/region"
 require_relative "../../lib/geodelta/id_util"
 require_relative "../svg"
@@ -63,6 +65,50 @@ class GeoDeltaServer < Sinatra::Base
         "x"         => coordinates[0][0],
         "y"         => coordinates[0][1],
         "font-size" => font_size)
+    }
+
+    content_type(svg.mime_type)
+    return svg.to_s
+  end
+
+  get "/demo/hex.svg" do
+    level = (params["level"] || "2").to_i
+    font_size =
+      case level
+      when 2 then 2.0
+      when 3 then 0.75
+      when 4 then 0.25
+      else raise("invalid level")
+      end
+
+    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-14.0 -14.0 32.0 28.0")
+    svg.style("polygon.delta", "fill" => "none", "stroke" => "black", "stroke-width" => "0.05")
+    svg.style("polygon.hex", "fill" => "none", "stroke" => "black", "stroke-width" => "0.2")
+    svg.style("text", "text-anchor" => "middle", "dominant-baseline" => "central")
+
+    all_delta_ids = GeoDelta::IdUtil.get_all_delta_ids(level)
+    all_hex_ids   = all_delta_ids.map { |ids| GeoDelta::Hex.get_base_delta_ids(ids) }.compact.sort.uniq
+
+    all_delta_ids.each { |ids|
+      coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+
+      svg.polygon(
+        "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
+        "class"  => "delta")
+      svg.text(
+        ids.join(","),
+        "x"         => coordinates[0][0],
+        "y"         => coordinates[0][1],
+        "font-size" => font_size)
+    }
+
+    all_hex_ids.each { |ids|
+      coordinates = GeoDelta::Hex.get_coordinates(ids) || next
+      coordinates.map! { |x, y| [x, -y] }
+
+      svg.polygon(
+        "points" => coordinates.map { |x, y| "#{x},#{y}" }.join(" "),
+        "class"  => "hex")
     }
 
     content_type(svg.mime_type)
