@@ -38,10 +38,18 @@ class GeoDeltaServer < Sinatra::Base
     return JSON.dump(response)
   end
 
-  get "/demo/delta_level2.svg" do
-    level = 2
+  get "/demo/delta_level.svg" do
+    level = (params["level"] || "1").to_i
+    font_size =
+      case level
+      when 1 then 4.0
+      when 2 then 2.0
+      when 3 then 0.75
+      when 4 then 0.25
+      else raise("invalid level")
+      end
 
-    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-16.0 -14.0 32.0 28.0")
+    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-14.0 -14.0 32.0 28.0")
     svg.style("polygon", "fill" => "none", "stroke" => "black", "stroke-width" => "0.05")
     svg.style("text", "text-anchor" => "middle", "dominant-baseline" => "central")
 
@@ -54,7 +62,7 @@ class GeoDeltaServer < Sinatra::Base
         ids.join(","),
         "x"         => coordinates[0][0],
         "y"         => coordinates[0][1],
-        "font-size" => "2.0")
+        "font-size" => font_size)
     }
 
     content_type(svg.mime_type)
