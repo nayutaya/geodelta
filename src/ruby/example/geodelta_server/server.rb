@@ -57,11 +57,8 @@ class GeoDeltaServer < Sinatra::Base
         "font-size" => "2.0")
     }
 
-    io = StringIO.new
-    svg.write(io)
-
-    content_type("image/svg+xml")
-    return io.string
+    content_type(svg.mime_type)
+    return svg.to_s
   end
 
   get "/demo/random_region_delta_level2.svg" do
@@ -92,7 +89,6 @@ class GeoDeltaServer < Sinatra::Base
       svg.polygon(
         "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
         "class"  => "b")
-
       svg.text(
         ids.join(","),
         "x"         => coordinates[0][0],
@@ -109,11 +105,8 @@ class GeoDeltaServer < Sinatra::Base
       "stroke"       => "red",
       "stroke-width" => 0.1)
 
-    io = StringIO.new
-    svg.write(io)
-
-    content_type("image/svg+xml")
-    return io.string
+    content_type(svg.mime_type)
+    return svg.to_s
   end
 
   get "/demo/random_region_delta_level3.svg" do
@@ -144,7 +137,6 @@ class GeoDeltaServer < Sinatra::Base
       svg.polygon(
         "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
         "class"  => "b")
-
       svg.text(
         ids.join(","),
         "x"         => coordinates[0][0],
@@ -161,11 +153,8 @@ class GeoDeltaServer < Sinatra::Base
       "stroke"       => "red",
       "stroke-width" => 0.1)
 
-    io = StringIO.new
-    svg.write(io)
-
-    content_type("image/svg+xml")
-    return io.string
+    content_type(svg.mime_type)
+    return svg.to_s
   end
 
   get "/demo/random_region_delta_level4.svg" do
@@ -196,7 +185,6 @@ class GeoDeltaServer < Sinatra::Base
       svg.polygon(
         "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
         "class"  => "b")
-
       svg.text(
         ids.join(","),
         "x"         => coordinates[0][0],
@@ -213,10 +201,7 @@ class GeoDeltaServer < Sinatra::Base
       "stroke"       => "red",
       "stroke-width" => 0.1)
 
-    io = StringIO.new
-    svg.write(io)
-
-    content_type("image/svg+xml")
-    return io.string
+    content_type(svg.mime_type)
+    return svg.to_s
   end
 end
