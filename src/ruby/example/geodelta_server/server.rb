@@ -73,6 +73,7 @@ class GeoDeltaServer < Sinatra::Base
     level = (params["level"] || "1").to_i
     font_size =
       case level
+      when 1 then 4.0
       when 2 then 2.0
       when 3 then 0.75
       when 4 then 0.25
@@ -84,7 +85,7 @@ class GeoDeltaServer < Sinatra::Base
     dx = x2 - x1
     dy = y1 - y2
 
-    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-16.0 -14.0 32.0 28.0")
+    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-14.0 -14.0 32.0 28.0")
     svg.style("polygon.a", "fill" => "green", "stroke" => "none")
     svg.style("polygon.b", "fill" => "none", "stroke" => "black", "stroke-width" => "0.05")
     svg.style("text", "text-anchor" => "middle", "dominant-baseline" => "central")
