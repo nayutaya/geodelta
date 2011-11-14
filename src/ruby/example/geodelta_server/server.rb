@@ -45,26 +45,10 @@ class GeoDeltaServer < Sinatra::Base
     dx = x2 - x1
     dy = y1 - y2
 
-    svg = SVG.new(
-      "width"   => "190mm",
-      "height"  => "190mm",
-      "viewBox" => "-16.0 -14.0 32.0 28.0")
-
-    svg.style(
-      "polygon.a",
-      "fill"   => "green",
-      "stroke" => "none")
-
-    svg.style(
-      "polygon.b",
-      "fill"         => "none",
-      "stroke"       => "black",
-      "stroke-width" => "0.05")
-
-    svg.style(
-      "text",
-      "text-anchor"       => "middle",
-      "dominant-baseline" => "central")
+    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-16.0 -14.0 32.0 28.0")
+    svg.style("polygon.a", "fill" => "green", "stroke" => "none")
+    svg.style("polygon.b", "fill" => "none", "stroke" => "black", "stroke-width" => "0.05")
+    svg.style("text", "text-anchor" => "middle", "dominant-baseline" => "central")
 
     regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, level)
     regional_ids.each { |ids|
@@ -113,26 +97,10 @@ class GeoDeltaServer < Sinatra::Base
     dx = x2 - x1
     dy = y1 - y2
 
-    svg = SVG.new(
-      "width"   => "190mm",
-      "height"  => "190mm",
-      "viewBox" => "-16.0 -14.0 32.0 28.0")
-
-    svg.style(
-      "polygon.a",
-      "fill"   => "green",
-      "stroke" => "none")
-
-    svg.style(
-      "polygon.b",
-      "fill"         => "none",
-      "stroke"       => "black",
-      "stroke-width" => "0.05")
-
-    svg.style(
-      "text",
-      "text-anchor"       => "middle",
-      "dominant-baseline" => "central")
+    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-16.0 -14.0 32.0 28.0")
+    svg.style("polygon.a", "fill" => "green", "stroke" => "none")
+    svg.style("polygon.b", "fill" => "none", "stroke" => "black", "stroke-width" => "0.05")
+    svg.style("text", "text-anchor" => "middle", "dominant-baseline" => "central")
 
     regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, level)
     regional_ids.each { |ids|
