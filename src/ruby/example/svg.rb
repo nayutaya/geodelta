@@ -1,5 +1,7 @@
 # encoding: utf-8
 
+require "stringio"
+
 class SVG
   def initialize(params = {})
     @params = params
@@ -51,6 +53,16 @@ class SVG
     io.puts(%|</svg>|)
 
     return self
+  end
+
+  def to_s
+    io = StringIO.new
+    self.write(io)
+    io.string
+  end
+
+  def mime_type
+    return "image/svg+xml"
   end
 
   def attrs(params)
