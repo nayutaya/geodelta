@@ -40,6 +40,45 @@ class GeoDeltaServer < Sinatra::Base
     return JSON.dump(response)
   end
 
+  get "/api/get_all_deltas" do
+    north = (params["north"] || "0.0").to_f
+    south = (params["south"] || "0.0").to_f
+    west  = (params["west"]  || "0.0").to_f
+    east  = (params["east"]  || "0.0").to_f
+    level = (params["level"] || "1"  ).to_i
+
+    x1 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(west))
+    y1 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(north))
+    x2 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(east))
+    y2 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(south))
+
+    ids_list = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, level)
+
+    response = {
+      "request" => {
+        "north" => north,
+        "south" => south,
+        "west"  => west,
+        "east"  => east,
+        "level" => level,
+      },
+      "response" => {
+        "deltas" => ids_list.map { |ids|
+          coordinates = GeoDelta.get_coordinates_from_ids(ids)
+          {
+            "code"        => GeoDelta::Encoder.encode(ids),
+            "coordinates" => coordinates.map { |lat, lng|
+              {"lat" => lat, "lng" => lng}
+            },
+          }
+        }
+      }
+    }
+
+    content_type(:json)
+    return JSON.dump(response)
+  end
+
   get "/demo/delta.svg" do
     level = (params["level"] || "1").to_i
     font_size =
