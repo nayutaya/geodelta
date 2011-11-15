@@ -51,6 +51,32 @@ module GeoDelta
       return GeoDelta::Geometry.get_delta_ids(x + sx, y + sy, ids.size)
     end
 
+    def self.get_part_delta_ids(base_ids)
+      level = base_ids.size
+      unit  = get_unit(base_ids)
+      x, y  = GeoDelta::Geometry.get_coordinates(base_ids)[1]
+
+      x1 = x - (unit / 2.0)
+      x2 = x
+      x3 = x + (unit / 2.0)
+
+      y1 = y + (unit * 2.0 / 3.0)
+      y2 = y + (unit / 3.0)
+      y3 = y - (unit / 3.0)
+      y4 = y - (unit * 2.0 / 3.0)
+
+      return [
+        [x2, y1],
+        [x3, y2],
+        [x3, y3],
+        [x2, y4],
+        [x1, y3],
+        [x1, y2],
+      ].map { |xx, yy|
+        GeoDelta::Geometry.get_delta_ids(xx, yy, level)
+      }
+    end
+
     def self.get_coordinates(base_ids)
       unit = get_unit(base_ids)
       ux1  = unit / 2.0

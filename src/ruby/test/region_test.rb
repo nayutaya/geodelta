@@ -25,6 +25,15 @@ class GeoDeltaRegionTest < Test::Unit::TestCase
       @mod.get_delta_ids_in_region(+1.0, +5.0, +5.0, -5.0, 1))
   end
 
+  def test_get_delta_ids_in_region__level1_roundtrip
+    assert_equal(
+      [[0], [1], [3]],
+      @mod.get_delta_ids_in_region(-6.0, +6.0, +6.0, +6.0, 1))
+    assert_equal(
+      [[0], [2], [3]],
+      @mod.get_delta_ids_in_region(+12.0, +6.0, -6.0, +6.0, 1))
+  end
+
   def test_get_delta_ids_in_region__level2
     expected = [
       [0, 1],
