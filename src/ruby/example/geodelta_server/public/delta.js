@@ -7,6 +7,19 @@ $(function() {
   });
 
   google.maps.event.addListener(map, "bounds_changed", function() {
-    console.debug("bounds_changed");
+    var bounds = map.getBounds();
+    var north_east = bounds.getNorthEast();
+    var south_west = bounds.getSouthWest();
+    var params = {
+      north: north_east.lat(),
+      south: south_west.lat(),
+      west: south_west.lng(),
+      east: north_east.lng(),
+      level: 4
+    };
+
+    $.get("/api/get_all_deltas", params, function(data) {
+      console.debug(data);
+    });
   });
 });
