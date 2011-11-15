@@ -1,8 +1,8 @@
 
 $(function() {
   var map = new google.maps.Map(document.getElementById("map_canvas"), {
-    zoom: 8,
-    center: new google.maps.LatLng(35.0, 135.0),
+    zoom: 10,
+    center: new google.maps.LatLng(34.68, 135.18),
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
@@ -17,7 +17,7 @@ $(function() {
       south: south_west.lat(),
       west: south_west.lng(),
       east: north_east.lng(),
-      level: 4
+      level: 11
     };
 
     $.get("/api/get_all_deltas", params, function(data) {
@@ -29,7 +29,6 @@ $(function() {
 
         if ( !cache[code] )
         {
-          console.debug("code:" + code + " cache miss");
           var coordinates = deltas[i].coordinates;
           var points = [
             new google.maps.LatLng(coordinates[1].lat, coordinates[1].lng),
@@ -42,7 +41,7 @@ $(function() {
             path: points,
             strokeColor: "#FF0000",
             strokeOpacity: 0.5,
-            strokeWeight: 2
+            strokeWeight: 1
           });
           cache[code] = path;
         }
