@@ -6,7 +6,7 @@ require "stringio"
 require "set"
 
 require_relative "../../lib/geodelta"
-require_relative "../../lib/geodelta/hex"
+require_relative "../../lib/geodelta/hex_geometry"
 require_relative "../../lib/geodelta/region"
 require_relative "../../lib/geodelta/id_util"
 require_relative "../svg"
@@ -96,7 +96,7 @@ class GeoDeltaServer < Sinatra::Base
 
     all_ids = GeoDelta::IdUtil.get_all_delta_ids(level)
     all_ids.each { |ids|
-      coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+      coordinates = GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
       svg.polygon("points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "))
       svg.text(
@@ -126,10 +126,10 @@ class GeoDeltaServer < Sinatra::Base
     svg.style("text", "text-anchor" => "middle", "dominant-baseline" => "central")
 
     all_delta_ids = GeoDelta::IdUtil.get_all_delta_ids(level)
-    all_hex_ids   = all_delta_ids.map { |ids| GeoDelta::Hex.get_base_delta_ids(ids) }.compact.sort.uniq
+    all_hex_ids   = all_delta_ids.map { |ids| GeoDelta::HexGeometry.get_base_delta_ids(ids) }.compact.sort.uniq
 
     all_delta_ids.each { |ids|
-      coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+      coordinates = GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
       svg.polygon(
         "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
@@ -142,7 +142,7 @@ class GeoDeltaServer < Sinatra::Base
     }
 
     all_hex_ids.each { |ids|
-      coordinates = GeoDelta::Hex.get_coordinates(ids) || next
+      coordinates = GeoDelta::HexGeometry.get_coordinates(ids) || next
       coordinates.map! { |x, y| [x, -y] }
 
       svg.polygon(
@@ -177,7 +177,7 @@ class GeoDeltaServer < Sinatra::Base
 
     regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, level)
     regional_ids.each { |ids|
-      coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+      coordinates = GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
       svg.polygon(
         "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
@@ -186,7 +186,7 @@ class GeoDeltaServer < Sinatra::Base
 
     all_ids = GeoDelta::IdUtil.get_all_delta_ids(level)
     all_ids.each { |ids|
-      coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+      coordinates = GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
       svg.polygon(
         "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
