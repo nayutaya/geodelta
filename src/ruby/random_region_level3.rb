@@ -33,7 +33,7 @@ svg.style(
 
 regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, 3)
 regional_ids.each { |ids|
-  coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+  coordinates = GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
   svg.polygon(
     "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
@@ -42,7 +42,7 @@ regional_ids.each { |ids|
 
 all_ids = GeoDelta::IdUtil.get_all_delta_ids(3)
 all_ids.each { |ids|
-  coordinates = GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+  coordinates = GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 
   svg.polygon(
     "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),

@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module GeoDelta
-  module Geometry
+  module DeltaGeometry
     # 指定された座標(x,y)に該当するワールドデルタの番号を返す
     # ただし、-12.0 <= x <= +12.0、-12.0 <= y <= +12.0
     def self.get_world_delta_id(x, y)

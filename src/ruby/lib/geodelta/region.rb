@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require_relative "geometry"
+require_relative "delta_geometry"
 
 module GeoDelta
   module Region
@@ -15,38 +15,38 @@ module GeoDelta
         u1   = unit
         u2   = unit / 2
 
-        nw = GeoDelta::Geometry.get_delta_ids(x1, y1, level)
-        ne = GeoDelta::Geometry.get_delta_ids(x2, y1, level)
-        sw = GeoDelta::Geometry.get_delta_ids(x1, y2, level)
-        se = GeoDelta::Geometry.get_delta_ids(x2, y2, level)
+        nw = GeoDelta::DeltaGeometry.get_delta_ids(x1, y1, level)
+        ne = GeoDelta::DeltaGeometry.get_delta_ids(x2, y1, level)
+        sw = GeoDelta::DeltaGeometry.get_delta_ids(x1, y2, level)
+        se = GeoDelta::DeltaGeometry.get_delta_ids(x2, y2, level)
 
         proc {
-          sx, y = GeoDelta::Geometry.get_center(nw)
-          ex, _ = GeoDelta::Geometry.get_center(ne)
+          sx, y = GeoDelta::DeltaGeometry.get_center(nw)
+          ex, _ = GeoDelta::DeltaGeometry.get_center(ne)
 
           sxi  = (sx / u2).floor
           exi  = (ex / u2).ceil
-          sxi -= 1 if !GeoDelta::Geometry.upper_delta?(nw) && x1 < sx && nw != sw
-          exi += 1 if !GeoDelta::Geometry.upper_delta?(ne) && x2 > ex && ne != se
+          sxi -= 1 if !GeoDelta::DeltaGeometry.upper_delta?(nw) && x1 < sx && nw != sw
+          exi += 1 if !GeoDelta::DeltaGeometry.upper_delta?(ne) && x2 > ex && ne != se
 
           (sxi..exi).each { |xi|
             xx = xi * u2
-            ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
+            ids << GeoDelta::DeltaGeometry.get_delta_ids(xx, y, level)
           }
         }.call
 
         proc {
-          sx, y = GeoDelta::Geometry.get_center(sw)
-          ex, _ = GeoDelta::Geometry.get_center(se)
+          sx, y = GeoDelta::DeltaGeometry.get_center(sw)
+          ex, _ = GeoDelta::DeltaGeometry.get_center(se)
 
           sxi  = (sx / u2).floor
           exi  = (ex / u2).ceil
-          sxi -= 1 if GeoDelta::Geometry.upper_delta?(sw) && x1 < sx && nw != sw
-          exi += 1 if GeoDelta::Geometry.upper_delta?(se) && x2 > ex && ne != se
+          sxi -= 1 if GeoDelta::DeltaGeometry.upper_delta?(sw) && x1 < sx && nw != sw
+          exi += 1 if GeoDelta::DeltaGeometry.upper_delta?(se) && x2 > ex && ne != se
 
           (sxi..exi).each { |xi|
             xx = xi * u2
-            ids << GeoDelta::Geometry.get_delta_ids(xx, y, level)
+            ids << GeoDelta::DeltaGeometry.get_delta_ids(xx, y, level)
           }
         }.call
 
@@ -59,7 +59,7 @@ module GeoDelta
             yy = yi * unit - u2
             (sxi..exi).each { |xi|
               xx = xi * u2
-              ids << GeoDelta::Geometry.get_delta_ids(xx, yy, level)
+              ids << GeoDelta::DeltaGeometry.get_delta_ids(xx, yy, level)
             }
           }
         }.call

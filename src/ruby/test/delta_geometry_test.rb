@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 require "test/unit"
-require_relative "../lib/geodelta/geometry"
+require_relative "../lib/geodelta/delta_geometry"
 
-class GeoDeltaGeometryTest < Test::Unit::TestCase
+class GeoDeltaDeltaGeometryTest < Test::Unit::TestCase
   def setup
-    @mod = GeoDelta::Geometry
+    @mod = GeoDelta::DeltaGeometry
   end
 
   def test_get_world_delta_id

@@ -6,7 +6,7 @@ task :default => :all
 task :all => ["level1.svg", "level2.svg", "level3.svg", "level4.svg"]
 
 def get_coordinates(ids)
-  return GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+  return GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 end
 
 def write_svg(deltas, io)

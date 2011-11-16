@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 require "test/unit"
-require_relative "../lib/geodelta/hex"
+require_relative "../lib/geodelta/hex_geometry"
 
-class GeoDeltaHexTest < Test::Unit::TestCase
+class GeoDeltaHexGeometryTest < Test::Unit::TestCase
   def setup
-    @mod = GeoDelta::Hex
+    @mod = GeoDelta::HexGeometry
   end
 
   def test_get_hex_position__level3_center

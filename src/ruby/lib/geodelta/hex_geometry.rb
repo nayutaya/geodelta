@@ -1,12 +1,12 @@
 # encoding: utf-8
 
-require_relative "geometry"
+require_relative "delta_geometry"
 
 module GeoDelta
-  module Hex
+  module HexGeometry
     def self.get_hex_position(ids)
       unit = get_unit(ids)
-      x, y = GeoDelta::Geometry.get_center(ids)
+      x, y = GeoDelta::DeltaGeometry.get_center(ids)
       ix   = (x / unit * 2.0).floor % 6
       iy   = (y / unit      ).floor % 2
 
@@ -32,7 +32,7 @@ module GeoDelta
       ux   = unit / 2.0
       uy   = unit / 3.0
       pos  = self.get_hex_position(ids)
-      x, y = GeoDelta::Geometry.get_center(ids)
+      x, y = GeoDelta::DeltaGeometry.get_center(ids)
 
       sx, sy =
         case pos
@@ -48,13 +48,13 @@ module GeoDelta
       return nil if x + sx > +12.0
       return nil if y + sy > +12.0
 
-      return GeoDelta::Geometry.get_delta_ids(x + sx, y + sy, ids.size)
+      return GeoDelta::DeltaGeometry.get_delta_ids(x + sx, y + sy, ids.size)
     end
 
     def self.get_part_delta_ids(base_ids)
       level = base_ids.size
       unit  = get_unit(base_ids)
-      x, y  = GeoDelta::Geometry.get_coordinates(base_ids)[1]
+      x, y  = GeoDelta::DeltaGeometry.get_coordinates(base_ids)[1]
 
       x1 = x - (unit / 2.0)
       x2 = x
@@ -73,7 +73,7 @@ module GeoDelta
         [x1, y3],
         [x1, y2],
       ].map { |xx, yy|
-        GeoDelta::Geometry.get_delta_ids(xx, yy, level)
+        GeoDelta::DeltaGeometry.get_delta_ids(xx, yy, level)
       }
     end
 
@@ -82,7 +82,7 @@ module GeoDelta
       ux1  = unit / 2.0
       ux2  = unit
       uy3  = unit
-      x, y = GeoDelta::Geometry.get_coordinates(base_ids)[1]
+      x, y = GeoDelta::DeltaGeometry.get_coordinates(base_ids)[1]
 
       return nil if y - uy3 < -12.0
 
