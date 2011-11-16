@@ -2,14 +2,14 @@
 
 require "set"
 require "../../lib/geodelta"
-require "../../lib/geodelta/hex"
+require "../../lib/geodelta/hex_geometry"
 
 def get_delta_coordinates(ids)
-  return GeoDelta::Geometry.get_coordinates(ids).map { |x, y| [x, -y] }
+  return GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
 end
 
 def get_hex_coordinates(ids)
-  coord = GeoDelta::Hex.get_coordinates(ids)
+  coord = GeoDelta::HexGeometry.get_coordinates(ids)
   return nil if coord.nil?
   return coord.map { |x, y| [x, -y] }
 end
@@ -75,7 +75,7 @@ file "hex_level3.svg" => ["Rakefile"] do |t|
             :size => 0.75,
           },
         }
-        hex_base_ids << GeoDelta::Hex.get_base_delta_ids(ids)
+        hex_base_ids << GeoDelta::HexGeometry.get_base_delta_ids(ids)
       }
     }
   }
@@ -112,7 +112,7 @@ file "hex_level4.svg" => ["Rakefile"] do |t|
               :size => 0.25,
             },
           }
-          hex_base_ids << GeoDelta::Hex.get_base_delta_ids(ids)
+          hex_base_ids << GeoDelta::HexGeometry.get_base_delta_ids(ids)
         }
       }
     }
@@ -147,7 +147,7 @@ file "hex_level5.svg" => ["Rakefile"] do |t|
               :color  => "black",
               :width  => 0.025,
             }
-            hex_base_ids << GeoDelta::Hex.get_base_delta_ids(ids)
+            hex_base_ids << GeoDelta::HexGeometry.get_base_delta_ids(ids)
           }
         }
       }
