@@ -92,7 +92,7 @@ class GeoDeltaRegionTest < Test::Unit::TestCase
       10.times {
         cx, cy = [x1 + (rand * (x2 - x1)), y1 - (rand * (y1 - y2))]
         regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, level)
-        test_ids     = GeoDelta::Geometry.get_delta_ids(cx, cy, level)
+        test_ids     = GeoDelta::DeltaGeometry.get_delta_ids(cx, cy, level)
         assert_equal(
           {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => true},
           {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => regional_ids.include?(test_ids)})
