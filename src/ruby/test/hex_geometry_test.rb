@@ -2,6 +2,7 @@
 
 require "test/unit"
 require_relative "../lib/geodelta/hex_geometry"
+require_relative "../lib/geodelta/id_util"
 
 class GeoDeltaHexGeometryTest < Test::Unit::TestCase
   def setup
@@ -272,5 +273,22 @@ class GeoDeltaHexGeometryTest < Test::Unit::TestCase
     assert_equal(nil, @mod.get_coordinates([6, 2, 0]))
     assert_equal(nil, @mod.get_coordinates([4, 0, 1]))
     assert_equal(nil, @mod.get_coordinates([6, 3, 0]))
+  end
+
+  def test_all_hexes__level1
+    all_ids   = GeoDelta::IdUtil.get_all_delta_ids(1)
+    all_hexes = all_ids.map { |ids| @mod.get_base_delta_ids(ids) }.compact.sort.uniq
+    assert_equal([[0]], all_hexes)
+  end
+
+  def test_all_hexes__level2
+    all_ids   = GeoDelta::IdUtil.get_all_delta_ids(2)
+    all_hexes = all_ids.map { |ids| @mod.get_base_delta_ids(ids) }.compact.sort.uniq
+    expected = [
+      [0, 1],
+      [2, 2],
+      [5, 3],
+    ]
+    assert_equal(expected, all_hexes)
   end
 end
