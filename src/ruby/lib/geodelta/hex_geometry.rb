@@ -46,7 +46,9 @@ module GeoDelta
         end
 
       return nil if x + sx > +12.0
+      return nil if x + sx < -12.0 + unit
       return nil if y + sy > +12.0
+      return nil if y + sy < -12.0 + unit
 
       return GeoDelta::DeltaGeometry.get_delta_ids(x + sx, y + sy, ids.size)
     end

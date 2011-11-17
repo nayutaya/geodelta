@@ -8,6 +8,7 @@ require "set"
 require_relative "../../lib/geodelta"
 require_relative "../../lib/geodelta/hex_geometry"
 require_relative "../../lib/geodelta/region"
+require_relative "../../lib/geodelta/hex_region"
 require_relative "../../lib/geodelta/id_util"
 require_relative "../svg"
 
@@ -68,6 +69,47 @@ class GeoDeltaServer < Sinatra::Base
           {
             "code"        => GeoDelta::Encoder.encode(ids),
             "coordinates" => coordinates.map { |lat, lng|
+              {"lat" => lat, "lng" => lng}
+            },
+          }
+        }
+      }
+    }
+
+    content_type(:json)
+    return JSON.dump(response)
+  end
+
+  get "/api/get_all_hexes" do
+    north = (params["north"] || "0.0").to_f
+    south = (params["south"] || "0.0").to_f
+    west  = (params["west"]  || "0.0").to_f
+    east  = (params["east"]  || "0.0").to_f
+    level = (params["level"] || "1"  ).to_i
+
+    x1 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(west))
+    y1 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(north))
+    x2 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(east))
+    y2 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(south))
+
+    ids_list = GeoDelta::HexRegion.get_base_delta_ids_in_region(x1, y1, x2, y2, level)
+
+    response = {
+      "request" => {
+        "north" => north,
+        "south" => south,
+        "west"  => west,
+        "east"  => east,
+        "level" => level,
+      },
+      "response" => {
+        "hexes" => ids_list.map { |ids|
+          coordinates = GeoDelta::HexGeometry.get_coordinates(ids)
+          {
+            "code"        => GeoDelta::Encoder.encode(ids),
+            "coordinates" => coordinates.map { |x, y|
+              lat = GeoDelta::Projector.my_to_lat(GeoDelta::Projector.ny_to_my(y))
+              lng = GeoDelta::Projector.mx_to_lng(GeoDelta::Projector.nx_to_mx(x))
               {"lat" => lat, "lng" => lng}
             },
           }
@@ -181,6 +223,63 @@ class GeoDeltaServer < Sinatra::Base
 
       svg.polygon(
         "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
+        "class"  => "a")
+    }
+
+    all_ids = GeoDelta::IdUtil.get_all_delta_ids(level)
+    all_ids.each { |ids|
+      coordinates = GeoDelta::DeltaGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
+
+      svg.polygon(
+        "points" => coordinates[1, 3].map { |x, y| "#{x},#{y}" }.join(" "),
+        "class"  => "b")
+      svg.text(
+        ids.join(","),
+        "x"         => coordinates[0][0],
+        "y"         => coordinates[0][1],
+        "font-size" => font_size)
+    }
+
+    svg.rect(
+      "x"            => x1,
+      "y"            => -y1,
+      "width"        => dx,
+      "height"       => dy,
+      "fill"         => "none",
+      "stroke"       => "red",
+      "stroke-width" => 0.1)
+
+    content_type(svg.mime_type)
+    return svg.to_s
+  end
+
+  get "/demo/random_region_hex.svg" do
+    level = (params["level"] || "1").to_i
+    font_size =
+      case level
+      when 1 then 4.0
+      when 2 then 2.0
+      when 3 then 0.75
+      when 4 then 0.25
+      else raise("invalid level")
+      end
+
+    x1, x2 = [(rand * 24) - 12, (rand * 24) - 12].sort
+    y1, y2 = [(rand * 24) - 12, (rand * 24) - 12].sort.reverse
+    dx = x2 - x1
+    dy = y1 - y2
+
+    svg = SVG.new("width" => "190mm", "height" => "190mm", "viewBox" => "-14.0 -14.0 32.0 28.0")
+    svg.style("polygon.a", "fill" => "green", "stroke" => "black", "stroke-width" => "0.2")
+    svg.style("polygon.b", "fill" => "none", "stroke" => "black", "stroke-width" => "0.05")
+    svg.style("text", "text-anchor" => "middle", "dominant-baseline" => "central")
+
+    regional_hexes = GeoDelta::HexRegion.get_base_delta_ids_in_region(x1, y1, x2, y2, level)
+    regional_hexes.each { |ids|
+      coordinates = GeoDelta::HexGeometry.get_coordinates(ids).map { |x, y| [x, -y] }
+
+      svg.polygon(
+        "points" => coordinates.map { |x, y| "#{x},#{y}" }.join(" "),
         "class"  => "a")
     }
 
