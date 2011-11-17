@@ -17,24 +17,27 @@ $(function() {
       south: south_west.lat(),
       west: south_west.lng(),
       east: north_east.lng(),
-      level: 11
+      level: 13
     };
 
-    $.get("/api/get_all_deltas", params, function(data) {
-      var deltas = data.response.deltas;
+    $.get("/api/get_all_hexes", params, function(data) {
+      var hexes = data.response.hexes;
 
-      for ( var i = 0, len = deltas.length; i < len; i++ )
+      for ( var i = 0, len = hexes.length; i < len; i++ )
       {
-        var code = deltas[i].code;
+        var code = hexes[i].code;
 
         if ( !cache[code] )
         {
-          var coordinates = deltas[i].coordinates;
+          var coordinates = hexes[i].coordinates;
           var points = [
+            new google.maps.LatLng(coordinates[0].lat, coordinates[0].lng),
             new google.maps.LatLng(coordinates[1].lat, coordinates[1].lng),
             new google.maps.LatLng(coordinates[2].lat, coordinates[2].lng),
             new google.maps.LatLng(coordinates[3].lat, coordinates[3].lng),
-            new google.maps.LatLng(coordinates[1].lat, coordinates[1].lng)
+            new google.maps.LatLng(coordinates[4].lat, coordinates[4].lng),
+            new google.maps.LatLng(coordinates[5].lat, coordinates[5].lng),
+            new google.maps.LatLng(coordinates[0].lat, coordinates[0].lng),
           ];
           var path = new google.maps.Polyline({
             map: map, 
