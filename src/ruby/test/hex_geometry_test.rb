@@ -207,6 +207,23 @@ class GeoDeltaHexGeometryTest < Test::Unit::TestCase
       expected.map { |pos, ids| [@mod.get_base_delta_ids(ids), ids] })
   end
 
+  def test_get_base_delta_ids__all_hexes_level1
+    all_ids   = GeoDelta::IdUtil.get_all_delta_ids(1)
+    all_hexes = all_ids.map { |ids| @mod.get_base_delta_ids(ids) }.compact.sort.uniq
+    assert_equal([[0]], all_hexes)
+  end
+
+  def test_get_base_delta_ids__all_hexes_level2
+    all_ids   = GeoDelta::IdUtil.get_all_delta_ids(2)
+    all_hexes = all_ids.map { |ids| @mod.get_base_delta_ids(ids) }.compact.sort.uniq
+    expected = [
+      [0, 1],
+      [2, 2],
+      [5, 3],
+    ]
+    assert_equal(expected, all_hexes)
+  end
+
   def test_get_part_delta_ids__level1
     assert_equal(
       [[0], [1], [5], [4], [7], [3]],
@@ -273,22 +290,5 @@ class GeoDeltaHexGeometryTest < Test::Unit::TestCase
     assert_equal(nil, @mod.get_coordinates([6, 2, 0]))
     assert_equal(nil, @mod.get_coordinates([4, 0, 1]))
     assert_equal(nil, @mod.get_coordinates([6, 3, 0]))
-  end
-
-  def test_all_hexes__level1
-    all_ids   = GeoDelta::IdUtil.get_all_delta_ids(1)
-    all_hexes = all_ids.map { |ids| @mod.get_base_delta_ids(ids) }.compact.sort.uniq
-    assert_equal([[0]], all_hexes)
-  end
-
-  def test_all_hexes__level2
-    all_ids   = GeoDelta::IdUtil.get_all_delta_ids(2)
-    all_hexes = all_ids.map { |ids| @mod.get_base_delta_ids(ids) }.compact.sort.uniq
-    expected = [
-      [0, 1],
-      [2, 2],
-      [5, 3],
-    ]
-    assert_equal(expected, all_hexes)
   end
 end
