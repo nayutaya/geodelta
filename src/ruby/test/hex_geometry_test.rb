@@ -224,6 +224,31 @@ class GeoDeltaHexGeometryTest < Test::Unit::TestCase
     assert_equal(expected, all_hexes)
   end
 
+  def test_get_base_delta_ids__all_hexes_level3
+    all_ids   = GeoDelta::IdUtil.get_all_delta_ids(3)
+    all_hexes = all_ids.map { |ids| @mod.get_base_delta_ids(ids) }.compact.sort.uniq
+    expected = [
+      [0, 0, 0],
+      [0, 1, 1],
+      [0, 2, 2],
+      [0, 3, 3],
+      [1, 0, 2],
+      [1, 2, 0],
+      [2, 2, 1],
+      [2, 3, 1],
+      [3, 0, 3],
+      [3, 3, 0],
+      [4, 1, 0],
+      [5, 1, 2],
+      [5, 2, 3],
+      [5, 3, 1],
+      [7, 1, 3],
+      [7, 2, 1],
+      [7, 3, 2],
+    ]
+    assert_equal(expected, all_hexes)
+  end
+
   def test_get_part_delta_ids__level1
     assert_equal(
       [[0], [1], [5], [4], [7], [3]],
