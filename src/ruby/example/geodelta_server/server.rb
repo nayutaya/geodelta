@@ -48,10 +48,8 @@ class GeoDeltaServer < Sinatra::Base
     east  = (params["east"]  || "0.0").to_f
     level = (params["level"] || "1"  ).to_i
 
-    x1 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(west))
-    y1 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(north))
-    x2 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(east))
-    y2 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(south))
+    x1, y1 = GeoDelta::Projector.latlng_to_nxy(north, west)
+    x2, y2 = GeoDelta::Projector.latlng_to_nxy(south, east)
 
     ids_list = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, level)
 
@@ -87,10 +85,8 @@ class GeoDeltaServer < Sinatra::Base
     east  = (params["east"]  || "0.0").to_f
     level = (params["level"] || "1"  ).to_i
 
-    x1 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(west))
-    y1 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(north))
-    x2 = GeoDelta::Projector.mx_to_nx(GeoDelta::Projector.lng_to_mx(east))
-    y2 = GeoDelta::Projector.my_to_ny(GeoDelta::Projector.lat_to_my(south))
+    x1, y1 = GeoDelta::Projector.latlng_to_nxy(north, west)
+    x2, y2 = GeoDelta::Projector.latlng_to_nxy(south, east)
 
     ids_list = GeoDelta::HexRegion.get_base_delta_ids_in_region(x1, y1, x2, y2, level)
 
@@ -108,8 +104,7 @@ class GeoDeltaServer < Sinatra::Base
           {
             "code"        => GeoDelta::Encoder.encode(ids),
             "coordinates" => coordinates.map { |x, y|
-              lat = GeoDelta::Projector.my_to_lat(GeoDelta::Projector.ny_to_my(y))
-              lng = GeoDelta::Projector.mx_to_lng(GeoDelta::Projector.nx_to_mx(x))
+              lat, lng = GeoDelta::Projector.nxy_to_latlng(x, y)
               {"lat" => lat, "lng" => lng}
             },
           }
