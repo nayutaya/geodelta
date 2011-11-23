@@ -63,5 +63,13 @@ module GeoDelta
     def self.nx_to_mx(ny)
       return ny / 12.0
     end
+
+    def self.lat_to_ny(lat)
+      return self.my_to_ny(self.lat_to_my(lat))
+    end
+
+    def self.lng_to_nx(lng)
+      return self.mx_to_nx(self.lng_to_mx(lng))
+    end
   end
 end
