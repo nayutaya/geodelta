@@ -86,5 +86,12 @@ module GeoDelta
         self.lat_to_ny(lat),
       ]
     end
+
+    def self.nxy_to_latlng(nx, ny)
+      return [
+        self.ny_to_lat(ny),
+        self.nx_to_lng(nx),
+      ]
+    end
   end
 end

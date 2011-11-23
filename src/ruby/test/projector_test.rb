@@ -114,6 +114,16 @@ class GeoDeltaProjectorTest < Test::Unit::TestCase
       @mod.latlng_to_nxy(-82.4674, -180.0))
   end
 
+  def test_nxy_to_latlng
+    assert_equal([0.0, 0.0], @mod.nxy_to_latlng(0.0, 0.0))
+    assert_equal(
+      [@mod.ny_to_lat(+12.0), @mod.nx_to_lng(+12.0)],
+      @mod.nxy_to_latlng(+12.0, +12.0))
+    assert_equal(
+      [@mod.ny_to_lat(-12.0), @mod.nx_to_lng(-12.0)],
+      @mod.nxy_to_latlng(-12.0, -12.0))
+  end
+
   def test_rush__lat
     1000.times {
       lat1 = rand * 180.0 - 90.0
