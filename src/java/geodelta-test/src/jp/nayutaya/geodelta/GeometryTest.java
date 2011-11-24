@@ -234,19 +234,18 @@ public class GeometryTest
         assertArrayEquals(new byte[] {1, 0, 0, 0}, Geometry.getDeltaIds(+6.0, +4.0, 4));
     }
 
-    // TODO: test_get_world_delta_center
-    /*
-     * def test_get_world_delta_center
-     * assert_equal([ +0.0, +8.0], @mod.get_world_delta_center(0))
-     * assert_equal([ +6.0, +4.0], @mod.get_world_delta_center(1))
-     * assert_equal([+12.0, +8.0], @mod.get_world_delta_center(2))
-     * assert_equal([+18.0, +4.0], @mod.get_world_delta_center(3))
-     * assert_equal([ +0.0, -8.0], @mod.get_world_delta_center(4))
-     * assert_equal([ +6.0, -4.0], @mod.get_world_delta_center(5))
-     * assert_equal([+12.0, -8.0], @mod.get_world_delta_center(6))
-     * assert_equal([+18.0, -4.0], @mod.get_world_delta_center(7))
-     * end
-     */
+    @Test
+    public void getWorldDeltaCenter()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getWorldDeltaCenter(0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.getWorldDeltaCenter(1), 1.0E-15);
+        assertArrayEquals(new double[] {+12.0, +8.0}, Geometry.getWorldDeltaCenter(2), 1.0E-15);
+        assertArrayEquals(new double[] {+18.0, +4.0}, Geometry.getWorldDeltaCenter(3), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -8.0}, Geometry.getWorldDeltaCenter(4), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -4.0}, Geometry.getWorldDeltaCenter(5), 1.0E-15);
+        assertArrayEquals(new double[] {+12.0, -8.0}, Geometry.getWorldDeltaCenter(6), 1.0E-15);
+        assertArrayEquals(new double[] {+18.0, -4.0}, Geometry.getWorldDeltaCenter(7), 1.0E-15);
+    }
 
     // TODO: test_get_upper_sub_delta_distance
     /*

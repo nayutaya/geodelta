@@ -213,21 +213,20 @@ public class Geometry
         return ids;
     }
 
-    // TODO:
-    /*
-     * def self.get_world_delta_center(id)
-     * case id
-     * when 0 then [ +0.0, +8.0]
-     * when 1 then [ +6.0, +4.0]
-     * when 2 then [+12.0, +8.0]
-     * when 3 then [+18.0, +4.0]
-     * when 4 then [ +0.0, -8.0]
-     * when 5 then [ +6.0, -4.0]
-     * when 6 then [+12.0, -8.0]
-     * when 7 then [+18.0, -4.0]
-     * end
-     * end
+    /**
+     * 指定されたワールドデルタIDの中心座標を取得する。
+     *
+     * @param id ワールドデルタID
+     * @return 中心座標(x, y)を含む配列
      */
+    /* package */static double[] getWorldDeltaCenter(final int id)
+    {
+        final double[] xs = {+0.0, +6.0, +12.0, +18.0, +0.0, +6.0, +12.0, +18.0};
+        final double[] ys = {+8.0, +4.0, +8.0, +4.0, -8.0, -4.0, -8.0, -4.0};
+        final double x = xs[id];
+        final double y = ys[id];
+        return new double[] {x, y};
+    }
 
     // TODO:
     /*
