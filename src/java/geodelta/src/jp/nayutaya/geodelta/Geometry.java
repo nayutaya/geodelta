@@ -258,16 +258,17 @@ public class Geometry
         return new double[] {dx, dy};
     }
 
-    // TODO:
-    /*
-     * def self.get_sub_delta_distance(parent_is_upper, id)
-     * if parent_is_upper
-     * return self.get_upper_sub_delta_distance(id)
-     * else
-     * return self.get_lower_sub_delta_distance(id)
-     * end
-     * end
+    /**
+     * 指定されたサブデルタIDの上位デルタからの距離を取得する。
+     *
+     * @param parentIsUpper 上位デルタが上向きか否か
+     * @param id サブデルタID
+     * @return 距離(dx, dy)を含む配列
      */
+    /* package */static double[] getSubDeltaDistance(final boolean parentIsUpper, final int id)
+    {
+        return (parentIsUpper ? getUpperSubDeltaDistance(id) : getLowerSubDeltaDistance(id));
+    }
 
     // TODO:
     /*

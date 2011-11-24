@@ -265,15 +265,14 @@ public class GeometryTest
         assertArrayEquals(new double[] {+3.0, +2.0}, Geometry.getLowerSubDeltaDistance(3), 1.0E-15);
     }
 
-    // TODO: test_get_sub_delta_distance
-    /*
-     * def test_get_sub_delta_distance
-     * assert_equal([+0.0, +4.0], @mod.get_sub_delta_distance(true, 1))
-     * assert_equal([+3.0, -2.0], @mod.get_sub_delta_distance(true, 2))
-     * assert_equal([+0.0, -4.0], @mod.get_sub_delta_distance(false, 1))
-     * assert_equal([-3.0, +2.0], @mod.get_sub_delta_distance(false, 2))
-     * end
-     */
+    @Test
+    public void getSubDeltaDistance()
+    {
+        assertArrayEquals(new double[] {+0.0, +4.0}, Geometry.getSubDeltaDistance(true, 1), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, -2.0}, Geometry.getSubDeltaDistance(true, 2), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -4.0}, Geometry.getSubDeltaDistance(false, 1), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, +2.0}, Geometry.getSubDeltaDistance(false, 2), 1.0E-15);
+    }
 
     // TODO: test_get_center__level1
     /*
