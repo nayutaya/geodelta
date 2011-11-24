@@ -97,4 +97,16 @@ public class Packer32Test
         assertEquals(12, Packer32.unpackLevel(0x0000000C));
         assertEquals(13, Packer32.unpackLevel(0x0000000D));
     }
+
+    @Test
+    public void pack()
+    {
+        assertEquals(0x00000001, Packer32.pack(new byte[] {0}));
+        assertEquals(0x70000001, Packer32.pack(new byte[] {7}));
+        assertEquals(0x04000002, Packer32.pack(new byte[] {0, 1}));
+        assertEquals(0x2C000002, Packer32.pack(new byte[] {2, 3}));
+        assertEquals(0x0000000D, Packer32.pack(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        assertEquals(0x1555555D, Packer32.pack(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
+        assertEquals(0x7FFFFFFD, Packer32.pack(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}));
+    }
 }

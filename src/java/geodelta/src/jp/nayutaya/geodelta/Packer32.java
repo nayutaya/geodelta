@@ -32,4 +32,16 @@ public class Packer32
     {
         return value & 0x0F;
     }
+
+    public static int pack(final byte[] ids)
+    {
+        final int wid = packWorldDelta(ids[0]);
+        int sid = 0;
+        for ( int i = 1, len = ids.length; i < len; i++ )
+        {
+            sid |= packSubDelta(i + 1, ids[i]);
+        }
+        final int level = packLevel(ids.length);
+        return wid | sid | level;
+    }
 }
