@@ -119,13 +119,14 @@ public class Packer64Test
         assertEquals(0x000000000000001CL, Packer64.packLevel(28));
     }
 
-    // TODO: test_unpackLevel
-    /*
-     * assertEquals( 1, Packer64.unpackLevel(0x0000000000000001L));
-     * assertEquals( 2, Packer64.unpackLevel(0x0000000000000002L));
-     * assertEquals(27, Packer64.unpackLevel(0x000000000000001BL));
-     * assertEquals(28, Packer64.unpackLevel(0x000000000000001CL));
-     */
+    @Test
+    public void unpackLevel()
+    {
+        assertEquals(1, Packer64.unpackLevel(0x0000000000000001L));
+        assertEquals(2, Packer64.unpackLevel(0x0000000000000002L));
+        assertEquals(27, Packer64.unpackLevel(0x000000000000001BL));
+        assertEquals(28, Packer64.unpackLevel(0x000000000000001CL));
+    }
 
     // TODO: test_pack
     /*

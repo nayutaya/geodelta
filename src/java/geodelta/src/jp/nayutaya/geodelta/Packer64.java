@@ -28,12 +28,10 @@ public class Packer64
         return level;
     }
 
-    // TODO: unpack_level
-    /*
-     * def unpack_level(level)
-     * return level & 0b11111
-     * end
-     */
+    /* package */static int unpackLevel(final long value)
+    {
+        return (int)(value & 0x1F);
+    }
 
     // TODO: pack
     /*
