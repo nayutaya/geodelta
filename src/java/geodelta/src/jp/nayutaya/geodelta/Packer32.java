@@ -7,4 +7,9 @@ public class Packer32
     {
         return id << 28;
     }
+
+    /* package */static byte unpackWorldDelta(final int value)
+    {
+        return (byte)((value >> 28) & 0x07);
+    }
 }
