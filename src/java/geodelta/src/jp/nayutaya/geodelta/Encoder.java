@@ -20,7 +20,7 @@ public class Encoder
      * @param id ワールドデルタID
      * @return ワールドデルタコード
      */
-    public static char encodeWorldDelta(final byte id)
+    /* package */static char encodeWorldDelta(final byte id)
     {
         switch ( id )
         {
@@ -50,7 +50,7 @@ public class Encoder
      * @param code ワールドデルタコード
      * @return ワールドデルタID
      */
-    public static byte decodeWorldDelta(final char code)
+    /* package */static byte decodeWorldDelta(final char code)
     {
         switch ( code )
         {
@@ -81,7 +81,7 @@ public class Encoder
      * @param ids サブデルタID列
      * @return サブデルタコード
      */
-    public static String encodeSubDelta(final byte[] ids)
+    /* package */static String encodeSubDelta(final byte[] ids)
     {
         return encodeSubDelta(ids, 0);
     }
@@ -182,7 +182,7 @@ public class Encoder
      * @param code サブデルタコード
      * @return サブデルタID列
      */
-    public static byte[] decodeSubDelta(final String code)
+    /* package */static byte[] decodeSubDelta(final String code)
     {
         final List<Byte> ids = new ArrayList<Byte>();
 
