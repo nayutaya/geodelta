@@ -1,6 +1,10 @@
 
 package jp.nayutaya.geodelta;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * 幾何的演算を行うクラス。
  */
@@ -270,34 +274,45 @@ public class Geometry
         return (parentIsUpper ? getUpperSubDeltaDistance(id) : getLowerSubDeltaDistance(id));
     }
 
-    // TODO:
-    /*
-     * def self.get_center(ids)
-     * xs, ys = [], []
-     * upper = nil
+    /**
+     * デルタID列から中心座標を取得する。
      *
-     * ids.each_with_index { |id, index|
-     * if index == 0
-     * x, y = self.get_world_delta_center(id)
-     * upper = self.upper_world_delta?(id)
-     * xs << x
-     * ys << y
-     * else
-     * x, y = self.get_sub_delta_distance(upper, id)
-     * upper = self.upper_sub_delta?(upper, id)
-     * xs << (x / (2 ** (index - 1)))
-     * ys << (y / (2 ** (index - 1)))
-     * end
-     * }
-     *
-     * x = xs.sort.inject(0.0, &:+)
-     * y = ys.sort.inject(0.0, &:+)
-     *
-     * x -= 24.0 if x > 12.0
-     *
-     * return [x, y]
-     * end
+     * @param ids デルタID列
+     * @return 中心座標(x, y)を含む配列
      */
+    public static double[] getCenter(final byte[] ids)
+    {
+        final List<Double> xs = new ArrayList<Double>();
+        final List<Double> ys = new ArrayList<Double>();
+
+        boolean upper = false;
+
+        for ( int i = 0, len = ids.length; i < len; i++ )
+        {
+            if ( i == 0 )
+            {
+                final double[] xy = getWorldDeltaCenter(ids[0]);
+                upper = isUpperWorldDelta(ids[0]);
+                xs.add(xy[0]);
+                ys.add(xy[1]);
+            }
+            else
+            {
+                final double[] xy = getSubDeltaDistance(upper, ids[i]);
+                upper = isUpperSubDelta(upper, ids[i]);
+                xs.add(xy[0] / Math.pow(2, (i - 1)));
+                ys.add(xy[1] / Math.pow(2, (i - 1)));
+            }
+        }
+
+        Collections.sort(xs);
+        Collections.sort(ys);
+
+        final double x = sum(xs);
+        final double y = sum(ys);
+
+        return new double[] {(x > 12.0 ? x - 24.0 : x), y};
+    }
 
     // TODO:
     /*
@@ -321,4 +336,14 @@ public class Geometry
      * end
      * end
      */
+
+    private static double sum(final List<Double> list)
+    {
+        double total = 0.0;
+        for ( final double value : list )
+        {
+            total += value;
+        }
+        return total;
+    }
 }

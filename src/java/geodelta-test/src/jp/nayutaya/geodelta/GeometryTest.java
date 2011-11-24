@@ -274,53 +274,50 @@ public class GeometryTest
         assertArrayEquals(new double[] {-3.0, +2.0}, Geometry.getSubDeltaDistance(false, 2), 1.0E-15);
     }
 
-    // TODO: test_get_center__level1
-    /*
-     * def test_get_center__level1
-     * assert_equal([+0.0, +8.0], @mod.get_center([0]))
-     * assert_equal([+6.0, +4.0], @mod.get_center([1]))
-     * assert_equal([+0.0, -8.0], @mod.get_center([4]))
-     * assert_equal([+6.0, -4.0], @mod.get_center([5]))
-     * end
-     */
+    @Test
+    public void getCenter__level1()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getCenter(new byte[] {0}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.getCenter(new byte[] {1}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -8.0}, Geometry.getCenter(new byte[] {4}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -4.0}, Geometry.getCenter(new byte[] {5}), 1.0E-15);
+    }
 
-    // TODO: test_get_center__level2
-    /*
-     * def test_get_center__level2
-     * assert_equal([ +0.0, +8.0], @mod.get_center([0, 0]))
-     * assert_equal([ +0.0, +4.0], @mod.get_center([0, 1]))
-     * assert_equal([ -3.0, +10.0], @mod.get_center([0, 2]))
-     * assert_equal([ +3.0, +10.0], @mod.get_center([0, 3]))
-     * assert_equal([ +6.0, +4.0], @mod.get_center([1, 0]))
-     * assert_equal([ +6.0, +8.0], @mod.get_center([1, 1]))
-     * assert_equal([ +9.0, +2.0], @mod.get_center([1, 2]))
-     * assert_equal([ +3.0, +2.0], @mod.get_center([1, 3]))
-     * assert_equal([ +9.0, +10.0], @mod.get_center([2, 2]))
-     * assert_equal([ -9.0, +2.0], @mod.get_center([3, 3]))
-     *
-     * assert_equal([ +0.0, -8.0], @mod.get_center([4, 0]))
-     * assert_equal([ +0.0, -4.0], @mod.get_center([4, 1]))
-     * assert_equal([ +3.0, -10.0], @mod.get_center([4, 2]))
-     * assert_equal([ -3.0, -10.0], @mod.get_center([4, 3]))
-     * assert_equal([ +6.0, -4.0], @mod.get_center([5, 0]))
-     * assert_equal([ +6.0, -8.0], @mod.get_center([5, 1]))
-     * assert_equal([ +3.0, -2.0], @mod.get_center([5, 2]))
-     * assert_equal([ +9.0, -2.0], @mod.get_center([5, 3]))
-     * assert_equal([ -9.0, -10.0], @mod.get_center([6, 2]))
-     * assert_equal([ -3.0, -2.0], @mod.get_center([7, 3]))
-     * end
-     */
+    @Test
+    public void getCenter__level2()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getCenter(new byte[] {0, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, +4.0}, Geometry.getCenter(new byte[] {0, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, +10.0}, Geometry.getCenter(new byte[] {0, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, +10.0}, Geometry.getCenter(new byte[] {0, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.getCenter(new byte[] {1, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.getCenter(new byte[] {1, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {+9.0, +2.0}, Geometry.getCenter(new byte[] {1, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, +2.0}, Geometry.getCenter(new byte[] {1, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+9.0, +10.0}, Geometry.getCenter(new byte[] {2, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-9.0, +2.0}, Geometry.getCenter(new byte[] {3, 3}), 1.0E-15);
 
-    // TODO: test_get_center__level3
-    /*
-     * def test_get_center__level3
-     * assert_equal([ +0.0, +8.0], @mod.get_center([0, 0, 0]))
-     * assert_equal([ +0.0, +10.0], @mod.get_center([0, 0, 1]))
-     * assert_equal([ -1.5, +5.0], @mod.get_center([0, 1, 2]))
-     * assert_equal([ -1.5, +11.0], @mod.get_center([0, 2, 3]))
-     * assert_equal([ +3.0, +10.0], @mod.get_center([0, 3, 0]))
-     * end
-     */
+        assertArrayEquals(new double[] {+0.0, -8.0}, Geometry.getCenter(new byte[] {4, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -4.0}, Geometry.getCenter(new byte[] {4, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, -10.0}, Geometry.getCenter(new byte[] {4, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, -10.0}, Geometry.getCenter(new byte[] {4, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -4.0}, Geometry.getCenter(new byte[] {5, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -8.0}, Geometry.getCenter(new byte[] {5, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, -2.0}, Geometry.getCenter(new byte[] {5, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {+9.0, -2.0}, Geometry.getCenter(new byte[] {5, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {-9.0, -10.0}, Geometry.getCenter(new byte[] {6, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, -2.0}, Geometry.getCenter(new byte[] {7, 3}), 1.0E-15);
+    }
+
+    @Test
+    public void getCenter__level3()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getCenter(new byte[] {0, 0, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, +10.0}, Geometry.getCenter(new byte[] {0, 0, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {-1.5, +5.0}, Geometry.getCenter(new byte[] {0, 1, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-1.5, +11.0}, Geometry.getCenter(new byte[] {0, 2, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, +10.0}, Geometry.getCenter(new byte[] {0, 3, 0}), 1.0E-15);
+    }
 
     // TODO: test_get_coordinates__level1
     /*
