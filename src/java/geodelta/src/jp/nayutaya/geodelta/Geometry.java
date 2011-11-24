@@ -1,6 +1,9 @@
 
 package jp.nayutaya.geodelta;
 
+/**
+ * 幾何的演算を行うクラス。
+ */
 public class Geometry
 {
     private Geometry()
@@ -9,11 +12,11 @@ public class Geometry
     }
 
     /**
-     * 指定された座標(x,y)に該当するワールドデルタの番号を返す。
+     * 指定された座標(x, y)に該当するワールドデルタIDを返す。
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x 正規化座標系におけるX
+     * @param y 正規化座標系におけるY
+     * @return ワールドデルタID
      */
     public static int getWorldDeltaId(final double x, final double y)
     {
@@ -40,11 +43,11 @@ public class Geometry
     }
 
     /**
-     * 指定された座標(x,y)に該当する上向きのサブデルタの番号を返す。
+     * 指定された座標(x, y)に該当する上向きのサブデルタIDを返す。
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x 正規化座標系におけるX
+     * @param y 正規化座標系におけるY
+     * @return サブデルタID
      */
     public static int getUpperDeltaId(final double x, final double y)
     {
@@ -64,11 +67,11 @@ public class Geometry
     }
 
     /**
-     * 指定された座標(x,y)に該当する下向きのサブデルタの番号を返す。
+     * 指定された座標(x, y)に該当する下向きのサブデルタの番号を返す。
      *
-     * @param x
-     * @param y
-     * @return
+     * @param x 正規化座標系におけるX
+     * @param y 正規化座標系におけるY
+     * @return サブデルタID
      */
     public static int getLowerDeltaId(final double x, final double y)
     {
@@ -88,10 +91,10 @@ public class Geometry
     }
 
     /**
-     * 指定されたワールドデルタが上向きかどうかを返す。
+     * 指定されたワールドデルタが上向きかどうか判定する。
      *
-     * @param id
-     * @return
+     * @param id ワールドデルタID
+     * @return 上向きであればtrueを、下向きであればfalseを返す
      */
     public static boolean isUpperWorldDelta(final int id)
     {
@@ -99,17 +102,23 @@ public class Geometry
     }
 
     /**
-     * 指定されたサブデルタが上向きかどうか返す。
+     * 指定されたサブデルタが上向きかどうか判定する。
      *
-     * @param upper
-     * @param id
-     * @return
+     * @param parentIsUpper 上位デルタが上向きか否か
+     * @param id サブデルタID
+     * @return 上向きであればtrueを、下向きであればfalseを返す
      */
     public static boolean isUpperSubDelta(final boolean parentIsUpper, final int id)
     {
         return (parentIsUpper ? (id != 0) : (id == 0));
     }
 
+    /**
+     * 指定されたデルタが上向きかどうか判定する。
+     *
+     * @param ids デルタID列
+     * @return 上向きであればtrueを、下向きであればfalseを返す
+     */
     public static boolean isUpperDelta(final byte[] ids)
     {
         boolean upper = false;
@@ -127,6 +136,14 @@ public class Geometry
         return upper;
     }
 
+    /**
+     * 指定された座標(x, y)を指定されたワールドデルタID内における正規化座標系に平行移動する。
+     *
+     * @param id ワールドデルタID
+     * @param x 正規化座標系におけるX
+     * @param y 正規化座標系におけるY
+     * @return 移動後の座標(x, y)を含む配列
+     */
     public static double[] transformWorldDelta(final int id, final double x, final double y)
     {
         final double[] xs = {+6.0, +0.0, -6.0, -12.0, +6.0, +0.0, -6.0, -12.0};
