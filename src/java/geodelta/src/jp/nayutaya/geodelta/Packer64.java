@@ -18,12 +18,10 @@ public class Packer64
         return (long)id << (57 - ((level - 2) * 2));
     }
 
-    // TODO: unpack_sub_delta
-    /*
-     * def unpack_sub_delta(level, value)
-     * return (value >> (57 - ((level - 2) * 2))) & 0b11
-     * end
-     */
+    /* package */static byte unpackSubDelta(final int level, final long value)
+    {
+        return (byte)((value >> (57 - ((level - 2) * 2))) & 0x03);
+    }
 
     // TODO: pack_level
     /*
