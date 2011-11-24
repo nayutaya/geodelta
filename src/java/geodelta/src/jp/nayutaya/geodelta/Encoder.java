@@ -116,8 +116,9 @@ public class Encoder
         }
         else
         {
-            if ( ids[start] == 0 )
+            switch ( ids[start] )
             {
+            case 0:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -129,9 +130,8 @@ public class Encoder
                 case 3:
                     return "5" + encodeSubDelta(ids, start + 2);
                 }
-            }
-            else if ( ids[start] == 1 )
-            {
+                break;
+            case 1:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -143,9 +143,8 @@ public class Encoder
                 case 3:
                     return "A" + encodeSubDelta(ids, start + 2);
                 }
-            }
-            else if ( ids[start] == 2 )
-            {
+                break;
+            case 2:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -157,9 +156,8 @@ public class Encoder
                 case 3:
                     return "E" + encodeSubDelta(ids, start + 2);
                 }
-            }
-            else if ( ids[start] == 3 )
-            {
+                break;
+            case 3:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -171,6 +169,7 @@ public class Encoder
                 case 3:
                     return "J" + encodeSubDelta(ids, start + 2);
                 }
+                break;
             }
         }
         return null;
