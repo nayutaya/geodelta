@@ -18,7 +18,7 @@ public class Geometry
      * @param y 正規化座標系におけるY
      * @return ワールドデルタID
      */
-    public static int getWorldDeltaId(final double x, final double y)
+    /* package */static int getWorldDeltaId(final double x, final double y)
     {
         final double xx = Utility.mod(x, 24);
         final double yy = Math.abs(y);
@@ -49,7 +49,7 @@ public class Geometry
      * @param y 正規化座標系におけるY
      * @return サブデルタID
      */
-    public static int getUpperDeltaId(final double x, final double y)
+    /* package */static int getUpperDeltaId(final double x, final double y)
     {
         if ( y < -2.0 * (x - 6.0) )
         {
@@ -73,7 +73,7 @@ public class Geometry
      * @param y 正規化座標系におけるY
      * @return サブデルタID
      */
-    public static int getLowerDeltaId(final double x, final double y)
+    /* package */static int getLowerDeltaId(final double x, final double y)
     {
         if ( y > -2.0 * (x - 12.0) )
         {
@@ -96,7 +96,7 @@ public class Geometry
      * @param id ワールドデルタID
      * @return 上向きであればtrueを、下向きであればfalseを返す
      */
-    public static boolean isUpperWorldDelta(final int id)
+    /* package */static boolean isUpperWorldDelta(final int id)
     {
         return (id % 2 == (id < 4 ? 1 : 0));
     }
@@ -108,7 +108,7 @@ public class Geometry
      * @param id サブデルタID
      * @return 上向きであればtrueを、下向きであればfalseを返す
      */
-    public static boolean isUpperSubDelta(final boolean parentIsUpper, final int id)
+    /* package */static boolean isUpperSubDelta(final boolean parentIsUpper, final int id)
     {
         return (parentIsUpper ? (id != 0) : (id == 0));
     }
@@ -144,7 +144,7 @@ public class Geometry
      * @param y 正規化座標系におけるY
      * @return 移動後の座標(x, y)を含む配列
      */
-    public static double[] transformWorldDelta(final int id, final double x, final double y)
+    /* package */static double[] transformWorldDelta(final int id, final double x, final double y)
     {
         final double[] xs = {+6.0, +0.0, -6.0, -12.0, +6.0, +0.0, -6.0, -12.0};
         final double[] ys = {+0.0, +0.0, +0.0, +0.0, +12.0, +12.0, +12.0, +12.0};
