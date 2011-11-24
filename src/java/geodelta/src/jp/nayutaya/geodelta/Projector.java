@@ -7,11 +7,11 @@ package jp.nayutaya.geodelta;
 public class Projector
 {
     /** 度をラジアンに変換するための係数 */
-    public static final double DEG2RAD = Math.PI / 180.0;
+    /* package */static final double DEG2RAD = Math.PI / 180.0;
     /** ラジアンを度に変換するための係数 */
-    public static final double RAD2DEG = 180.0 / Math.PI;
+    /* package */static final double RAD2DEG = 180.0 / Math.PI;
     /** 一辺を1.0とする正三角形の高さ */
-    public static final double DELTA_HEIGHT = Math.sqrt(0.75);
+    /* package */static final double DELTA_HEIGHT = Math.sqrt(0.75);
 
     private Projector()
     {
