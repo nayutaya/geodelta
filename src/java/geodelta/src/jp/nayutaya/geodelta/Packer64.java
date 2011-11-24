@@ -45,13 +45,15 @@ public class Packer64
         return wid | sid | level;
     }
 
-    // TODO: unpack
-    /*
-     * def unpack(value)
-     * level = self.unpack_level(value)
-     * wid = self.unpack_world_delta(value)
-     * sids = (level - 1).times.map { |i| self.unpack_sub_delta(i + 2, value) }
-     * return [wid] + sids
-     * end
-     */
+    public static byte[] unpack(final long value)
+    {
+        final int level = unpackLevel(value);
+        final byte[] ids = new byte[level];
+        ids[0] = unpackWorldDelta(value);
+        for ( int i = 1; i < level; i++ )
+        {
+            ids[i] = unpackSubDelta(i + 1, value);
+        }
+        return ids;
+    }
 }

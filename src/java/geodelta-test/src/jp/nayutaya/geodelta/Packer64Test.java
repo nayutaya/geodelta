@@ -1,6 +1,7 @@
 
 package jp.nayutaya.geodelta;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -143,37 +144,20 @@ public class Packer64Test
                 Packer64.pack(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}));
     }
 
-    // TODO: test_unpack
-    /*
-     * assertEquals(
-     * new byte[] {0},
-     *
-     * Packer64.unpack(0x0000000000000001L));
-     * assertEquals(
-     * new byte[] {7},
-     *
-     * Packer64.unpack(0x3800000000000001L));
-     * assertEquals(
-     * new byte[] {0, 1},
-     *
-     * Packer64.unpack(0x0200000000000002L));
-     * assertEquals(
-     * new byte[] {2, 3},
-     *
-     * Packer64.unpack(0x1600000000000002L));
-     * assertEquals(
-     * new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-     *
-     * Packer64.unpack(0x000000000000001CL));
-     * assertEquals(
-     * new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-     *
-     * Packer64.unpack(0x0AAAAAAAAAAAAABCL));
-     * assertEquals(
-     * new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-     *
-     * Packer64.unpack(0x3FFFFFFFFFFFFFFCL));
-     */
+    @Test
+    public void unpack()
+    {
+        assertArrayEquals(new byte[] {0}, Packer64.unpack(0x0000000000000001L));
+        assertArrayEquals(new byte[] {7}, Packer64.unpack(0x3800000000000001L));
+        assertArrayEquals(new byte[] {0, 1}, Packer64.unpack(0x0200000000000002L));
+        assertArrayEquals(new byte[] {2, 3}, Packer64.unpack(0x1600000000000002L));
+        assertArrayEquals(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                Packer64.unpack(0x000000000000001CL));
+        assertArrayEquals(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                Packer64.unpack(0x0AAAAAAAAAAAAABCL));
+        assertArrayEquals(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+                Packer64.unpack(0x3FFFFFFFFFFFFFFCL));
+    }
 
     // TODO: test_pack_and_unpack
     /*
