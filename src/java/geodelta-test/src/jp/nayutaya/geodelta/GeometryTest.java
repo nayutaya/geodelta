@@ -181,62 +181,58 @@ public class GeometryTest
         assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.transformLowerDelta(3, +9.0, +10.0), 1.0E-15);
     }
 
-    // TODO: test_get_delta_ids__level1
-    /*
-     * def test_get_delta_ids__level1
-     * assert_equal([0], @mod.get_delta_ids( 0.0, +6.0, 1))
-     * assert_equal([1], @mod.get_delta_ids( 6.0, +6.0, 1))
-     * assert_equal([2], @mod.get_delta_ids(12.0, +6.0, 1))
-     * assert_equal([3], @mod.get_delta_ids(18.0, +6.0, 1))
-     * assert_equal([4], @mod.get_delta_ids( 0.0, -6.0, 1))
-     * assert_equal([5], @mod.get_delta_ids( 6.0, -6.0, 1))
-     * assert_equal([6], @mod.get_delta_ids(12.0, -6.0, 1))
-     * assert_equal([7], @mod.get_delta_ids(18.0, -6.0, 1))
-     * end
-     */
+    @Test
+    public void getDeltaIds__level1()
+    {
+        assertArrayEquals(new byte[] {0}, Geometry.getDeltaIds(0.0, +6.0, 1));
+        assertArrayEquals(new byte[] {1}, Geometry.getDeltaIds(6.0, +6.0, 1));
+        assertArrayEquals(new byte[] {2}, Geometry.getDeltaIds(12.0, +6.0, 1));
+        assertArrayEquals(new byte[] {3}, Geometry.getDeltaIds(18.0, +6.0, 1));
+        assertArrayEquals(new byte[] {4}, Geometry.getDeltaIds(0.0, -6.0, 1));
+        assertArrayEquals(new byte[] {5}, Geometry.getDeltaIds(6.0, -6.0, 1));
+        assertArrayEquals(new byte[] {6}, Geometry.getDeltaIds(12.0, -6.0, 1));
+        assertArrayEquals(new byte[] {7}, Geometry.getDeltaIds(18.0, -6.0, 1));
+    }
 
-    // TODO: test_get_delta_ids__level2
-    /*
-     * def test_get_delta_ids__level2
-     * assert_equal([0, 0], @mod.get_delta_ids( +0.0, +8.0, 2))
-     * assert_equal([0, 1], @mod.get_delta_ids( +0.0, +4.0, 2))
-     * assert_equal([0, 2], @mod.get_delta_ids( -3.0, +10.0, 2))
-     * assert_equal([0, 3], @mod.get_delta_ids( +3.0, +10.0, 2))
-     * assert_equal([1, 0], @mod.get_delta_ids( +6.0, +4.0, 2))
-     * assert_equal([1, 1], @mod.get_delta_ids( +6.0, +8.0, 2))
-     * assert_equal([1, 2], @mod.get_delta_ids( +9.0, +2.0, 2))
-     * assert_equal([1, 3], @mod.get_delta_ids( +3.0, +2.0, 2))
-     * assert_equal([2, 2], @mod.get_delta_ids( +9.0, +10.0, 2))
-     * assert_equal([3, 3], @mod.get_delta_ids(+15.0, +2.0, 2))
-     *
-     * assert_equal([4, 0], @mod.get_delta_ids( +0.0, -8.0, 2))
-     * assert_equal([4, 1], @mod.get_delta_ids( +0.0, -4.0, 2))
-     * assert_equal([4, 2], @mod.get_delta_ids( +3.0, -10.0, 2))
-     * assert_equal([4, 3], @mod.get_delta_ids( -3.0, -10.0, 2))
-     * assert_equal([5, 0], @mod.get_delta_ids( +6.0, -4.0, 2))
-     * assert_equal([5, 1], @mod.get_delta_ids( +6.0, -8.0, 2))
-     * assert_equal([5, 2], @mod.get_delta_ids( +3.0, -2.0, 2))
-     * assert_equal([5, 3], @mod.get_delta_ids( +9.0, -2.0, 2))
-     * assert_equal([6, 2], @mod.get_delta_ids(+15.0, -10.0, 2))
-     * assert_equal([7, 3], @mod.get_delta_ids(+21.0, -2.0, 2))
-     * end
-     */
+    @Test
+    public void getDeltaIds__level2()
+    {
+        assertArrayEquals(new byte[] {0, 0}, Geometry.getDeltaIds(+0.0, +8.0, 2));
+        assertArrayEquals(new byte[] {0, 1}, Geometry.getDeltaIds(+0.0, +4.0, 2));
+        assertArrayEquals(new byte[] {0, 2}, Geometry.getDeltaIds(-3.0, +10.0, 2));
+        assertArrayEquals(new byte[] {0, 3}, Geometry.getDeltaIds(+3.0, +10.0, 2));
+        assertArrayEquals(new byte[] {1, 0}, Geometry.getDeltaIds(+6.0, +4.0, 2));
+        assertArrayEquals(new byte[] {1, 1}, Geometry.getDeltaIds(+6.0, +8.0, 2));
+        assertArrayEquals(new byte[] {1, 2}, Geometry.getDeltaIds(+9.0, +2.0, 2));
+        assertArrayEquals(new byte[] {1, 3}, Geometry.getDeltaIds(+3.0, +2.0, 2));
+        assertArrayEquals(new byte[] {2, 2}, Geometry.getDeltaIds(+9.0, +10.0, 2));
+        assertArrayEquals(new byte[] {3, 3}, Geometry.getDeltaIds(+15.0, +2.0, 2));
 
-    // TODO: test_get_delta_ids__level3
-    /*
-     * def test_get_delta_ids__level3
-     * assert_equal([0, 0, 0], @mod.get_delta_ids(+0.0, +8.0, 3))
-     * assert_equal([1, 0, 0], @mod.get_delta_ids(+6.0, +4.0, 3))
-     * end
-     */
+        assertArrayEquals(new byte[] {4, 0}, Geometry.getDeltaIds(+0.0, -8.0, 2));
+        assertArrayEquals(new byte[] {4, 1}, Geometry.getDeltaIds(+0.0, -4.0, 2));
+        assertArrayEquals(new byte[] {4, 2}, Geometry.getDeltaIds(+3.0, -10.0, 2));
+        assertArrayEquals(new byte[] {4, 3}, Geometry.getDeltaIds(-3.0, -10.0, 2));
+        assertArrayEquals(new byte[] {5, 0}, Geometry.getDeltaIds(+6.0, -4.0, 2));
+        assertArrayEquals(new byte[] {5, 1}, Geometry.getDeltaIds(+6.0, -8.0, 2));
+        assertArrayEquals(new byte[] {5, 2}, Geometry.getDeltaIds(+3.0, -2.0, 2));
+        assertArrayEquals(new byte[] {5, 3}, Geometry.getDeltaIds(+9.0, -2.0, 2));
+        assertArrayEquals(new byte[] {6, 2}, Geometry.getDeltaIds(+15.0, -10.0, 2));
+        assertArrayEquals(new byte[] {7, 3}, Geometry.getDeltaIds(+21.0, -2.0, 2));
+    }
 
-    // TODO: test_get_delta_ids__level4
-    /*
-     * def test_get_delta_ids__level4
-     * assert_equal([0, 0, 0, 0], @mod.get_delta_ids(+0.0, +8.0, 4))
-     * assert_equal([1, 0, 0, 0], @mod.get_delta_ids(+6.0, +4.0, 4))
-     * end
-     */
+    @Test
+    public void getDeltaIds__level3()
+    {
+        assertArrayEquals(new byte[] {0, 0, 0}, Geometry.getDeltaIds(+0.0, +8.0, 3));
+        assertArrayEquals(new byte[] {1, 0, 0}, Geometry.getDeltaIds(+6.0, +4.0, 3));
+    }
+
+    @Test
+    public void getDeltaIds__level4()
+    {
+        assertArrayEquals(new byte[] {0, 0, 0, 0}, Geometry.getDeltaIds(+0.0, +8.0, 4));
+        assertArrayEquals(new byte[] {1, 0, 0, 0}, Geometry.getDeltaIds(+6.0, +4.0, 4));
+    }
 
     // TODO: test_get_world_delta_center
     /*

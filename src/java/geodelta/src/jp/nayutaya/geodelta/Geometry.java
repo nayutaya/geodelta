@@ -39,7 +39,7 @@ public class Geometry
         {
             return base + 3;
         }
-        return 0;
+        return base;
     }
 
     /**
@@ -187,28 +187,31 @@ public class Geometry
         return new double[] {xx, yy};
     }
 
-    // TODO:
-    /*
-     * def self.get_delta_ids(x, y, level)
-     * ids = [self.get_world_delta_id(x, y)]
-     * xx, yy = self.transform_world_delta(ids.last, x, y)
-     * upper = self.upper_world_delta?(ids.last)
+    /**
+     * 指定された座標(x, y)に該当するデルタのデルタID列を取得する。
      *
-     * (level - 1).times {
-     * if upper
-     * ids << self.get_upper_delta_id(xx, yy)
-     * xx, yy = self.transform_upper_delta(ids.last, xx, yy)
-     * upper = self.upper_sub_delta?(upper, ids.last)
-     * else
-     * ids << self.get_lower_delta_id(xx, yy)
-     * xx, yy = self.transform_lower_delta(ids.last, xx, yy)
-     * upper = self.upper_sub_delta?(upper, ids.last)
-     * end
-     * }
-     *
-     * return ids
-     * end
+     * @param x 正規化座標系におけるX
+     * @param y 正規化座標系におけるY
+     * @param level デルタのレベル（1～）
+     * @return デルタID列
      */
+    public static byte[] getDeltaIds(final double x, final double y, final int level)
+    {
+        final byte[] ids = new byte[level];
+
+        ids[0] = (byte)getWorldDeltaId(x, y);
+        double[] xxyy = transformWorldDelta(ids[0], x, y);
+        boolean upper = isUpperWorldDelta(ids[0]);
+
+        for ( int i = 1; i < level; i++ )
+        {
+            ids[i] = (byte)(upper ? getUpperDeltaId(xxyy[0], xxyy[1]) : getLowerDeltaId(xxyy[0], xxyy[1]));
+            xxyy = (upper ? transformUpperDelta(ids[i], xxyy[0], xxyy[1]) : transformLowerDelta(ids[i], xxyy[0], xxyy[1]));
+            upper = isUpperSubDelta(upper, ids[i]);
+        }
+
+        return ids;
+    }
 
     // TODO:
     /*
