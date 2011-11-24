@@ -12,4 +12,9 @@ public class Packer64
     {
         return (byte)((value >> 59) & 0x07);
     }
+
+    /* package */static long packSubDelta(final int level, final byte id)
+    {
+        return (long)id << (57 - ((level - 2) * 2));
+    }
 }
