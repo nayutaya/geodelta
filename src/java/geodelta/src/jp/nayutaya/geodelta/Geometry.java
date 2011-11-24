@@ -170,14 +170,22 @@ public class Geometry
         return new double[] {xx, yy};
     }
 
-    // TODO:
-    /*
-     * def self.transform_lower_delta(id, x, y)
-     * xx = (x + [-3.0, -3.0, -0.0, -6.0][id]) * 2
-     * yy = (y + [-6.0, -0.0, -6.0, -6.0][id]) * 2
-     * return [xx, yy]
-     * end
+    /**
+     * 指定された座標(x, y)を指定されたサブデルタID内における正規化座標系に平行移動する。
+     *
+     * @param id サブデルタID
+     * @param x 正規化座標系におけるX
+     * @param y 正規化座標系におけるY
+     * @return 移動後の座標(x, y)を含む配列
      */
+    /* package */static double[] transformLowerDelta(final int id, final double x, final double y)
+    {
+        final double[] xs = {-3.0, -3.0, -0.0, -6.0};
+        final double[] ys = {-6.0, -0.0, -6.0, -6.0};
+        final double xx = (x + xs[id]) * 2;
+        final double yy = (y + ys[id]) * 2;
+        return new double[] {xx, yy};
+    }
 
     // TODO:
     /*
