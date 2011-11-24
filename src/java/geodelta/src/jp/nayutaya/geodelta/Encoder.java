@@ -55,8 +55,9 @@ public class Encoder
             return 6;
         case 'R':
             return 7;
+        default:
+            throw new IllegalArgumentException();
         }
-        return 0;
     }
 
     public static String encodeSubDelta(final byte[] ids)
