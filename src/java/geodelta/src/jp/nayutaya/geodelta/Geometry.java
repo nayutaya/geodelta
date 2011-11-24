@@ -152,8 +152,8 @@ public class Geometry
     {
         final double[] xs = {+6.0, +0.0, -6.0, -12.0, +6.0, +0.0, -6.0, -12.0};
         final double[] ys = {+0.0, +0.0, +0.0, +0.0, +12.0, +12.0, +12.0, +12.0};
-        final double xx = Utility.mod((x + xs[id]), 12);
-        final double yy = Utility.mod((y + ys[id]), 12);
+        final double xx = Utility.mod((x + xs[id]), 12.0);
+        final double yy = Utility.mod((y + ys[id]), 12.0);
         return new double[] {xx, yy};
     }
 
