@@ -228,29 +228,35 @@ public class Geometry
         return new double[] {x, y};
     }
 
-    // TODO:
-    /*
-     * def self.get_upper_sub_delta_distance(id)
-     * case id
-     * when 0 then [+0.0, +0.0]
-     * when 1 then [+0.0, +4.0]
-     * when 2 then [+3.0, -2.0]
-     * when 3 then [-3.0, -2.0]
-     * end
-     * end
+    /**
+     * 指定されたサブデルタIDの上向き上位デルタからの距離を取得する。
+     *
+     * @param id サブデルタID
+     * @return 距離(dx, dy)を含む配列
      */
+    /* package */static double[] getUpperSubDeltaDistance(final int id)
+    {
+        final double[] xs = {+0.0, +0.0, +3.0, -3.0};
+        final double[] ys = {+0.0, +4.0, -2.0, -2.0};
+        final double dx = xs[id];
+        final double dy = ys[id];
+        return new double[] {dx, dy};
+    }
 
-    // TODO:
-    /*
-     * def self.get_lower_sub_delta_distance(id)
-     * case id
-     * when 0 then [+0.0, +0.0]
-     * when 1 then [+0.0, -4.0]
-     * when 2 then [-3.0, +2.0]
-     * when 3 then [+3.0, +2.0]
-     * end
-     * end
+    /**
+     * 指定されたサブデルタIDの下向き上位デルタからの距離を取得する。
+     *
+     * @param id サブデルタID
+     * @return 距離(dx, dy)を含む配列
      */
+    /* package */static double[] getLowerSubDeltaDistance(final int id)
+    {
+        final double[] xs = {+0.0, +0.0, -3.0, +3.0};
+        final double[] ys = {+0.0, -4.0, +2.0, +2.0};
+        final double dx = xs[id];
+        final double dy = ys[id];
+        return new double[] {dx, dy};
+    }
 
     // TODO:
     /*
