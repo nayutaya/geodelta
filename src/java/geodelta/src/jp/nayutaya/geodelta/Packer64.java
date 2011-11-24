@@ -33,15 +33,17 @@ public class Packer64
         return (int)(value & 0x1F);
     }
 
-    // TODO: pack
-    /*
-     * def pack(ids)
-     * wid = self.pack_world_delta(ids[0])
-     * sids = ids[1..-1].each_with_index.map { |id, i| self.pack_sub_delta(i + 2, id) }.inject(0, &:+)
-     * level = self.pack_level(ids.size)
-     * return wid + sids + level
-     * end
-     */
+    public static long pack(final byte[] ids)
+    {
+        final long wid = packWorldDelta(ids[0]);
+        long sid = 0;
+        for ( int i = 1, len = ids.length; i < len; i++ )
+        {
+            sid |= packSubDelta(i + 1, ids[i]);
+        }
+        final long level = packLevel(ids.length);
+        return wid | sid | level;
+    }
 
     // TODO: unpack
     /*
