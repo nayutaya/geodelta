@@ -314,28 +314,33 @@ public class Geometry
         return new double[] {(x > 12.0 ? x - 24.0 : x), y};
     }
 
-    // TODO:
-    /*
-     * def self.get_coordinates(ids)
-     * cx, cy = self.get_center(ids)
-     * level = ids.size
-     * sign = (self.upper_delta?(ids) ? +1 : -1)
-     * scale = 1.0 / (2 ** (level - 1)) * sign
+    /**
+     * デルタID列からデルタの中心座標、頂点座標を取得する。
      *
-     * dx1 = 0.0
-     * dy1 = 8.0 * scale
-     * dx2 = 6.0 * scale
-     * dy2 = 4.0 * scale
-     *
-     * return [
-     * [cx, cy ],
-     * [cx + dx1, cy + dy1],
-     * [cx + dx2, cy - dy2],
-     * [cx - dx2, cy - dy2],
-     * ]
-     * end
-     * end
+     * @param ids デルタID列
+     * @return 4点の座標(x, y)を含む配列
      */
+    public static double[][] getCoordinates(final byte[] ids)
+    {
+        final double[] cxy = getCenter(ids);
+        final int level = ids.length;
+        final int sign = (isUpperDelta(ids) ? +1 : -1);
+        final double scale = 1.0 / Math.pow(2, level - 1) * sign;
+
+        final double dx1 = 0.0;
+        final double dy1 = 8.0 * scale;
+        final double dx2 = 6.0 * scale;
+        final double dy2 = 4.0 * scale;
+
+        // @formatter:off
+        return new double[][] {
+            {cxy[0], cxy[1]},
+            {cxy[0] + dx1, cxy[1] + dy1},
+            {cxy[0] + dx2, cxy[1] - dy2},
+            {cxy[0] - dx2, cxy[1] - dy2},
+        };
+        // @formatter:on
+    }
 
     private static double sum(final List<Double> list)
     {

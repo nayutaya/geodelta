@@ -319,132 +319,157 @@ public class GeometryTest
         assertArrayEquals(new double[] {+3.0, +10.0}, Geometry.getCenter(new byte[] {0, 3, 0}), 1.0E-15);
     }
 
-    // TODO: test_get_coordinates__level1
-    /*
-     * def test_get_coordinates__level1
-     * expected = [
-     * [+0.0, +8.0],
-     * [+0.0, +0.0], # +0.0, -8.0
-     * [-6.0, +12.0], # -6.0, +4.0
-     * [+6.0, +12.0], # +6.0, +4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0]))
-     *
-     * expected = [
-     * [ +6.0, +4.0],
-     * [ +6.0, +12.0], # +0.0, +8.0
-     * [+12.0, +0.0], # +6.0, -4.0
-     * [ +0.0, +0.0], # -6.0, -4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([1]))
-     *
-     * expected = [
-     * [+0.0, -8.0],
-     * [+0.0, +0.0], # +0.0, +8.0
-     * [+6.0, -12.0], # +6.0, -4.0
-     * [-6.0, -12.0], # -6.0, -4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4]))
-     *
-     * expected = [
-     * [ +6.0, -4.0],
-     * [ +6.0, -12.0], # +0.0, -8.0
-     * [ +0.0, +0.0], # -6.0, +4.0
-     * [+12.0, +0.0], # +6.0, +4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([5]))
-     * end
-     */
+    @Test
+    public void getCoordinates__level1()
+    {
+        // @formatter:off
+        final double[][] expected1 = {
+            {+0.0,  +8.0},
+            {+0.0,  +0.0}, // +0.0, -8.0
+            {-6.0, +12.0}, // -6.0, +4.0
+            {+6.0, +12.0}, // +6.0, +4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected1, Geometry.getCoordinates(new byte[] {0}), 1.0E-15);
 
-    // TODO: test_get_coordinates__level2
-    /*
-     * def test_get_coordinates__level2
-     * expected = [
-     * [ +0.0, +8.0],
-     * [ +0.0, +12.0], # +0.0, +4.0
-     * [ +3.0, +6.0], # +3.0, -2.0
-     * [ -3.0, +6.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 0]))
-     *
-     * expected = [
-     * [ +0.0, +4.0],
-     * [ +0.0, +0.0], # +0.0, -4.0
-     * [ -3.0, +6.0], # -3.0, +2.0
-     * [ +3.0, +6.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 1]))
-     *
-     * expected = [
-     * [ -3.0, +10.0],
-     * [ -3.0, +6.0], # +0.0, -4.0
-     * [ -6.0, +12.0], # -3.0, +2.0
-     * [ +0.0, +12.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 2]))
-     *
-     * expected = [
-     * [ +3.0, +10.0],
-     * [ +3.0, +6.0], # +0.0, -4.0
-     * [ +0.0, +12.0], # -3.0, +2.0
-     * [ +6.0, +12.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 3]))
-     *
-     * expected = [
-     * [ +0.0, -8.0],
-     * [ +0.0, -12.0], # +0.0, -4.0
-     * [ -3.0, -6.0], # -3.0, +2.0
-     * [ +3.0, -6.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 0]))
-     *
-     * expected = [
-     * [ +0.0, -4.0],
-     * [ +0.0, +0.0], # +0.0, +4.0
-     * [ +3.0, -6.0], # +3.0, -2.0
-     * [ -3.0, -6.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 1]))
-     *
-     * expected = [
-     * [ +3.0, -10.0],
-     * [ +3.0, -6.0], # +0.0, +4.0
-     * [ +6.0, -12.0], # +3.0, -2.0
-     * [ +0.0, -12.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 2]))
-     *
-     * expected = [
-     * [ -3.0, -10.0],
-     * [ -3.0, -6.0], # +0.0, +4.0
-     * [ +0.0, -12.0], # +3.0, -2.0
-     * [ -6.0, -12.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 3]))
-     * end
-     */
+        // @formatter:off
+        final double[][] expected2 = {
+            { +6.0,  +4.0},
+            { +6.0, +12.0}, // +0.0, +8.0
+            {+12.0,  +0.0}, // +6.0, -4.0
+            { +0.0,  +0.0}, // -6.0, -4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected2, Geometry.getCoordinates(new byte[] {1}), 1.0E-15);
 
-    // TODO: test_get_coordinates__level3
-    /*
-     * def test_get_coordinates__level3
-     * expected = [
-     * [ +0.0, +8.0],
-     * [ +0.0, +6.0], # +0.0, -2.0
-     * [ -1.5, +9.0], # -1.5, +1.0
-     * [ +1.5, +9.0], # +1.5, +1.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 0, 0]))
-     *
-     * expected = [
-     * [ -1.5, +5.0],
-     * [ -1.5, +3.0], # +0.0, -2.0
-     * [ -3.0, +6.0], # -1.5, +1.0
-     * [ +0.0, +6.0], # +1.5, +1.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 1, 2]))
-     * end
-     */
+        // @formatter:off
+        final double[][] expected3 = {
+            {+0.0,  -8.0},
+            {+0.0,  +0.0}, // +0.0, +8.0
+            {+6.0, -12.0}, // +6.0, -4.0
+            {-6.0, -12.0}, // -6.0, -4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected3, Geometry.getCoordinates(new byte[] {4}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected4 = {
+            { +6.0,  -4.0},
+            { +6.0, -12.0}, // +0.0, -8.0
+            { +0.0,  +0.0}, // -6.0, +4.0
+            {+12.0,  +0.0}, // +6.0, +4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected4, Geometry.getCoordinates(new byte[] {5}), 1.0E-15);
+    }
+
+    @Test
+    public void getCoordinates__level2()
+    {
+        // @formatter:off
+        final double[][] expected1 = {
+            { +0.0,  +8.0},
+            { +0.0, +12.0}, // +0.0, +4.0
+            { +3.0,  +6.0}, // +3.0, -2.0
+            { -3.0,  +6.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected1, Geometry.getCoordinates(new byte[] {0, 0}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected2 = {
+            { +0.0, +4.0},
+            { +0.0, +0.0}, // +0.0, -4.0
+            { -3.0, +6.0}, // -3.0, +2.0
+            { +3.0, +6.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected2, Geometry.getCoordinates(new byte[] {0, 1}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected3 = {
+            { -3.0, +10.0},
+            { -3.0,  +6.0}, // +0.0, -4.0
+            { -6.0, +12.0}, // -3.0, +2.0
+            { +0.0, +12.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected3, Geometry.getCoordinates(new byte[] {0, 2}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected4 = {
+            { +3.0, +10.0},
+            { +3.0,  +6.0}, // +0.0, -4.0
+            { +0.0, +12.0}, // -3.0, +2.0
+            { +6.0, +12.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected4, Geometry.getCoordinates(new byte[] {0, 3}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected5 = {
+            { +0.0,  -8.0},
+            { +0.0, -12.0}, // +0.0, -4.0
+            { -3.0,  -6.0}, // -3.0, +2.0
+            { +3.0,  -6.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected5, Geometry.getCoordinates(new byte[] {4, 0}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected6 = {
+            { +0.0, -4.0},
+            { +0.0, +0.0}, // +0.0, +4.0
+            { +3.0, -6.0}, // +3.0, -2.0
+            { -3.0, -6.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected6, Geometry.getCoordinates(new byte[] {4, 1}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected7 = {
+            { +3.0, -10.0},
+            { +3.0,  -6.0}, // +0.0, +4.0
+            { +6.0, -12.0}, // +3.0, -2.0
+            { +0.0, -12.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected7, Geometry.getCoordinates(new byte[] {4, 2}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected8 = {
+            { -3.0, -10.0},
+            { -3.0,  -6.0}, // +0.0, +4.0
+            { +0.0, -12.0}, // +3.0, -2.0
+            { -6.0, -12.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected8, Geometry.getCoordinates(new byte[] {4, 3}), 1.0E-15);
+    }
+
+    @Test
+    public void getCoordinates__level3()
+    {
+        // @formatter:off
+        final double[][] expected1 = {
+            { +0.0, +8.0},
+            { +0.0, +6.0}, // +0.0, -2.0
+            { -1.5, +9.0}, // -1.5, +1.0
+            { +1.5, +9.0}, // +1.5, +1.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected1, Geometry.getCoordinates(new byte[] {0, 0, 0}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected = {
+            { -1.5, +5.0},
+            { -1.5, +3.0}, // +0.0, -2.0
+            { -3.0, +6.0}, // -1.5, +1.0
+            { +0.0, +6.0}, // +1.5, +1.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected, Geometry.getCoordinates(new byte[] {0, 1, 2}), 1.0E-15);
+    }
 
     // TODO: test_rush__center
     /*
@@ -462,4 +487,13 @@ public class GeometryTest
      * }
      * end
      */
+
+    private void assertArrayArrayEquals(final double[][] expecteds, final double[][] actuals, final double delta)
+    {
+        assertEquals(expecteds.length, actuals.length);
+        for ( int i = 0, len = expecteds.length; i < len; i++ )
+        {
+            assertArrayEquals(expecteds[i], actuals[i], delta);
+        }
+    }
 }
