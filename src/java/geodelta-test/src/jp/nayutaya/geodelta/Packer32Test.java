@@ -88,4 +88,13 @@ public class Packer32Test
         assertEquals(0x0000000C, Packer32.packLevel(12));
         assertEquals(0x0000000D, Packer32.packLevel(13));
     }
+
+    @Test
+    public void unpackLevel()
+    {
+        assertEquals(1, Packer32.unpackLevel(0x00000001));
+        assertEquals(2, Packer32.unpackLevel(0x00000002));
+        assertEquals(12, Packer32.unpackLevel(0x0000000C));
+        assertEquals(13, Packer32.unpackLevel(0x0000000D));
+    }
 }

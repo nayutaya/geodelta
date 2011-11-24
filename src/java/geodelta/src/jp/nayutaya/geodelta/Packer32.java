@@ -27,4 +27,9 @@ public class Packer32
     {
         return level;
     }
+
+    /* package */static int unpackLevel(final int value)
+    {
+        return value & 0x0F;
+    }
 }
