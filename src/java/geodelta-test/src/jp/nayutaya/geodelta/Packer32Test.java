@@ -79,4 +79,13 @@ public class Packer32Test
         assertEquals(3, Packer32.unpackSubDelta(12, 0x000000C0));
         assertEquals(3, Packer32.unpackSubDelta(13, 0x00000030));
     }
+
+    @Test
+    public void packLevel()
+    {
+        assertEquals(0x00000001, Packer32.packLevel(1));
+        assertEquals(0x00000002, Packer32.packLevel(2));
+        assertEquals(0x0000000C, Packer32.packLevel(12));
+        assertEquals(0x0000000D, Packer32.packLevel(13));
+    }
 }

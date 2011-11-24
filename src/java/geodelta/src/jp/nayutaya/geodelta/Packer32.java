@@ -22,4 +22,9 @@ public class Packer32
     {
         return (byte)((value >> (26 - ((level - 2) * 2))) & 0x03);
     }
+
+    /* package */static int packLevel(final int level)
+    {
+        return level;
+    }
 }
