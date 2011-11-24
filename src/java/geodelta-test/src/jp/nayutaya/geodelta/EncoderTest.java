@@ -43,8 +43,18 @@ public class EncoderTest
         assertEquals(5, Encoder.decodeWorldDelta('T'));
         assertEquals(6, Encoder.decodeWorldDelta('S'));
         assertEquals(7, Encoder.decodeWorldDelta('R'));
-        // TODO: assert_raise(RuntimeError) { @mod.decode_world_delta("z") }
-        // TODO: assert_raise(RuntimeError) { @mod.decode_world_delta("A") }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void decodeWorldDelta__invlidParam1()
+    {
+        Encoder.decodeWorldDelta('z');
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void decodeWorldDelta__invalidParam2()
+    {
+        Encoder.decodeWorldDelta('A');
     }
 
     // TODO: test_encode_and_decode_world_delta

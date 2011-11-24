@@ -4,6 +4,9 @@ package jp.nayutaya.geodelta;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * デルタID列とGeoDeltaコードを相互変換するクラス。
+ */
 public class Encoder
 {
     private Encoder()
@@ -11,7 +14,13 @@ public class Encoder
         // nop
     }
 
-    public static char encodeWorldDelta(final byte id)
+    /**
+     * ワールドデルタIDをエンコードする。
+     *
+     * @param id ワールドデルタID
+     * @return ワールドデルタコード
+     */
+    /* package */static char encodeWorldDelta(final byte id)
     {
         switch ( id )
         {
@@ -35,7 +44,13 @@ public class Encoder
         throw new IllegalArgumentException("id");
     }
 
-    public static byte decodeWorldDelta(final char code)
+    /**
+     * ワールドデルタコードをデコードする。
+     *
+     * @param code ワールドデルタコード
+     * @return ワールドデルタID
+     */
+    /* package */static byte decodeWorldDelta(final char code)
     {
         switch ( code )
         {
@@ -55,15 +70,29 @@ public class Encoder
             return 6;
         case 'R':
             return 7;
+        default:
+            throw new IllegalArgumentException();
         }
-        return 0;
     }
 
-    public static String encodeSubDelta(final byte[] ids)
+    /**
+     * サブデルタID列をエンコードする。
+     *
+     * @param ids サブデルタID列
+     * @return サブデルタコード
+     */
+    /* package */static String encodeSubDelta(final byte[] ids)
     {
         return encodeSubDelta(ids, 0);
     }
 
+    /**
+     * サブデルタID列をエンコードする。
+     *
+     * @param ids サブデルタID列
+     * @param start エンコード開始位置
+     * @return サブデルタコード
+     */
     private static String encodeSubDelta(final byte[] ids, final int start)
     {
         final int rest = ids.length - start;
@@ -87,8 +116,9 @@ public class Encoder
         }
         else
         {
-            if ( ids[start] == 0 )
+            switch ( ids[start] )
             {
+            case 0:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -100,9 +130,8 @@ public class Encoder
                 case 3:
                     return "5" + encodeSubDelta(ids, start + 2);
                 }
-            }
-            else if ( ids[start] == 1 )
-            {
+                break;
+            case 1:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -114,9 +143,8 @@ public class Encoder
                 case 3:
                     return "A" + encodeSubDelta(ids, start + 2);
                 }
-            }
-            else if ( ids[start] == 2 )
-            {
+                break;
+            case 2:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -128,9 +156,8 @@ public class Encoder
                 case 3:
                     return "E" + encodeSubDelta(ids, start + 2);
                 }
-            }
-            else if ( ids[start] == 3 )
-            {
+                break;
+            case 3:
                 switch ( ids[start + 1] )
                 {
                 case 0:
@@ -142,12 +169,19 @@ public class Encoder
                 case 3:
                     return "J" + encodeSubDelta(ids, start + 2);
                 }
+                break;
             }
         }
         return null;
     }
 
-    public static byte[] decodeSubDelta(final String code)
+    /**
+     * サブデルタコードをデコードする。
+     *
+     * @param code サブデルタコード
+     * @return サブデルタID列
+     */
+    /* package */static byte[] decodeSubDelta(final String code)
     {
         final List<Byte> ids = new ArrayList<Byte>();
 
@@ -241,6 +275,12 @@ public class Encoder
         return ret;
     }
 
+    /**
+     * デルタID列をエンコードする。
+     *
+     * @param ids デルタID列
+     * @return GeoDeltaコード
+     */
     public static String encode(final byte[] ids)
     {
         final StringBuilder sb = new StringBuilder();
@@ -249,6 +289,12 @@ public class Encoder
         return sb.toString();
     }
 
+    /**
+     * GeoDeltaコードをデコードする。
+     *
+     * @param code GeoDeltaコード
+     * @return デルタID列
+     */
     public static byte[] decode(final String code)
     {
         final List<Byte> ids = new ArrayList<Byte>();

@@ -163,301 +163,313 @@ public class GeometryTest
         assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(7, +18.0, -8.0), 1.0E-15);
     }
 
-    // TODO: test_transform_upper_delta
-    /*
-     * def test_transform_upper_delta
-     * assert_equal([+6.0, +8.0], @mod.transform_upper_delta(0, +6.0, +4.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_upper_delta(1, +6.0, +8.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_upper_delta(2, +9.0, +2.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_upper_delta(3, +3.0, +2.0))
-     * end
-     */
+    @Test
+    public void transformUpperDelta()
+    {
+        assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.transformUpperDelta(0, +6.0, +4.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformUpperDelta(1, +6.0, +8.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformUpperDelta(2, +9.0, +2.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformUpperDelta(3, +3.0, +2.0), 1.0E-15);
+    }
 
-    // TODO: test_transform_lower_delta
-    /*
-     * def test_transform_lower_delta
-     * assert_equal([+6.0, +4.0], @mod.transform_lower_delta(0, +6.0, +8.0))
-     * assert_equal([+6.0, +8.0], @mod.transform_lower_delta(1, +6.0, +4.0))
-     * assert_equal([+6.0, +8.0], @mod.transform_lower_delta(2, +3.0, +10.0))
-     * assert_equal([+6.0, +8.0], @mod.transform_lower_delta(3, +9.0, +10.0))
-     * end
-     */
+    @Test
+    public void transformLowerDelta()
+    {
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformLowerDelta(0, +6.0, +8.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.transformLowerDelta(1, +6.0, +4.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.transformLowerDelta(2, +3.0, +10.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.transformLowerDelta(3, +9.0, +10.0), 1.0E-15);
+    }
 
-    // TODO: test_get_delta_ids__level1
-    /*
-     * def test_get_delta_ids__level1
-     * assert_equal([0], @mod.get_delta_ids( 0.0, +6.0, 1))
-     * assert_equal([1], @mod.get_delta_ids( 6.0, +6.0, 1))
-     * assert_equal([2], @mod.get_delta_ids(12.0, +6.0, 1))
-     * assert_equal([3], @mod.get_delta_ids(18.0, +6.0, 1))
-     * assert_equal([4], @mod.get_delta_ids( 0.0, -6.0, 1))
-     * assert_equal([5], @mod.get_delta_ids( 6.0, -6.0, 1))
-     * assert_equal([6], @mod.get_delta_ids(12.0, -6.0, 1))
-     * assert_equal([7], @mod.get_delta_ids(18.0, -6.0, 1))
-     * end
-     */
+    @Test
+    public void getDeltaIds__level1()
+    {
+        assertArrayEquals(new byte[] {0}, Geometry.getDeltaIds(0.0, +6.0, 1));
+        assertArrayEquals(new byte[] {1}, Geometry.getDeltaIds(6.0, +6.0, 1));
+        assertArrayEquals(new byte[] {2}, Geometry.getDeltaIds(12.0, +6.0, 1));
+        assertArrayEquals(new byte[] {3}, Geometry.getDeltaIds(18.0, +6.0, 1));
+        assertArrayEquals(new byte[] {4}, Geometry.getDeltaIds(0.0, -6.0, 1));
+        assertArrayEquals(new byte[] {5}, Geometry.getDeltaIds(6.0, -6.0, 1));
+        assertArrayEquals(new byte[] {6}, Geometry.getDeltaIds(12.0, -6.0, 1));
+        assertArrayEquals(new byte[] {7}, Geometry.getDeltaIds(18.0, -6.0, 1));
+    }
 
-    // TODO: test_get_delta_ids__level2
-    /*
-     * def test_get_delta_ids__level2
-     * assert_equal([0, 0], @mod.get_delta_ids( +0.0, +8.0, 2))
-     * assert_equal([0, 1], @mod.get_delta_ids( +0.0, +4.0, 2))
-     * assert_equal([0, 2], @mod.get_delta_ids( -3.0, +10.0, 2))
-     * assert_equal([0, 3], @mod.get_delta_ids( +3.0, +10.0, 2))
-     * assert_equal([1, 0], @mod.get_delta_ids( +6.0, +4.0, 2))
-     * assert_equal([1, 1], @mod.get_delta_ids( +6.0, +8.0, 2))
-     * assert_equal([1, 2], @mod.get_delta_ids( +9.0, +2.0, 2))
-     * assert_equal([1, 3], @mod.get_delta_ids( +3.0, +2.0, 2))
-     * assert_equal([2, 2], @mod.get_delta_ids( +9.0, +10.0, 2))
-     * assert_equal([3, 3], @mod.get_delta_ids(+15.0, +2.0, 2))
-     *
-     * assert_equal([4, 0], @mod.get_delta_ids( +0.0, -8.0, 2))
-     * assert_equal([4, 1], @mod.get_delta_ids( +0.0, -4.0, 2))
-     * assert_equal([4, 2], @mod.get_delta_ids( +3.0, -10.0, 2))
-     * assert_equal([4, 3], @mod.get_delta_ids( -3.0, -10.0, 2))
-     * assert_equal([5, 0], @mod.get_delta_ids( +6.0, -4.0, 2))
-     * assert_equal([5, 1], @mod.get_delta_ids( +6.0, -8.0, 2))
-     * assert_equal([5, 2], @mod.get_delta_ids( +3.0, -2.0, 2))
-     * assert_equal([5, 3], @mod.get_delta_ids( +9.0, -2.0, 2))
-     * assert_equal([6, 2], @mod.get_delta_ids(+15.0, -10.0, 2))
-     * assert_equal([7, 3], @mod.get_delta_ids(+21.0, -2.0, 2))
-     * end
-     */
+    @Test
+    public void getDeltaIds__level2()
+    {
+        assertArrayEquals(new byte[] {0, 0}, Geometry.getDeltaIds(+0.0, +8.0, 2));
+        assertArrayEquals(new byte[] {0, 1}, Geometry.getDeltaIds(+0.0, +4.0, 2));
+        assertArrayEquals(new byte[] {0, 2}, Geometry.getDeltaIds(-3.0, +10.0, 2));
+        assertArrayEquals(new byte[] {0, 3}, Geometry.getDeltaIds(+3.0, +10.0, 2));
+        assertArrayEquals(new byte[] {1, 0}, Geometry.getDeltaIds(+6.0, +4.0, 2));
+        assertArrayEquals(new byte[] {1, 1}, Geometry.getDeltaIds(+6.0, +8.0, 2));
+        assertArrayEquals(new byte[] {1, 2}, Geometry.getDeltaIds(+9.0, +2.0, 2));
+        assertArrayEquals(new byte[] {1, 3}, Geometry.getDeltaIds(+3.0, +2.0, 2));
+        assertArrayEquals(new byte[] {2, 2}, Geometry.getDeltaIds(+9.0, +10.0, 2));
+        assertArrayEquals(new byte[] {3, 3}, Geometry.getDeltaIds(+15.0, +2.0, 2));
 
-    // TODO: test_get_delta_ids__level3
-    /*
-     * def test_get_delta_ids__level3
-     * assert_equal([0, 0, 0], @mod.get_delta_ids(+0.0, +8.0, 3))
-     * assert_equal([1, 0, 0], @mod.get_delta_ids(+6.0, +4.0, 3))
-     * end
-     */
+        assertArrayEquals(new byte[] {4, 0}, Geometry.getDeltaIds(+0.0, -8.0, 2));
+        assertArrayEquals(new byte[] {4, 1}, Geometry.getDeltaIds(+0.0, -4.0, 2));
+        assertArrayEquals(new byte[] {4, 2}, Geometry.getDeltaIds(+3.0, -10.0, 2));
+        assertArrayEquals(new byte[] {4, 3}, Geometry.getDeltaIds(-3.0, -10.0, 2));
+        assertArrayEquals(new byte[] {5, 0}, Geometry.getDeltaIds(+6.0, -4.0, 2));
+        assertArrayEquals(new byte[] {5, 1}, Geometry.getDeltaIds(+6.0, -8.0, 2));
+        assertArrayEquals(new byte[] {5, 2}, Geometry.getDeltaIds(+3.0, -2.0, 2));
+        assertArrayEquals(new byte[] {5, 3}, Geometry.getDeltaIds(+9.0, -2.0, 2));
+        assertArrayEquals(new byte[] {6, 2}, Geometry.getDeltaIds(+15.0, -10.0, 2));
+        assertArrayEquals(new byte[] {7, 3}, Geometry.getDeltaIds(+21.0, -2.0, 2));
+    }
 
-    // TODO: test_get_delta_ids__level4
-    /*
-     * def test_get_delta_ids__level4
-     * assert_equal([0, 0, 0, 0], @mod.get_delta_ids(+0.0, +8.0, 4))
-     * assert_equal([1, 0, 0, 0], @mod.get_delta_ids(+6.0, +4.0, 4))
-     * end
-     */
+    @Test
+    public void getDeltaIds__level3()
+    {
+        assertArrayEquals(new byte[] {0, 0, 0}, Geometry.getDeltaIds(+0.0, +8.0, 3));
+        assertArrayEquals(new byte[] {1, 0, 0}, Geometry.getDeltaIds(+6.0, +4.0, 3));
+    }
 
-    // TODO: test_get_world_delta_center
-    /*
-     * def test_get_world_delta_center
-     * assert_equal([ +0.0, +8.0], @mod.get_world_delta_center(0))
-     * assert_equal([ +6.0, +4.0], @mod.get_world_delta_center(1))
-     * assert_equal([+12.0, +8.0], @mod.get_world_delta_center(2))
-     * assert_equal([+18.0, +4.0], @mod.get_world_delta_center(3))
-     * assert_equal([ +0.0, -8.0], @mod.get_world_delta_center(4))
-     * assert_equal([ +6.0, -4.0], @mod.get_world_delta_center(5))
-     * assert_equal([+12.0, -8.0], @mod.get_world_delta_center(6))
-     * assert_equal([+18.0, -4.0], @mod.get_world_delta_center(7))
-     * end
-     */
+    @Test
+    public void getDeltaIds__level4()
+    {
+        assertArrayEquals(new byte[] {0, 0, 0, 0}, Geometry.getDeltaIds(+0.0, +8.0, 4));
+        assertArrayEquals(new byte[] {1, 0, 0, 0}, Geometry.getDeltaIds(+6.0, +4.0, 4));
+    }
 
-    // TODO: test_get_upper_sub_delta_distance
-    /*
-     * def test_get_upper_sub_delta_distance
-     * assert_equal([+0.0, +0.0], @mod.get_upper_sub_delta_distance(0))
-     * assert_equal([+0.0, +4.0], @mod.get_upper_sub_delta_distance(1))
-     * assert_equal([+3.0, -2.0], @mod.get_upper_sub_delta_distance(2))
-     * assert_equal([-3.0, -2.0], @mod.get_upper_sub_delta_distance(3))
-     * end
-     */
+    @Test
+    public void getWorldDeltaCenter()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getWorldDeltaCenter(0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.getWorldDeltaCenter(1), 1.0E-15);
+        assertArrayEquals(new double[] {+12.0, +8.0}, Geometry.getWorldDeltaCenter(2), 1.0E-15);
+        assertArrayEquals(new double[] {+18.0, +4.0}, Geometry.getWorldDeltaCenter(3), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -8.0}, Geometry.getWorldDeltaCenter(4), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -4.0}, Geometry.getWorldDeltaCenter(5), 1.0E-15);
+        assertArrayEquals(new double[] {+12.0, -8.0}, Geometry.getWorldDeltaCenter(6), 1.0E-15);
+        assertArrayEquals(new double[] {+18.0, -4.0}, Geometry.getWorldDeltaCenter(7), 1.0E-15);
+    }
 
-    // TODO: test_get_lower_sub_delta_distance
-    /*
-     * def test_get_lower_sub_delta_distance
-     * assert_equal([+0.0, +0.0], @mod.get_lower_sub_delta_distance(0))
-     * assert_equal([+0.0, -4.0], @mod.get_lower_sub_delta_distance(1))
-     * assert_equal([-3.0, +2.0], @mod.get_lower_sub_delta_distance(2))
-     * assert_equal([+3.0, +2.0], @mod.get_lower_sub_delta_distance(3))
-     * end
-     */
+    @Test
+    public void getUpperSubDeltaDistance()
+    {
+        assertArrayEquals(new double[] {+0.0, +0.0}, Geometry.getUpperSubDeltaDistance(0), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, +4.0}, Geometry.getUpperSubDeltaDistance(1), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, -2.0}, Geometry.getUpperSubDeltaDistance(2), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, -2.0}, Geometry.getUpperSubDeltaDistance(3), 1.0E-15);
+    }
 
-    // TODO: test_get_sub_delta_distance
-    /*
-     * def test_get_sub_delta_distance
-     * assert_equal([+0.0, +4.0], @mod.get_sub_delta_distance(true, 1))
-     * assert_equal([+3.0, -2.0], @mod.get_sub_delta_distance(true, 2))
-     * assert_equal([+0.0, -4.0], @mod.get_sub_delta_distance(false, 1))
-     * assert_equal([-3.0, +2.0], @mod.get_sub_delta_distance(false, 2))
-     * end
-     */
+    @Test
+    public void getLowerSubDeltaDistance()
+    {
+        assertArrayEquals(new double[] {+0.0, +0.0}, Geometry.getLowerSubDeltaDistance(0), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -4.0}, Geometry.getLowerSubDeltaDistance(1), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, +2.0}, Geometry.getLowerSubDeltaDistance(2), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, +2.0}, Geometry.getLowerSubDeltaDistance(3), 1.0E-15);
+    }
 
-    // TODO: test_get_center__level1
-    /*
-     * def test_get_center__level1
-     * assert_equal([+0.0, +8.0], @mod.get_center([0]))
-     * assert_equal([+6.0, +4.0], @mod.get_center([1]))
-     * assert_equal([+0.0, -8.0], @mod.get_center([4]))
-     * assert_equal([+6.0, -4.0], @mod.get_center([5]))
-     * end
-     */
+    @Test
+    public void getSubDeltaDistance()
+    {
+        assertArrayEquals(new double[] {+0.0, +4.0}, Geometry.getSubDeltaDistance(true, 1), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, -2.0}, Geometry.getSubDeltaDistance(true, 2), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -4.0}, Geometry.getSubDeltaDistance(false, 1), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, +2.0}, Geometry.getSubDeltaDistance(false, 2), 1.0E-15);
+    }
 
-    // TODO: test_get_center__level2
-    /*
-     * def test_get_center__level2
-     * assert_equal([ +0.0, +8.0], @mod.get_center([0, 0]))
-     * assert_equal([ +0.0, +4.0], @mod.get_center([0, 1]))
-     * assert_equal([ -3.0, +10.0], @mod.get_center([0, 2]))
-     * assert_equal([ +3.0, +10.0], @mod.get_center([0, 3]))
-     * assert_equal([ +6.0, +4.0], @mod.get_center([1, 0]))
-     * assert_equal([ +6.0, +8.0], @mod.get_center([1, 1]))
-     * assert_equal([ +9.0, +2.0], @mod.get_center([1, 2]))
-     * assert_equal([ +3.0, +2.0], @mod.get_center([1, 3]))
-     * assert_equal([ +9.0, +10.0], @mod.get_center([2, 2]))
-     * assert_equal([ -9.0, +2.0], @mod.get_center([3, 3]))
-     *
-     * assert_equal([ +0.0, -8.0], @mod.get_center([4, 0]))
-     * assert_equal([ +0.0, -4.0], @mod.get_center([4, 1]))
-     * assert_equal([ +3.0, -10.0], @mod.get_center([4, 2]))
-     * assert_equal([ -3.0, -10.0], @mod.get_center([4, 3]))
-     * assert_equal([ +6.0, -4.0], @mod.get_center([5, 0]))
-     * assert_equal([ +6.0, -8.0], @mod.get_center([5, 1]))
-     * assert_equal([ +3.0, -2.0], @mod.get_center([5, 2]))
-     * assert_equal([ +9.0, -2.0], @mod.get_center([5, 3]))
-     * assert_equal([ -9.0, -10.0], @mod.get_center([6, 2]))
-     * assert_equal([ -3.0, -2.0], @mod.get_center([7, 3]))
-     * end
-     */
+    @Test
+    public void getCenter__level1()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getCenter(new byte[] {0}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.getCenter(new byte[] {1}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -8.0}, Geometry.getCenter(new byte[] {4}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -4.0}, Geometry.getCenter(new byte[] {5}), 1.0E-15);
+    }
 
-    // TODO: test_get_center__level3
-    /*
-     * def test_get_center__level3
-     * assert_equal([ +0.0, +8.0], @mod.get_center([0, 0, 0]))
-     * assert_equal([ +0.0, +10.0], @mod.get_center([0, 0, 1]))
-     * assert_equal([ -1.5, +5.0], @mod.get_center([0, 1, 2]))
-     * assert_equal([ -1.5, +11.0], @mod.get_center([0, 2, 3]))
-     * assert_equal([ +3.0, +10.0], @mod.get_center([0, 3, 0]))
-     * end
-     */
+    @Test
+    public void getCenter__level2()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getCenter(new byte[] {0, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, +4.0}, Geometry.getCenter(new byte[] {0, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, +10.0}, Geometry.getCenter(new byte[] {0, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, +10.0}, Geometry.getCenter(new byte[] {0, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.getCenter(new byte[] {1, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.getCenter(new byte[] {1, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {+9.0, +2.0}, Geometry.getCenter(new byte[] {1, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, +2.0}, Geometry.getCenter(new byte[] {1, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+9.0, +10.0}, Geometry.getCenter(new byte[] {2, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-9.0, +2.0}, Geometry.getCenter(new byte[] {3, 3}), 1.0E-15);
 
-    // TODO: test_get_coordinates__level1
-    /*
-     * def test_get_coordinates__level1
-     * expected = [
-     * [+0.0, +8.0],
-     * [+0.0, +0.0], # +0.0, -8.0
-     * [-6.0, +12.0], # -6.0, +4.0
-     * [+6.0, +12.0], # +6.0, +4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0]))
-     *
-     * expected = [
-     * [ +6.0, +4.0],
-     * [ +6.0, +12.0], # +0.0, +8.0
-     * [+12.0, +0.0], # +6.0, -4.0
-     * [ +0.0, +0.0], # -6.0, -4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([1]))
-     *
-     * expected = [
-     * [+0.0, -8.0],
-     * [+0.0, +0.0], # +0.0, +8.0
-     * [+6.0, -12.0], # +6.0, -4.0
-     * [-6.0, -12.0], # -6.0, -4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4]))
-     *
-     * expected = [
-     * [ +6.0, -4.0],
-     * [ +6.0, -12.0], # +0.0, -8.0
-     * [ +0.0, +0.0], # -6.0, +4.0
-     * [+12.0, +0.0], # +6.0, +4.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([5]))
-     * end
-     */
+        assertArrayEquals(new double[] {+0.0, -8.0}, Geometry.getCenter(new byte[] {4, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, -4.0}, Geometry.getCenter(new byte[] {4, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, -10.0}, Geometry.getCenter(new byte[] {4, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, -10.0}, Geometry.getCenter(new byte[] {4, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -4.0}, Geometry.getCenter(new byte[] {5, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, -8.0}, Geometry.getCenter(new byte[] {5, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, -2.0}, Geometry.getCenter(new byte[] {5, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {+9.0, -2.0}, Geometry.getCenter(new byte[] {5, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {-9.0, -10.0}, Geometry.getCenter(new byte[] {6, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-3.0, -2.0}, Geometry.getCenter(new byte[] {7, 3}), 1.0E-15);
+    }
 
-    // TODO: test_get_coordinates__level2
-    /*
-     * def test_get_coordinates__level2
-     * expected = [
-     * [ +0.0, +8.0],
-     * [ +0.0, +12.0], # +0.0, +4.0
-     * [ +3.0, +6.0], # +3.0, -2.0
-     * [ -3.0, +6.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 0]))
-     *
-     * expected = [
-     * [ +0.0, +4.0],
-     * [ +0.0, +0.0], # +0.0, -4.0
-     * [ -3.0, +6.0], # -3.0, +2.0
-     * [ +3.0, +6.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 1]))
-     *
-     * expected = [
-     * [ -3.0, +10.0],
-     * [ -3.0, +6.0], # +0.0, -4.0
-     * [ -6.0, +12.0], # -3.0, +2.0
-     * [ +0.0, +12.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 2]))
-     *
-     * expected = [
-     * [ +3.0, +10.0],
-     * [ +3.0, +6.0], # +0.0, -4.0
-     * [ +0.0, +12.0], # -3.0, +2.0
-     * [ +6.0, +12.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 3]))
-     *
-     * expected = [
-     * [ +0.0, -8.0],
-     * [ +0.0, -12.0], # +0.0, -4.0
-     * [ -3.0, -6.0], # -3.0, +2.0
-     * [ +3.0, -6.0], # +3.0, +2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 0]))
-     *
-     * expected = [
-     * [ +0.0, -4.0],
-     * [ +0.0, +0.0], # +0.0, +4.0
-     * [ +3.0, -6.0], # +3.0, -2.0
-     * [ -3.0, -6.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 1]))
-     *
-     * expected = [
-     * [ +3.0, -10.0],
-     * [ +3.0, -6.0], # +0.0, +4.0
-     * [ +6.0, -12.0], # +3.0, -2.0
-     * [ +0.0, -12.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 2]))
-     *
-     * expected = [
-     * [ -3.0, -10.0],
-     * [ -3.0, -6.0], # +0.0, +4.0
-     * [ +0.0, -12.0], # +3.0, -2.0
-     * [ -6.0, -12.0], # -3.0, -2.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([4, 3]))
-     * end
-     */
+    @Test
+    public void getCenter__level3()
+    {
+        assertArrayEquals(new double[] {+0.0, +8.0}, Geometry.getCenter(new byte[] {0, 0, 0}), 1.0E-15);
+        assertArrayEquals(new double[] {+0.0, +10.0}, Geometry.getCenter(new byte[] {0, 0, 1}), 1.0E-15);
+        assertArrayEquals(new double[] {-1.5, +5.0}, Geometry.getCenter(new byte[] {0, 1, 2}), 1.0E-15);
+        assertArrayEquals(new double[] {-1.5, +11.0}, Geometry.getCenter(new byte[] {0, 2, 3}), 1.0E-15);
+        assertArrayEquals(new double[] {+3.0, +10.0}, Geometry.getCenter(new byte[] {0, 3, 0}), 1.0E-15);
+    }
 
-    // TODO: test_get_coordinates__level3
-    /*
-     * def test_get_coordinates__level3
-     * expected = [
-     * [ +0.0, +8.0],
-     * [ +0.0, +6.0], # +0.0, -2.0
-     * [ -1.5, +9.0], # -1.5, +1.0
-     * [ +1.5, +9.0], # +1.5, +1.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 0, 0]))
-     *
-     * expected = [
-     * [ -1.5, +5.0],
-     * [ -1.5, +3.0], # +0.0, -2.0
-     * [ -3.0, +6.0], # -1.5, +1.0
-     * [ +0.0, +6.0], # +1.5, +1.0
-     * ]
-     * assert_equal(expected, @mod.get_coordinates([0, 1, 2]))
-     * end
-     */
+    @Test
+    public void getCoordinates__level1()
+    {
+        // @formatter:off
+        final double[][] expected1 = {
+            {+0.0,  +8.0},
+            {+0.0,  +0.0}, // +0.0, -8.0
+            {-6.0, +12.0}, // -6.0, +4.0
+            {+6.0, +12.0}, // +6.0, +4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected1, Geometry.getCoordinates(new byte[] {0}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected2 = {
+            { +6.0,  +4.0},
+            { +6.0, +12.0}, // +0.0, +8.0
+            {+12.0,  +0.0}, // +6.0, -4.0
+            { +0.0,  +0.0}, // -6.0, -4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected2, Geometry.getCoordinates(new byte[] {1}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected3 = {
+            {+0.0,  -8.0},
+            {+0.0,  +0.0}, // +0.0, +8.0
+            {+6.0, -12.0}, // +6.0, -4.0
+            {-6.0, -12.0}, // -6.0, -4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected3, Geometry.getCoordinates(new byte[] {4}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected4 = {
+            { +6.0,  -4.0},
+            { +6.0, -12.0}, // +0.0, -8.0
+            { +0.0,  +0.0}, // -6.0, +4.0
+            {+12.0,  +0.0}, // +6.0, +4.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected4, Geometry.getCoordinates(new byte[] {5}), 1.0E-15);
+    }
+
+    @Test
+    public void getCoordinates__level2()
+    {
+        // @formatter:off
+        final double[][] expected1 = {
+            { +0.0,  +8.0},
+            { +0.0, +12.0}, // +0.0, +4.0
+            { +3.0,  +6.0}, // +3.0, -2.0
+            { -3.0,  +6.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected1, Geometry.getCoordinates(new byte[] {0, 0}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected2 = {
+            { +0.0, +4.0},
+            { +0.0, +0.0}, // +0.0, -4.0
+            { -3.0, +6.0}, // -3.0, +2.0
+            { +3.0, +6.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected2, Geometry.getCoordinates(new byte[] {0, 1}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected3 = {
+            { -3.0, +10.0},
+            { -3.0,  +6.0}, // +0.0, -4.0
+            { -6.0, +12.0}, // -3.0, +2.0
+            { +0.0, +12.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected3, Geometry.getCoordinates(new byte[] {0, 2}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected4 = {
+            { +3.0, +10.0},
+            { +3.0,  +6.0}, // +0.0, -4.0
+            { +0.0, +12.0}, // -3.0, +2.0
+            { +6.0, +12.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected4, Geometry.getCoordinates(new byte[] {0, 3}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected5 = {
+            { +0.0,  -8.0},
+            { +0.0, -12.0}, // +0.0, -4.0
+            { -3.0,  -6.0}, // -3.0, +2.0
+            { +3.0,  -6.0}, // +3.0, +2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected5, Geometry.getCoordinates(new byte[] {4, 0}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected6 = {
+            { +0.0, -4.0},
+            { +0.0, +0.0}, // +0.0, +4.0
+            { +3.0, -6.0}, // +3.0, -2.0
+            { -3.0, -6.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected6, Geometry.getCoordinates(new byte[] {4, 1}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected7 = {
+            { +3.0, -10.0},
+            { +3.0,  -6.0}, // +0.0, +4.0
+            { +6.0, -12.0}, // +3.0, -2.0
+            { +0.0, -12.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected7, Geometry.getCoordinates(new byte[] {4, 2}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected8 = {
+            { -3.0, -10.0},
+            { -3.0,  -6.0}, // +0.0, +4.0
+            { +0.0, -12.0}, // +3.0, -2.0
+            { -6.0, -12.0}, // -3.0, -2.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected8, Geometry.getCoordinates(new byte[] {4, 3}), 1.0E-15);
+    }
+
+    @Test
+    public void getCoordinates__level3()
+    {
+        // @formatter:off
+        final double[][] expected1 = {
+            { +0.0, +8.0},
+            { +0.0, +6.0}, // +0.0, -2.0
+            { -1.5, +9.0}, // -1.5, +1.0
+            { +1.5, +9.0}, // +1.5, +1.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected1, Geometry.getCoordinates(new byte[] {0, 0, 0}), 1.0E-15);
+
+        // @formatter:off
+        final double[][] expected = {
+            { -1.5, +5.0},
+            { -1.5, +3.0}, // +0.0, -2.0
+            { -3.0, +6.0}, // -1.5, +1.0
+            { +0.0, +6.0}, // +1.5, +1.0
+        };
+        // @formatter:on
+        assertArrayArrayEquals(expected, Geometry.getCoordinates(new byte[] {0, 1, 2}), 1.0E-15);
+    }
 
     // TODO: test_rush__center
     /*
@@ -475,4 +487,13 @@ public class GeometryTest
      * }
      * end
      */
+
+    private void assertArrayArrayEquals(final double[][] expecteds, final double[][] actuals, final double delta)
+    {
+        assertEquals(expecteds.length, actuals.length);
+        for ( int i = 0, len = expecteds.length; i < len; i++ )
+        {
+            assertArrayEquals(expecteds[i], actuals[i], delta);
+        }
+    }
 }
