@@ -102,25 +102,57 @@ public class Packer32Test
     @Test
     public void pack()
     {
-        assertEquals(0x00000001, Packer32.pack(new byte[] {0}));
-        assertEquals(0x70000001, Packer32.pack(new byte[] {7}));
-        assertEquals(0x04000002, Packer32.pack(new byte[] {0, 1}));
-        assertEquals(0x2C000002, Packer32.pack(new byte[] {2, 3}));
-        assertEquals(0x0000000D, Packer32.pack(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
-        assertEquals(0x1555555D, Packer32.pack(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
-        assertEquals(0x7FFFFFFD, Packer32.pack(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}));
+        // @formatter:off
+        assertEquals(
+            0x00000001,
+            Packer32.pack(new byte[] {0}));
+        assertEquals(
+            0x70000001,
+            Packer32.pack(new byte[] {7}));
+        assertEquals(
+            0x04000002,
+            Packer32.pack(new byte[] {0, 1}));
+        assertEquals(
+            0x2C000002,
+            Packer32.pack(new byte[] {2, 3}));
+        assertEquals(
+            0x0000000D,
+            Packer32.pack(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        assertEquals(
+            0x1555555D,
+            Packer32.pack(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
+        assertEquals(
+            0x7FFFFFFD,
+            Packer32.pack(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}));
+        // @formatter:on
     }
 
     @Test
     public void unpack()
     {
-        assertArrayEquals(new byte[] {0}, Packer32.unpack(0x00000001));
-        assertArrayEquals(new byte[] {7}, Packer32.unpack(0x70000001));
-        assertArrayEquals(new byte[] {0, 1}, Packer32.unpack(0x04000002));
-        assertArrayEquals(new byte[] {2, 3}, Packer32.unpack(0x2C000002));
-        assertArrayEquals(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, Packer32.unpack(0x0000000D));
-        assertArrayEquals(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, Packer32.unpack(0x1555555D));
-        assertArrayEquals(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}, Packer32.unpack(0x7FFFFFFD));
+        // @formatter:off
+        assertArrayEquals(
+            new byte[] {0},
+            Packer32.unpack(0x00000001));
+        assertArrayEquals(
+            new byte[] {7},
+            Packer32.unpack(0x70000001));
+        assertArrayEquals(
+            new byte[] {0, 1},
+            Packer32.unpack(0x04000002));
+        assertArrayEquals(
+            new byte[] {2, 3},
+            Packer32.unpack(0x2C000002));
+        assertArrayEquals(
+            new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            Packer32.unpack(0x0000000D));
+        assertArrayEquals(
+            new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            Packer32.unpack(0x1555555D));
+        assertArrayEquals(
+            new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+            Packer32.unpack(0x7FFFFFFD));
+        // @formatter:on
     }
 
     // TODO: test_pack_and_unpack

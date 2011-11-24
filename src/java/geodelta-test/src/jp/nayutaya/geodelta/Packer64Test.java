@@ -132,31 +132,57 @@ public class Packer64Test
     @Test
     public void pack()
     {
-        assertEquals(0x0000000000000001L, Packer64.pack(new byte[] {0}));
-        assertEquals(0x3800000000000001L, Packer64.pack(new byte[] {7}));
-        assertEquals(0x0200000000000002L, Packer64.pack(new byte[] {0, 1}));
-        assertEquals(0x1600000000000002L, Packer64.pack(new byte[] {2, 3}));
-        assertEquals(0x000000000000001CL,
-                Packer64.pack(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
-        assertEquals(0x0AAAAAAAAAAAAABCL,
-                Packer64.pack(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
-        assertEquals(0x3FFFFFFFFFFFFFFCL,
-                Packer64.pack(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}));
+        // @formatter:off
+        assertEquals(
+            0x0000000000000001L,
+            Packer64.pack(new byte[] {0}));
+        assertEquals(
+            0x3800000000000001L,
+            Packer64.pack(new byte[] {7}));
+        assertEquals(
+            0x0200000000000002L,
+            Packer64.pack(new byte[] {0, 1}));
+        assertEquals(
+            0x1600000000000002L,
+            Packer64.pack(new byte[] {2, 3}));
+        assertEquals(
+            0x000000000000001CL,
+            Packer64.pack(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+        assertEquals(
+            0x0AAAAAAAAAAAAABCL,
+            Packer64.pack(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
+        assertEquals(
+            0x3FFFFFFFFFFFFFFCL,
+            Packer64.pack(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}));
+        // @formatter:on
     }
 
     @Test
     public void unpack()
     {
-        assertArrayEquals(new byte[] {0}, Packer64.unpack(0x0000000000000001L));
-        assertArrayEquals(new byte[] {7}, Packer64.unpack(0x3800000000000001L));
-        assertArrayEquals(new byte[] {0, 1}, Packer64.unpack(0x0200000000000002L));
-        assertArrayEquals(new byte[] {2, 3}, Packer64.unpack(0x1600000000000002L));
-        assertArrayEquals(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                Packer64.unpack(0x000000000000001CL));
-        assertArrayEquals(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                Packer64.unpack(0x0AAAAAAAAAAAAABCL));
-        assertArrayEquals(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
-                Packer64.unpack(0x3FFFFFFFFFFFFFFCL));
+        // @formatter:off
+        assertArrayEquals(
+            new byte[] {0},
+            Packer64.unpack(0x0000000000000001L));
+        assertArrayEquals(
+            new byte[] {7},
+            Packer64.unpack(0x3800000000000001L));
+        assertArrayEquals(
+            new byte[] {0, 1},
+            Packer64.unpack(0x0200000000000002L));
+        assertArrayEquals(
+            new byte[] {2, 3},
+            Packer64.unpack(0x1600000000000002L));
+        assertArrayEquals(
+            new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+            Packer64.unpack(0x000000000000001CL));
+        assertArrayEquals(
+            new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+            Packer64.unpack(0x0AAAAAAAAAAAAABCL));
+        assertArrayEquals(
+            new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+            Packer64.unpack(0x3FFFFFFFFFFFFFFCL));
+        // @formatter:on
     }
 
     // TODO: test_pack_and_unpack
