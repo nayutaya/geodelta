@@ -163,15 +163,14 @@ public class GeometryTest
         assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformWorldDelta(7, +18.0, -8.0), 1.0E-15);
     }
 
-    // TODO: test_transform_upper_delta
-    /*
-     * def test_transform_upper_delta
-     * assert_equal([+6.0, +8.0], @mod.transform_upper_delta(0, +6.0, +4.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_upper_delta(1, +6.0, +8.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_upper_delta(2, +9.0, +2.0))
-     * assert_equal([+6.0, +4.0], @mod.transform_upper_delta(3, +3.0, +2.0))
-     * end
-     */
+    @Test
+    public void transformUpperDelta()
+    {
+        assertArrayEquals(new double[] {+6.0, +8.0}, Geometry.transformUpperDelta(0, +6.0, +4.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformUpperDelta(1, +6.0, +8.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformUpperDelta(2, +9.0, +2.0), 1.0E-15);
+        assertArrayEquals(new double[] {+6.0, +4.0}, Geometry.transformUpperDelta(3, +3.0, +2.0), 1.0E-15);
+    }
 
     // TODO: test_transform_lower_delta
     /*
