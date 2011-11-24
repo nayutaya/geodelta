@@ -55,4 +55,28 @@ public class Packer32Test
         assertEquals(0x000000C0, Packer32.packSubDelta(12, 3));
         assertEquals(0x00000030, Packer32.packSubDelta(13, 3));
     }
+
+    @Test
+    public void unpackSubDelta()
+    {
+        assertEquals(0, Packer32.unpackSubDelta(2, 0x00000000));
+        assertEquals(1, Packer32.unpackSubDelta(2, 0x04000000));
+        assertEquals(2, Packer32.unpackSubDelta(2, 0x08000000));
+        assertEquals(3, Packer32.unpackSubDelta(2, 0x0C000000));
+        assertEquals(0, Packer32.unpackSubDelta(3, 0x00000000));
+        assertEquals(1, Packer32.unpackSubDelta(3, 0x01000000));
+        assertEquals(2, Packer32.unpackSubDelta(3, 0x02000000));
+        assertEquals(3, Packer32.unpackSubDelta(3, 0x03000000));
+
+        assertEquals(3, Packer32.unpackSubDelta(4, 0x00C00000));
+        assertEquals(3, Packer32.unpackSubDelta(5, 0x00300000));
+        assertEquals(3, Packer32.unpackSubDelta(6, 0x000C0000));
+        assertEquals(3, Packer32.unpackSubDelta(7, 0x00030000));
+        assertEquals(3, Packer32.unpackSubDelta(8, 0x0000C000));
+        assertEquals(3, Packer32.unpackSubDelta(9, 0x00003000));
+        assertEquals(3, Packer32.unpackSubDelta(10, 0x00000C00));
+        assertEquals(3, Packer32.unpackSubDelta(11, 0x00000300));
+        assertEquals(3, Packer32.unpackSubDelta(12, 0x000000C0));
+        assertEquals(3, Packer32.unpackSubDelta(13, 0x00000030));
+    }
 }

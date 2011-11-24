@@ -17,4 +17,9 @@ public class Packer32
     {
         return id << (26 - ((level - 2) * 2));
     }
+
+    /* package */static byte unpackSubDelta(final int level, final int value)
+    {
+        return (byte)((value >> (26 - ((level - 2) * 2))) & 0x03);
+    }
 }
