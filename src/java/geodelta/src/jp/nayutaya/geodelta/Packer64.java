@@ -7,4 +7,9 @@ public class Packer64
     {
         return (long)id << 59;
     }
+
+    /* package */static byte unpackWorldDelta(final long value)
+    {
+        return (byte)((value >> 59) & 0x07);
+    }
 }
