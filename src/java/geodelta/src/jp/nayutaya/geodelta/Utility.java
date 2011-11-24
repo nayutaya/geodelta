@@ -18,15 +18,15 @@ public class Utility
      */
     public static double mod(final double a, final double b)
     {
-        double x = a;
-        while ( x >= b )
+        double val = a;
+        while ( val >= b )
         {
-            x -= b;
+            val -= b;
         }
-        while ( x < 0.0 )
+        while ( val < 0.0 )
         {
-            x += b;
+            val += b;
         }
-        return x;
+        return val;
     }
 }
