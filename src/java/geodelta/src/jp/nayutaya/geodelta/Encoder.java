@@ -4,6 +4,9 @@ package jp.nayutaya.geodelta;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * デルタID列とGeoDeltaコードを相互変換するクラス。
+ */
 public class Encoder
 {
     private Encoder()
@@ -11,6 +14,12 @@ public class Encoder
         // nop
     }
 
+    /**
+     * ワールドデルタIDをエンコードする。
+     *
+     * @param id ワールドデルタID
+     * @return ワールドデルタコード
+     */
     public static char encodeWorldDelta(final byte id)
     {
         switch ( id )
@@ -35,6 +44,12 @@ public class Encoder
         throw new IllegalArgumentException("id");
     }
 
+    /**
+     * ワールドデルタコードをデコードする。
+     *
+     * @param code ワールドデルタコード
+     * @return ワールドデルタID
+     */
     public static byte decodeWorldDelta(final char code)
     {
         switch ( code )
@@ -60,11 +75,24 @@ public class Encoder
         }
     }
 
+    /**
+     * サブデルタID列をエンコードする。
+     *
+     * @param ids サブデルタID列
+     * @return サブデルタコード
+     */
     public static String encodeSubDelta(final byte[] ids)
     {
         return encodeSubDelta(ids, 0);
     }
 
+    /**
+     * サブデルタID列をエンコードする。
+     *
+     * @param ids サブデルタID列
+     * @param start エンコード開始位置
+     * @return サブデルタコード
+     */
     private static String encodeSubDelta(final byte[] ids, final int start)
     {
         final int rest = ids.length - start;
@@ -148,6 +176,12 @@ public class Encoder
         return null;
     }
 
+    /**
+     * サブデルタコードをデコードする。
+     *
+     * @param code サブデルタコード
+     * @return サブデルタID列
+     */
     public static byte[] decodeSubDelta(final String code)
     {
         final List<Byte> ids = new ArrayList<Byte>();
@@ -242,6 +276,12 @@ public class Encoder
         return ret;
     }
 
+    /**
+     * デルタID列をエンコードする。
+     *
+     * @param ids デルタID列
+     * @return GeoDeltaコード
+     */
     public static String encode(final byte[] ids)
     {
         final StringBuilder sb = new StringBuilder();
@@ -250,6 +290,12 @@ public class Encoder
         return sb.toString();
     }
 
+    /**
+     * GeoDeltaコードをデコードする。
+     *
+     * @param code GeoDeltaコード
+     * @return デルタID列
+     */
     public static byte[] decode(final String code)
     {
         final List<Byte> ids = new ArrayList<Byte>();
