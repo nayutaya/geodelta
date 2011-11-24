@@ -44,4 +44,16 @@ public class Packer32
         final int level = packLevel(ids.length);
         return wid | sid | level;
     }
+
+    public static byte[] unpack(final int value)
+    {
+        final int level = unpackLevel(value);
+        final byte[] ids = new byte[level];
+        ids[0] = unpackWorldDelta(value);
+        for ( int i = 1; i < level; i++ )
+        {
+            ids[i] = unpackSubDelta(i + 1, value);
+        }
+        return ids;
+    }
 }
