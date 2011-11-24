@@ -70,4 +70,111 @@ public class Packer64Test
         assertEquals(0x0000000000000180L, Packer64.packSubDelta(27, (byte)3));
         assertEquals(0x0000000000000060L, Packer64.packSubDelta(28, (byte)3));
     }
+
+    // TODO: test_unpackSubDelta64
+    /*
+     * assertEquals((byte)0, Packer64.unpackSubDelta( 2, 0x0000000000000000L));
+     * assertEquals((byte)1, Packer64.unpackSubDelta( 2, 0x0200000000000000L));
+     * assertEquals((byte)2, Packer64.unpackSubDelta( 2, 0x0400000000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 2, 0x0600000000000000L));
+     * assertEquals((byte)0, Packer64.unpackSubDelta( 3, 0x0000000000000000L));
+     * assertEquals((byte)1, Packer64.unpackSubDelta( 3, 0x0080000000000000L));
+     * assertEquals((byte)2, Packer64.unpackSubDelta( 3, 0x0100000000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 3, 0x0180000000000000L));
+     *
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 4, 0x0060000000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 5, 0x0018000000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 6, 0x0006000000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 7, 0x0001800000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 8, 0x0000600000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta( 9, 0x0000180000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(10, 0x0000060000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(11, 0x0000018000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(12, 0x0000006000000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(13, 0x0000001800000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(14, 0x0000000600000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(15, 0x0000000180000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(16, 0x0000000060000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(17, 0x0000000018000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(18, 0x0000000006000000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(19, 0x0000000001800000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(20, 0x0000000000600000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(21, 0x0000000000180000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(22, 0x0000000000060000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(23, 0x0000000000018000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(24, 0x0000000000006000L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(25, 0x0000000000001800L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(26, 0x0000000000000600L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(27, 0x0000000000000180L));
+     * assertEquals((byte)3, Packer64.unpackSubDelta(28, 0x0000000000000060L));
+     */
+
+    // TODO: test_packLevel
+    /*
+     * assertEquals(0x0000000000000001L, Packer64.packLevel( 1));
+     * assertEquals(0x0000000000000002L, Packer64.packLevel( 2));
+     * assertEquals(0x000000000000001BL, Packer64.packLevel(27));
+     * assertEquals(0x000000000000001CL, Packer64.packLevel(28));
+     */
+
+    // TODO: test_unpackLevel
+    /*
+     * assertEquals( 1, Packer64.unpackLevel(0x0000000000000001L));
+     * assertEquals( 2, Packer64.unpackLevel(0x0000000000000002L));
+     * assertEquals(27, Packer64.unpackLevel(0x000000000000001BL));
+     * assertEquals(28, Packer64.unpackLevel(0x000000000000001CL));
+     */
+
+    // TODO: test_pack
+    /*
+     * assertEquals(0x0000000000000001L, Packer64.pack(new byte[] {0}));
+     * assertEquals(0x3800000000000001L, Packer64.pack(new byte[] {7}));
+     * assertEquals(0x0200000000000002L, Packer64.pack(new byte[] {0, 1}));
+     * assertEquals(0x1600000000000002L, Packer64.pack(new byte[] {2, 3}));
+     * assertEquals(0x000000000000001CL, Packer64.pack(new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}));
+     * assertEquals(0x0AAAAAAAAAAAAABCL, Packer64.pack(new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}));
+     * assertEquals(0x3FFFFFFFFFFFFFFCL, Packer64.pack(new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3}));
+     */
+
+    // TODO: test_unpack
+    /*
+     * assertEquals(
+     * new byte[] {0},
+     *
+     * Packer64.unpack(0x0000000000000001L));
+     * assertEquals(
+     * new byte[] {7},
+     *
+     * Packer64.unpack(0x3800000000000001L));
+     * assertEquals(
+     * new byte[] {0, 1},
+     *
+     * Packer64.unpack(0x0200000000000002L));
+     * assertEquals(
+     * new byte[] {2, 3},
+     *
+     * Packer64.unpack(0x1600000000000002L));
+     * assertEquals(
+     * new byte[] {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+     *
+     * Packer64.unpack(0x000000000000001CL));
+     * assertEquals(
+     * new byte[] {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+     *
+     * Packer64.unpack(0x0AAAAAAAAAAAAABCL));
+     * assertEquals(
+     * new byte[] {7, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3},
+     *
+     * Packer64.unpack(0x3FFFFFFFFFFFFFFCL));
+     */
+
+    // TODO: test_pack_and_unpack
+    /*
+     * 1000.times {
+     * ids1 = [rand(8)] + ((28 - 1).times.map { rand(4) })[0, rand(28)]
+     * packed = Packer64.pack(ids1)
+     * ids2 = Packer64.unpack(packed)
+     * assertEquals(ids1, ids2)
+     * }
+     */
 }

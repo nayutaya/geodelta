@@ -17,4 +17,45 @@ public class Packer64
     {
         return (long)id << (57 - ((level - 2) * 2));
     }
+
+    // TODO: unpack_sub_delta
+    /*
+     * def unpack_sub_delta(level, value)
+     * return (value >> (57 - ((level - 2) * 2))) & 0b11
+     * end
+     */
+
+    // TODO: pack_level
+    /*
+     * def pack_level(level)
+     * return level
+     * end
+     */
+
+    // TODO: unpack_level
+    /*
+     * def unpack_level(level)
+     * return level & 0b11111
+     * end
+     */
+
+    // TODO: pack
+    /*
+     * def pack(ids)
+     * wid = self.pack_world_delta(ids[0])
+     * sids = ids[1..-1].each_with_index.map { |id, i| self.pack_sub_delta(i + 2, id) }.inject(0, &:+)
+     * level = self.pack_level(ids.size)
+     * return wid + sids + level
+     * end
+     */
+
+    // TODO: unpack
+    /*
+     * def unpack(value)
+     * level = self.unpack_level(value)
+     * wid = self.unpack_world_delta(value)
+     * sids = (level - 1).times.map { |i| self.unpack_sub_delta(i + 2, value) }
+     * return [wid] + sids
+     * end
+     */
 }
