@@ -23,12 +23,10 @@ public class Packer64
         return (byte)((value >> (57 - ((level - 2) * 2))) & 0x03);
     }
 
-    // TODO: pack_level
-    /*
-     * def pack_level(level)
-     * return level
-     * end
-     */
+    /* package */static long packLevel(final int level)
+    {
+        return level;
+    }
 
     // TODO: unpack_level
     /*

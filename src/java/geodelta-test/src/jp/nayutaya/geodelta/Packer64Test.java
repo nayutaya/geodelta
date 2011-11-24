@@ -110,13 +110,14 @@ public class Packer64Test
         assertEquals((byte)3, Packer64.unpackSubDelta(28, 0x0000000000000060L));
     }
 
-    // TODO: test_packLevel
-    /*
-     * assertEquals(0x0000000000000001L, Packer64.packLevel( 1));
-     * assertEquals(0x0000000000000002L, Packer64.packLevel( 2));
-     * assertEquals(0x000000000000001BL, Packer64.packLevel(27));
-     * assertEquals(0x000000000000001CL, Packer64.packLevel(28));
-     */
+    @Test
+    public void packLevel()
+    {
+        assertEquals(0x0000000000000001L, Packer64.packLevel(1));
+        assertEquals(0x0000000000000002L, Packer64.packLevel(2));
+        assertEquals(0x000000000000001BL, Packer64.packLevel(27));
+        assertEquals(0x000000000000001CL, Packer64.packLevel(28));
+    }
 
     // TODO: test_unpackLevel
     /*
