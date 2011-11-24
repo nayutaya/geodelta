@@ -92,12 +92,12 @@ public class Projector
     /**
      * 正規化Y座標からメルカトルY座標に変換する。
      *
-     * @param my 正規化座標系におけるY
+     * @param ny 正規化座標系におけるY
      * @return メルカトル座標系におけるY
      */
-    public static double nyToMy(final double my)
+    public static double nyToMy(final double ny)
     {
-        return my / 12.0 * DELTA_HEIGHT;
+        return ny / 12.0 * DELTA_HEIGHT;
     }
 
     /**
