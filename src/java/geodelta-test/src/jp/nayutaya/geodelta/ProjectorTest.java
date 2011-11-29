@@ -1,6 +1,7 @@
 
 package jp.nayutaya.geodelta;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -108,6 +109,22 @@ public class ProjectorTest
         assertEquals(0.0, Projector.nxToLng(0.0), 1.0E-15);
         assertEquals(Projector.mxToLng(Projector.nxToMx(+12.0)), Projector.nxToLng(+12.0), 1.0E-15);
         assertEquals(Projector.mxToLng(Projector.nxToMx(-12.0)), Projector.nxToLng(-12.0), 1.0E-15);
+    }
+
+    @Test
+    public void latLngToNxy()
+    {
+        assertArrayEquals(new double[] {0.0, 0.0}, Projector.latLngToNxy(0.0, 0.0), 1.0E-15);
+        assertArrayEquals(new double[] {Projector.lngToNx(+180.0), Projector.latToNy(+82.4674)}, Projector.latLngToNxy(+82.4674, +180.0), 1.0E-15);
+        assertArrayEquals(new double[] {Projector.lngToNx(-180.0), Projector.latToNy(-82.4674)}, Projector.latLngToNxy(-82.4674, -180.0), 1.0E-15);
+    }
+
+    @Test
+    public void nxyToLatLng()
+    {
+        assertArrayEquals(new double[] {0.0, 0.0}, Projector.nxyToLatLng(0.0, 0.0), 1.0E-15);
+        assertArrayEquals(new double[] {Projector.nyToLat(+12.0), Projector.nxToLng(+12.0)}, Projector.nxyToLatLng(+12.0, +12.0), 1.0E-15);
+        assertArrayEquals(new double[] {Projector.nyToLat(-12.0), Projector.nxToLng(-12.0)}, Projector.nxyToLatLng(-12.0, -12.0), 1.0E-15);
     }
 
     // TODO: test_rush__lat
