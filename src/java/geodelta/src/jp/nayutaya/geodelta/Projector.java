@@ -68,7 +68,7 @@ public class Projector
     }
 
     /**
-     * メルカトルY座標から正規化Y座標に変換する。
+     * メルカトルY座標を正規化Y座標に変換する。
      *
      * @param my メルカトル座標系におけるY
      * @return 正規化座標系におけるY
@@ -79,7 +79,7 @@ public class Projector
     }
 
     /**
-     * メルカトルX座標から正規化X座標に変換する。
+     * メルカトルX座標を正規化X座標に変換する。
      *
      * @param mx メルカトル座標系におけるX
      * @return 正規化座標系におけるX
@@ -90,7 +90,7 @@ public class Projector
     }
 
     /**
-     * 正規化Y座標からメルカトルY座標に変換する。
+     * 正規化Y座標をメルカトルY座標に変換する。
      *
      * @param ny 正規化座標系におけるY
      * @return メルカトル座標系におけるY
@@ -101,7 +101,7 @@ public class Projector
     }
 
     /**
-     * 正規化X座標からメルカトルX座標に変換する。
+     * 正規化X座標をメルカトルX座標に変換する。
      *
      * @param nx 正規化座標系におけるX
      * @return メルカトル座標系におけるX
@@ -109,6 +109,78 @@ public class Projector
     public static double nxToMx(final double nx)
     {
         return nx / 12.0;
+    }
+
+    /**
+     * 緯度を正規化Y座標系に変換する。
+     *
+     * @param lat 緯度
+     * @return 正規化座標系におけるY
+     */
+    public static double latToNy(final double lat)
+    {
+        return Projector.myToNy(Projector.latToMy(lat));
+    }
+
+    /**
+     * 経度を正規化X座標に変換する。
+     *
+     * @param lng 経度
+     * @return 正規化座標系におけるX
+     */
+    public static double lngToNx(final double lng)
+    {
+        return Projector.mxToNx(Projector.lngToMx(lng));
+    }
+
+    /**
+     * 正規化Y座標を緯度に変換する。
+     *
+     * @param ny 正規化座標系におけるY
+     * @return 緯度
+     */
+    public static double nyToLat(final double ny)
+    {
+        return Projector.myToLat(Projector.nyToMy(ny));
+    }
+
+    /**
+     * 正規化X座標を経度に変換する。
+     *
+     * @param nx 正規化座標系におけるX
+     * @return 経度
+     */
+    public static double nxToLng(final double nx)
+    {
+        return Projector.mxToLng(Projector.nxToMx(nx));
+    }
+
+    /**
+     * 緯度経度を正規化XY座標に変換する。
+     *
+     * @param lat 緯度
+     * @param lng 経度
+     * @return 正規化XY座標を含む配列
+     */
+    public static double[] latLngToNxy(final double lat, final double lng)
+    {
+        final double nx = Projector.lngToNx(lng);
+        final double ny = Projector.latToNy(lat);
+        return new double[] {nx, ny};
+    }
+
+    /**
+     * 正規化XY座標を緯度経度に変換する。
+     *
+     * @param nx 正規化座標系におけるX
+     * @param ny 正規化座標系におけるY
+     * @return 緯度経度を含む配列
+     */
+    public static double[] nxyToLatLng(final double nx, final double ny)
+    {
+        final double lat = Projector.nyToLat(ny);
+        final double lng = Projector.nxToLng(nx);
+        return new double[] {lat, lng};
     }
 
     /**
