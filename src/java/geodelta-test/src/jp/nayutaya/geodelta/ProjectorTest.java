@@ -94,6 +94,22 @@ public class ProjectorTest
         assertEquals(Projector.mxToNx(Projector.lngToMx(-180.0)), Projector.lngToNx(-180.0), 1.0E-15);
     }
 
+    @Test
+    public void nyToLat()
+    {
+        assertEquals(0.0, Projector.nyToLat(0.0), 1.0E-15);
+        assertEquals(Projector.myToLat(Projector.nyToMy(+12.0)), Projector.nyToLat(+12.0), 1.0E-15);
+        assertEquals(Projector.myToLat(Projector.nyToMy(-12.0)), Projector.nyToLat(-12.0), 1.0E-15);
+    }
+
+    @Test
+    public void nxToLng()
+    {
+        assertEquals(0.0, Projector.nxToLng(0.0), 1.0E-15);
+        assertEquals(Projector.mxToLng(Projector.nxToMx(+12.0)), Projector.nxToLng(+12.0), 1.0E-15);
+        assertEquals(Projector.mxToLng(Projector.nxToMx(-12.0)), Projector.nxToLng(-12.0), 1.0E-15);
+    }
+
     // TODO: test_rush__lat
     /*
      * def test_rush__lat
