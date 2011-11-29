@@ -1,0 +1,101 @@
+# encoding: utf-8
+
+require_relative "../src/ruby/lib/geodelta"
+require_relative "../src/ruby/lib/geodelta/id_util"
+require_relative "../src/ruby/lib/geodelta/hex_geometry"
+
+desc "generate test data."
+file "delta_center.txt" => "Rakefile" do |t|
+  lat_max = GeoDelta::Projector.ny_to_lat(+12.0)
+  lng_max = 180.0
+
+  records = [
+    [
+      "Latitude",
+      "Longitude",
+      "Level",
+      "Code",
+      "Center Latitude",
+      "Center Longitude",
+    ]
+  ]
+
+  srand(0)
+
+  (1..40).each { |level|
+    100.times {
+      rlat_f = (rand * lat_max * 2) - lat_max
+      rlng_f = (rand * lng_max * 2) - lng_max
+      rlat_s = format("%+0.15f", rlat_f)
+      rlng_s = format("%+0.15f", rlng_f)
+      rcode  = GeoDelta.get_delta_code(rlat_s.to_f, rlng_s.to_f, level)
+      clat_f,
+      clng_f = GeoDelta.get_center_from_delta_code(rcode)
+      clat_s = format("%+0.15f", clat_f)
+      clng_s = format("%+0.15f", clng_f)
+      ccode  = GeoDelta.get_delta_code(clat_s.to_f, clng_s.to_f, level)
+      raise("#{level}: #{rcode} != #{ccode}") if rcode != ccode
+      records << [rlat_s, rlng_s, level.to_s, rcode, clat_s, clng_s]
+    }
+  }
+
+  File.open(t.name, "wb") { |file|
+    records.each { |rlat_s, rlng_s, level_s, rcode, clat_s, clng_s|
+      tuple = [
+        rlat_s.rjust(19),
+        rlng_s.rjust(20),
+        level_s.rjust(5),
+        rcode.ljust(26),
+        clat_s.rjust(19),
+        clng_s.rjust(20),
+      ]
+      file.puts(tuple.join(" | "))
+    }
+  }
+end
+
+desc "generate test data."
+file "hex_base.txt" => "Rakefile" do |t|
+  lat_max = GeoDelta::Projector.ny_to_lat(+12.0)
+  lng_max = 180.0
+
+  records = [
+    [
+      "Delta Code",
+      "Hex Code",
+    ]
+  ]
+
+  ids_list = []
+  (1..4).each { |level|
+    ids_list += GeoDelta::IdUtil.get_all_delta_ids(level)
+  }
+
+  srand(0)
+
+  (5..40).each { |level|
+    100.times {
+      rlat_f = (rand * lat_max * 2) - lat_max
+      rlng_f = (rand * lng_max * 2) - lng_max
+      rids   = GeoDelta.get_delta_ids(rlat_f, rlng_f, level)
+      ids_list << rids
+    }
+  }
+
+  ids_list.uniq.each { |delta_ids|
+    delta_code = GeoDelta::Encoder.encode(delta_ids)
+    hex_ids    = GeoDelta::HexGeometry.get_base_delta_ids(delta_ids)
+    hex_code   = (hex_ids ? GeoDelta::Encoder.encode(hex_ids) : "-")
+    records << [delta_code, hex_code]
+  }
+
+  File.open(t.name, "wb") { |file|
+    records.each { |delta_code, hex_code|
+      tuple = [
+        delta_code.ljust(21),
+        hex_code.ljust(21),
+      ]
+      file.puts(tuple.join(" | "))
+    }
+  }
+end
