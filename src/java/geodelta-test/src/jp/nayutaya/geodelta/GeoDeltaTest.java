@@ -3,6 +3,9 @@ package jp.nayutaya.geodelta;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.util.Random;
+
 import org.junit.Test;
 
 public class GeoDeltaTest
@@ -162,6 +165,27 @@ public class GeoDeltaTest
             assertArrayEquals(expected[1], actual[1], 1.0E-15);
             assertArrayEquals(expected[2], actual[2], 1.0E-15);
             assertArrayEquals(expected[3], actual[3], 1.0E-15);
+        }
+    }
+
+    @Test
+    public void rush()
+    {
+        final double latMax = Projector.nyToLat(+12.0);
+        final double lngMax = 180.0;
+        final Random r = new Random();
+
+        for ( int i = 0; i < 1000; i++ )
+        {
+            final double lat1 = r.nextDouble() * latMax * 2 - latMax;
+            final double lng1 = r.nextDouble() * lngMax * 2 - lngMax;
+            final int level = r.nextInt(30) + 1;
+            final String code1 = GeoDelta.getDeltaCode(lat1, lng1, level);
+            final double[] latlng2 = GeoDelta.getCenter(code1);
+            final String code2 = GeoDelta.getDeltaCode(latlng2[0], latlng2[1], level);
+            final double[] latlng3 = GeoDelta.getCenter(code2);
+            assertEquals(code1, code2);
+            assertArrayEquals(latlng2, latlng3, 1.0E-15);
         }
     }
 }
