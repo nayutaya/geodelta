@@ -3,6 +3,9 @@ package jp.nayutaya.geodelta;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+
+import java.util.Random;
+
 import org.junit.Test;
 
 public class ProjectorTest
@@ -127,31 +130,23 @@ public class ProjectorTest
         assertArrayEquals(new double[] {Projector.nyToLat(-12.0), Projector.nxToLng(-12.0)}, Projector.nxyToLatLng(-12.0, -12.0), 1.0E-15);
     }
 
-    // TODO: test_rush__lat
-    /*
-     * def test_rush__lat
-     * 1000.times {
-     * lat1 = rand * 180.0 - 90.0
-     * my1 = @mod.lat_to_my(lat1)
-     * ny1 = @mod.my_to_ny(my1)
-     * my2 = @mod.ny_to_my(ny1)
-     * lat2 = @mod.my_to_lat(my2)
-     * assert_in_delta(lat1, lat2, 1.0E-10)
-     * }
-     * end
-     */
+    @Test
+    public void rush_latLngNxy()
+    {
+        final double latMax = Projector.nyToLat(+12.0);
+        final double lngMax = 180.0;
+        final Random r = new Random();
 
-    // TODO: test_rush__lng
-    /*
-     * def test_rush__lng
-     * 1000.times {
-     * lng1 = rand * 360.0 - 180.0
-     * mx1 = @mod.lng_to_mx(lng1)
-     * nx1 = @mod.mx_to_nx(mx1)
-     * mx2 = @mod.nx_to_mx(nx1)
-     * lng2 = @mod.mx_to_lng(mx2)
-     * assert_in_delta(lng1, lng2, 1.0E-13)
-     * }
-     * end
-     */
+        for ( int i = 0; i < 1000; i++ )
+        {
+            final double lat1 = r.nextDouble() * latMax * 2 - latMax;
+            final double lng1 = r.nextDouble() * lngMax * 2 - lngMax;
+            final double nx = Projector.lngToNx(lng1);
+            final double ny = Projector.latToNy(lat1);
+            final double lat2 = Projector.nyToLat(ny);
+            final double lng2 = Projector.nxToLng(nx);
+            assertEquals(lat1, lat2, 1.0E-13);
+            assertEquals(lng1, lng2, 1.0E-13);
+        }
+    }
 }
