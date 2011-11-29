@@ -57,4 +57,33 @@ public class GeoDelta
         final byte[] ids = Encoder.decode(code);
         return GeoDelta.getCenter(ids);
     }
+
+    /**
+     * デルタID列から中心座標と各頂点の座標を取得する。
+     *
+     * @param ids デルタID列
+     * @return 中心座標と各頂点の座標を含む配列
+     */
+    public static double[][] getCoordinates(final byte[] ids)
+    {
+        final double[][] coordinates = Geometry.getCoordinates(ids);
+        final double[][] result = new double[4][];
+        for ( int i = 0; i < 4; i++ )
+        {
+            result[i] = Projector.nxyToLatLng(coordinates[i][0], coordinates[i][1]);
+        }
+        return result;
+    }
+
+    /**
+     * GeoDeltaコードから中心座標と各頂点の座標を取得する。
+     *
+     * @param code GeoDeltaコード
+     * @return 中心座標と各頂点の座標を含む配列
+     */
+    public static double[][] getCoordinates(final String code)
+    {
+        final byte[] ids = Encoder.decode(code);
+        return GeoDelta.getCoordinates(ids);
+    }
 }

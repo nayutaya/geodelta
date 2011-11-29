@@ -78,4 +78,90 @@ public class GeoDeltaTest
         assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("ZK"), 1.0E-3);
         assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("Z2"), 1.0E-3);
     }
+
+    @Test
+    public void getCoordinates_ids1()
+    {
+        final double[][] delta0 = GeoDelta.getCoordinates(new byte[] {0});
+        assertEquals(4, delta0.length);
+        assertArrayEquals(new double[] {+71.480, +0.000}, delta0[0], 1.0E-3);
+        assertArrayEquals(new double[] {+0.000, +0.000}, delta0[1], 1.0E-3);
+        assertArrayEquals(new double[] {+82.467, -90.000}, delta0[2], 1.0E-3);
+        assertArrayEquals(new double[] {+82.467, +90.000}, delta0[3], 1.0E-3);
+
+        final double[][] delta4 = GeoDelta.getCoordinates(new byte[] {4});
+        assertArrayEquals(new double[] {-71.480, +0.000}, delta4[0], 1.0E-3);
+        assertArrayEquals(new double[] {+0.000, +0.000}, delta4[1], 1.0E-3);
+        assertArrayEquals(new double[] {-82.467, +90.000}, delta4[2], 1.0E-3);
+        assertArrayEquals(new double[] {-82.467, -90.000}, delta4[3], 1.0E-3);
+    }
+
+    @Test
+    public void getCoordinates_ids2()
+    {
+        final double[][][] delta = new double[8][][];
+        for ( int id = 0; id < 8; id++ )
+        {
+            delta[id] = GeoDelta.getCoordinates(new byte[] {(byte)id});
+        }
+
+        assertArrayEquals(delta[0][1], delta[1][3], 1.0E-15);
+        assertArrayEquals(delta[0][1], delta[3][2], 1.0E-15);
+        assertArrayEquals(delta[0][1], delta[4][1], 1.0E-15);
+        assertArrayEquals(delta[0][1], delta[5][2], 1.0E-15);
+        assertArrayEquals(delta[0][1], delta[7][3], 1.0E-15);
+        assertArrayEquals(delta[0][2], delta[2][3], 1.0E-15);
+        assertArrayEquals(delta[0][2], delta[3][1], 1.0E-15);
+        assertArrayEquals(delta[0][3], delta[1][1], 1.0E-15);
+        assertArrayEquals(delta[0][3], delta[2][2], 1.0E-15);
+        assertArrayEquals(delta[1][2], delta[2][1], 1.0E-15);
+        assertArrayEquals(delta[1][2], delta[3][3], 1.0E-15);
+        assertArrayEquals(delta[1][2], delta[5][3], 1.0E-15);
+        assertArrayEquals(delta[1][2], delta[6][1], 1.0E-15);
+        assertArrayEquals(delta[1][2], delta[7][2], 1.0E-15);
+        assertArrayEquals(delta[4][3], delta[6][2], 1.0E-15);
+        assertArrayEquals(delta[4][3], delta[7][1], 1.0E-15);
+        assertArrayEquals(delta[4][2], delta[5][1], 1.0E-15);
+        assertArrayEquals(delta[4][2], delta[6][3], 1.0E-15);
+    }
+
+    @Test
+    public void getCoordinates_ids3()
+    {
+        final double[][][] delta = new double[4][][];
+        for ( int id = 0; id < 4; id++ )
+        {
+            delta[id] = GeoDelta.getCoordinates(new byte[] {0, (byte)id});
+        }
+
+        assertArrayEquals(delta[0][1], delta[2][3], 1.0E-15);
+        assertArrayEquals(delta[0][1], delta[3][2], 1.0E-15);
+        assertArrayEquals(delta[0][2], delta[1][3], 1.0E-15);
+        assertArrayEquals(delta[0][2], delta[3][1], 1.0E-15);
+        assertArrayEquals(delta[0][3], delta[1][2], 1.0E-15);
+        assertArrayEquals(delta[0][3], delta[2][1], 1.0E-15);
+    }
+
+    @Test
+    public void getCoordinates_code()
+    {
+        {
+            final double[][] expected = GeoDelta.getCoordinates(new byte[] {0});
+            final double[][] actual = GeoDelta.getCoordinates("Z");
+            assertEquals(4, actual.length);
+            assertArrayEquals(expected[0], actual[0], 1.0E-15);
+            assertArrayEquals(expected[1], actual[1], 1.0E-15);
+            assertArrayEquals(expected[2], actual[2], 1.0E-15);
+            assertArrayEquals(expected[3], actual[3], 1.0E-15);
+        }
+
+        {
+            final double[][] expected = GeoDelta.getCoordinates(new byte[] {0, 1, 2});
+            final double[][] actual = GeoDelta.getCoordinates("Z8");
+            assertArrayEquals(expected[0], actual[0], 1.0E-15);
+            assertArrayEquals(expected[1], actual[1], 1.0E-15);
+            assertArrayEquals(expected[2], actual[2], 1.0E-15);
+            assertArrayEquals(expected[3], actual[3], 1.0E-15);
+        }
+    }
 }
