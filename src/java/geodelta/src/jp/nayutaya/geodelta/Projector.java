@@ -68,7 +68,7 @@ public class Projector
     }
 
     /**
-     * メルカトルY座標から正規化Y座標に変換する。
+     * メルカトルY座標を正規化Y座標に変換する。
      *
      * @param my メルカトル座標系におけるY
      * @return 正規化座標系におけるY
@@ -79,7 +79,7 @@ public class Projector
     }
 
     /**
-     * メルカトルX座標から正規化X座標に変換する。
+     * メルカトルX座標を正規化X座標に変換する。
      *
      * @param mx メルカトル座標系におけるX
      * @return 正規化座標系におけるX
@@ -90,7 +90,7 @@ public class Projector
     }
 
     /**
-     * 正規化Y座標からメルカトルY座標に変換する。
+     * 正規化Y座標をメルカトルY座標に変換する。
      *
      * @param ny 正規化座標系におけるY
      * @return メルカトル座標系におけるY
@@ -101,7 +101,7 @@ public class Projector
     }
 
     /**
-     * 正規化X座標からメルカトルX座標に変換する。
+     * 正規化X座標をメルカトルX座標に変換する。
      *
      * @param nx 正規化座標系におけるX
      * @return メルカトル座標系におけるX
