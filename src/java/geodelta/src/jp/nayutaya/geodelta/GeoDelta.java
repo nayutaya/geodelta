@@ -33,4 +33,28 @@ public class GeoDelta
         final byte[] ids = GeoDelta.getDeltaIds(lat, lng, level);
         return Encoder.encode(ids);
     }
+
+    /**
+     * デルタID列からデルタの中心座標を取得する。
+     *
+     * @param ids デルタID列
+     * @return 中心座標を含む配列
+     */
+    public static double[] getCenter(final byte[] ids)
+    {
+        final double[] nxy = Geometry.getCenter(ids);
+        return Projector.nxyToLatLng(nxy[0], nxy[1]);
+    }
+
+    /**
+     * GeoDeltaコードから中心座標を取得する。
+     *
+     * @param code GeoDeltaコード
+     * @return 中心座標を含む配列
+     */
+    public static double[] getCenter(final String code)
+    {
+        final byte[] ids = Encoder.decode(code);
+        return GeoDelta.getCenter(ids);
+    }
 }
