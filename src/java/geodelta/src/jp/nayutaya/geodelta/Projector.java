@@ -112,6 +112,28 @@ public class Projector
     }
 
     /**
+     * 緯度を正規化Y座標系に変換する。
+     *
+     * @param lat 緯度
+     * @return 正規化座標系におけるY
+     */
+    public static double latToNy(final double lat)
+    {
+        return Projector.myToNy(Projector.latToMy(lat));
+    }
+
+    /**
+     * 経度を正規化X座標に変換する。
+     *
+     * @param lng 経度
+     * @return 正規化座標系におけるX
+     */
+    public static double lngToNx(final double lng)
+    {
+        return Projector.mxToNx(Projector.lngToMx(lng));
+    }
+
+    /**
      * 双曲線逆正接を計算する。
      *
      * @param x 値
