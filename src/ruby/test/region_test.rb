@@ -82,20 +82,31 @@ class GeoDeltaRegionTest < Test::Unit::TestCase
       [7, 3, 3],
     ]
     assert_equal(expected, @mod.get_delta_ids_in_region(-1.5, +1.5, +1.5, -1.5, 3))
+
+    expected = [
+      [2, 1, 1],
+      [3, 3, 0],
+      [3, 3, 3],
+      [6, 1, 1],
+      [7, 2, 0],
+      [7, 2, 2],
+    ]
+    assert_equal(expected, @mod.get_delta_ids_in_region(-11.5, +1.5, -9.5, -1.5, 3))
   end
 
   def test_get_delta_ids_in_region__random
     10.times {
-      level  = 3
-      x1, x2 = [(rand * 24) - 12, (rand * 24) - 12].sort
-      y1, y2 = [(rand * 24) - 12, (rand * 24) - 12].sort.reverse
-      10.times {
-        cx, cy = [x1 + (rand * (x2 - x1)), y1 - (rand * (y1 - y2))]
+      (3..5).each { |level|
+        x1, x2 = [(rand * 24) - 12, (rand * 24) - 12].sort
+        y1, y2 = [(rand * 24) - 12, (rand * 24) - 12].sort.reverse
         regional_ids = GeoDelta::Region.get_delta_ids_in_region(x1, y1, x2, y2, level)
-        test_ids     = GeoDelta::DeltaGeometry.get_delta_ids(cx, cy, level)
-        assert_equal(
-          {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => true},
-          {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => regional_ids.include?(test_ids)})
+        10.times {
+          cx, cy = [x1 + (rand * (x2 - x1)), y1 - (rand * (y1 - y2))]
+          test_ids = GeoDelta::DeltaGeometry.get_delta_ids(cx, cy, level)
+          assert_equal(
+            {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => true},
+            {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => regional_ids.include?(test_ids)})
+        }
       }
     }
   end
