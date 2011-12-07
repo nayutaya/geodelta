@@ -24,6 +24,8 @@ module GeoDelta
           sx, y = GeoDelta::DeltaGeometry.get_center(nw)
           ex, _ = GeoDelta::DeltaGeometry.get_center(ne)
 
+          sx -= 24.0  if sx > ex
+
           sxi  = (sx / u2).floor
           exi  = (ex / u2).ceil
           sxi -= 1 if !GeoDelta::DeltaGeometry.upper_delta?(nw) && x1 < sx && nw != sw
@@ -38,6 +40,8 @@ module GeoDelta
         proc {
           sx, y = GeoDelta::DeltaGeometry.get_center(sw)
           ex, _ = GeoDelta::DeltaGeometry.get_center(se)
+
+          sx -= 24.0  if sx > ex
 
           sxi  = (sx / u2).floor
           exi  = (ex / u2).ceil
