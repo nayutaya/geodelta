@@ -1,0 +1,24 @@
+# encoding: utf-8
+
+task :default => "geodelta.js"
+
+MODULES = [
+  "lib/projector.js",
+  "lib/encoder.js",
+]
+
+file "geodelta.js" => ["Rakefile"] + MODULES do |t|
+  lines = MODULES.inject([]) { |memo, filepath|
+    STDERR.puts(filepath)
+    memo += File.open(filepath, "rb:utf-8") { |file| file.readlines }
+    memo
+  }
+  lines.each { |line| line.strip! }
+  lines.each { |line| line.gsub!(/ +/, " ") }
+  lines.each { |line| line.gsub!(/\/\/.*$/, "") }
+  lines.reject! { |line| line.empty? }
+  src = lines.join("")
+  File.open(t.name, "wb:utf-8") { |file|
+    file.write(src)
+  }
+end
