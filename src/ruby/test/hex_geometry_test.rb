@@ -289,6 +289,7 @@ class GeoDeltaHexGeometryTest < Test::Unit::TestCase
 
   def test_get_coordinates__level3_1
     expected = [
+      [+0.0, +0.0],
       [+1.5, +3.0],
       [+3.0, +0.0],
       [+1.5, -3.0],
@@ -301,6 +302,7 @@ class GeoDeltaHexGeometryTest < Test::Unit::TestCase
 
   def test_get_coordinates__level3_2
     expected = [
+      [ -9.0, -6.0],
       [ -7.5, -3.0],
       [ -6.0, -6.0],
       [ -7.5, -9.0],

@@ -81,20 +81,20 @@ module GeoDelta
 
     def self.get_coordinates(base_ids)
       unit = get_unit(base_ids)
-      ux1  = unit / 2.0
-      ux2  = unit
-      uy3  = unit
+      u1   = unit
+      u2   = unit / 2.0
       x, y = GeoDelta::DeltaGeometry.get_coordinates(base_ids)[1]
 
-      return nil if y - uy3 < -12.0
+      return nil if y - u1 < -12.0
 
       return [
-        [x + ux1, y + uy3],
-        [x + ux2, y      ],
-        [x + ux1, y - uy3],
-        [x - ux1, y - uy3],
-        [x - ux2, y      ],
-        [x - ux1, y + uy3],
+        [x     , y     ],
+        [x + u2, y + u1],
+        [x + u1, y     ],
+        [x + u2, y - u1],
+        [x - u2, y - u1],
+        [x - u1, y     ],
+        [x - u2, y + u1],
       ]
     end
 
