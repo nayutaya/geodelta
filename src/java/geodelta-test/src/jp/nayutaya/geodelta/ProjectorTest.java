@@ -129,7 +129,7 @@ public class ProjectorTest
     }
 
     @Test
-    public void rush_latLngNxy()
+    public void randomLatLngAndNxy()
     {
         final double latMax = Projector.nyToLat(+12.0);
         final double lngMax = 180.0;

@@ -168,7 +168,7 @@ public class GeoDeltaTest
     }
 
     @Test
-    public void rush()
+    public void randomGetDeltaCodeAndGetCenter()
     {
         final double latMax = Projector.nyToLat(+12.0);
         final double lngMax = 180.0;
