@@ -46,13 +46,13 @@ public class EncoderTest
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void decodeWorldDelta__invlidParam1()
+    public void decodeWorldDelta__invalidArg1()
     {
         Encoder.decodeWorldDelta('z');
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void decodeWorldDelta__invalidParam2()
+    public void decodeWorldDelta__invalidArg2()
     {
         Encoder.decodeWorldDelta('A');
     }
