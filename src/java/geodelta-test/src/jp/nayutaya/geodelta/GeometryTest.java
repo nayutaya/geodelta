@@ -1,8 +1,10 @@
 
 package jp.nayutaya.geodelta;
 
+import static jp.nayutaya.geodelta.Assert.assertArrayArrayEquals;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import java.util.Random;
 import org.junit.Test;
 
 public class GeometryTest
@@ -471,29 +473,23 @@ public class GeometryTest
         assertArrayArrayEquals(expected, Geometry.getCoordinates(new byte[] {0, 1, 2}), 1E-15);
     }
 
-    // TODO: test_rush__center
-    /*
-     * def test_rush__center
-     * 1000.times {
-     * x1 = (rand * 24) - 12
-     * y1 = (rand * 24) - 12
-     * level = rand(20) + 1
-     * ids1 = @mod.get_delta_ids(x1, y1, level)
-     * x2, y2 = @mod.get_center(ids1)
-     * ids2 = @mod.get_delta_ids(x2, y2, level)
-     * x3, y3 = @mod.get_center(ids2)
-     * assert_equal(ids1, ids2)
-     * assert_equal([x2, y2], [x3, y3])
-     * }
-     * end
-     */
-
-    private void assertArrayArrayEquals(final double[][] expecteds, final double[][] actuals, final double delta)
+    @Test
+    public void randomCenter()
     {
-        assertEquals(expecteds.length, actuals.length);
-        for ( int i = 0, len = expecteds.length; i < len; i++ )
+        final Random r = new Random();
+
+        for ( int i = 0; i < 1000; i++ )
         {
-            assertArrayEquals(expecteds[i], actuals[i], delta);
+            final int level = r.nextInt(20) + 1;
+            final double x1 = (r.nextDouble() * 24.0) - 12.0;
+            final double y1 = (r.nextDouble() * 24.0) - 12.0;
+
+            final byte[] ids1 = Geometry.getDeltaIds(x1, y1, level);
+            final double[] xy2 = Geometry.getCenter(ids1);
+            final byte[] ids2 = Geometry.getDeltaIds(xy2[0], xy2[1], level);
+            final double[] xy3 = Geometry.getCenter(ids2);
+            assertArrayEquals(ids1, ids2);
+            assertArrayEquals(xy2, xy3, 1E-15);
         }
     }
 }
