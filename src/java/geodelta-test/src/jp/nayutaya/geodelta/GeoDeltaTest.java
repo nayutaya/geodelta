@@ -1,6 +1,7 @@
 
 package jp.nayutaya.geodelta;
 
+import static jp.nayutaya.geodelta.Assert.assertArrayArrayEquals;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import java.util.Random;
@@ -83,18 +84,28 @@ public class GeoDeltaTest
     @Test
     public void getCoordinates_ids1()
     {
-        final double[][] delta0 = GeoDelta.getCoordinates(new byte[] {0});
-        assertEquals(4, delta0.length);
-        assertArrayEquals(new double[] {+71.480, +0.000}, delta0[0], 1.0E-3);
-        assertArrayEquals(new double[] {+0.000, +0.000}, delta0[1], 1.0E-3);
-        assertArrayEquals(new double[] {+82.467, -90.000}, delta0[2], 1.0E-3);
-        assertArrayEquals(new double[] {+82.467, +90.000}, delta0[3], 1.0E-3);
-
-        final double[][] delta4 = GeoDelta.getCoordinates(new byte[] {4});
-        assertArrayEquals(new double[] {-71.480, +0.000}, delta4[0], 1.0E-3);
-        assertArrayEquals(new double[] {+0.000, +0.000}, delta4[1], 1.0E-3);
-        assertArrayEquals(new double[] {-82.467, +90.000}, delta4[2], 1.0E-3);
-        assertArrayEquals(new double[] {-82.467, -90.000}, delta4[3], 1.0E-3);
+        {
+            // @formatter:off
+            final double[][] expecteds = {
+                {+71.480,  +0.000},
+                { +0.000,  +0.000},
+                {+82.467, -90.000},
+                {+82.467, +90.000},
+            };
+            // @formatter:on
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates(new byte[] {0}), 1E-3);
+        }
+        {
+            // @formatter:off
+            final double[][] expecteds = {
+                {-71.480,  +0.000},
+                { +0.000,  +0.000},
+                {-82.467, +90.000},
+                {-82.467, -90.000},
+            };
+            // @formatter:on
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates(new byte[] {4}), 1E-3);
+        }
     }
 
     @Test
@@ -147,22 +158,12 @@ public class GeoDeltaTest
     public void getCoordinates_code()
     {
         {
-            final double[][] expected = GeoDelta.getCoordinates(new byte[] {0});
-            final double[][] actual = GeoDelta.getCoordinates("Z");
-            assertEquals(4, actual.length);
-            assertArrayEquals(expected[0], actual[0], 1.0E-15);
-            assertArrayEquals(expected[1], actual[1], 1.0E-15);
-            assertArrayEquals(expected[2], actual[2], 1.0E-15);
-            assertArrayEquals(expected[3], actual[3], 1.0E-15);
+            final double[][] expecteds = GeoDelta.getCoordinates(new byte[] {0});
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates("Z"), 1E-15);
         }
-
         {
-            final double[][] expected = GeoDelta.getCoordinates(new byte[] {0, 1, 2});
-            final double[][] actual = GeoDelta.getCoordinates("Z8");
-            assertArrayEquals(expected[0], actual[0], 1.0E-15);
-            assertArrayEquals(expected[1], actual[1], 1.0E-15);
-            assertArrayEquals(expected[2], actual[2], 1.0E-15);
-            assertArrayEquals(expected[3], actual[3], 1.0E-15);
+            final double[][] expecteds = GeoDelta.getCoordinates(new byte[] {0, 1, 2});
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates("Z8"), 1E-15);
         }
     }
 
