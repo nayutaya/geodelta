@@ -3,6 +3,7 @@ package jp.nayutaya.geodelta;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import java.util.Random;
 import org.junit.Test;
 
 public class EncoderTest
@@ -57,18 +58,17 @@ public class EncoderTest
         Encoder.decodeWorldDelta('A');
     }
 
-    // TODO: test_encode_and_decode_world_delta
-    /*
-     * def test_encode_and_decode_world_delta
-     * (0..7).each { |id|
-     * encoded1 = @mod.encode_world_delta(id)
-     * decoded1 = @mod.decode_world_delta(encoded1)
-     * encoded2 = @mod.encode_world_delta(decoded1)
-     * assert_equal(id, decoded1)
-     * assert_equal(encoded1, encoded2)
-     * }
-     * end
-     */
+    @Test
+    public void allEncodeAndDecodeWorldDelta()
+    {
+        for ( int id = 0; id <= 7; id++ )
+        {
+            final char encoded1 = Encoder.encodeWorldDelta((byte)id);
+            final byte decoded1 = Encoder.decodeWorldDelta(encoded1);
+            final char encoded2 = Encoder.encodeWorldDelta(decoded1);
+            assertEquals(encoded1, encoded2);
+        }
+    }
 
     @Test
     public void encodeSubDelta__1()
@@ -196,33 +196,34 @@ public class EncoderTest
         Encoder.decodeSubDelta("Z");
     }
 
-    // TODO: test_encode_and_decode_sub_delta__1
-    /*
-     * def test_encode_and_decode_sub_delta__1
-     * (0..3).each { |id1|
-     * encoded1 = @mod.encode_sub_delta([id1])
-     * decoded1 = @mod.decode_sub_delta(encoded1)
-     * encoded2 = @mod.encode_sub_delta(decoded1)
-     * assert_equal([id1], decoded1)
-     * assert_equal(encoded1, encoded2)
-     * }
-     * end
-     */
+    @Test
+    public void allEncodeAndDecodeSubDelta__level2()
+    {
+        for ( int id1 = 0; id1 <= 3; id1++ )
+        {
+            final byte[] ids = {(byte)id1};
+            final String encoded1 = Encoder.encodeSubDelta(ids);
+            final byte[] decoded1 = Encoder.decodeSubDelta(encoded1);
+            final String encoded2 = Encoder.encodeSubDelta(decoded1);
+            assertEquals(encoded1, encoded2);
+        }
+    }
 
-    // TODO: test_encode_and_decode_sub_delta__1
-    /*
-     * def test_encode_and_decode_sub_delta__2
-     * (0..3).each { |id1|
-     * (0..3).each { |id2|
-     * encoded1 = @mod.encode_sub_delta([id1, id2])
-     * decoded1 = @mod.decode_sub_delta(encoded1)
-     * encoded2 = @mod.encode_sub_delta(decoded1)
-     * assert_equal([id1, id2], decoded1)
-     * assert_equal(encoded1, encoded2)
-     * }
-     * }
-     * end
-     */
+    @Test
+    public void allEncodeAndDecodeSubDelta__level3()
+    {
+        for ( int id1 = 0; id1 <= 3; id1++ )
+        {
+            for ( int id2 = 0; id2 <= 3; id2++ )
+            {
+                final byte[] ids = {(byte)id1, (byte)id2};
+                final String encoded1 = Encoder.encodeSubDelta(ids);
+                final byte[] decoded1 = Encoder.decodeSubDelta(encoded1);
+                final String encoded2 = Encoder.encodeSubDelta(decoded1);
+                assertEquals(encoded1, encoded2);
+            }
+        }
+    }
 
     @Test
     public void encode()
@@ -274,19 +275,31 @@ public class EncoderTest
         Encoder.decode("");
     }
 
-    // TODO: test_encode_and_decode__rush
-    /*
-     * def test_encode_and_decode__rush
-     * world = (0..7).to_a
-     * sub = (0..3).to_a
-     * 1000.times {
-     * ids = [world[rand(world.size)]] + rand(20).times.map { sub[rand(sub.size)] }
-     * encoded1 = @mod.encode(ids)
-     * decoded1 = @mod.decode(encoded1)
-     * encoded2 = @mod.encode(decoded1)
-     * assert_equal(ids, decoded1)
-     * assert_equal(encoded1, encoded2)
-     * }
-     * end
-     */
+    @Test
+    public void randomEncodeAndDecode()
+    {
+        final Random r = new Random();
+
+        for ( int i = 0; i < 1000; i++ )
+        {
+            final byte[] ids = createRandomDeltaIds(r, 20);
+            final String encoded1 = Encoder.encode(ids);
+            final byte[] decoded1 = Encoder.decode(encoded1);
+            final String encoded2 = Encoder.encode(decoded1);
+            assertArrayEquals(ids, decoded1);
+            assertEquals(encoded1, encoded2);
+        }
+    }
+
+    // FIXME: refactoring
+    private byte[] createRandomDeltaIds(final Random random, final int level)
+    {
+        final byte[] ids = new byte[random.nextInt(level) + 1];
+        ids[0] = (byte)random.nextInt(8);
+        for ( int i = 1; i < ids.length; i++ )
+        {
+            ids[i] = (byte)random.nextInt(4);
+        }
+        return ids;
+    }
 }
