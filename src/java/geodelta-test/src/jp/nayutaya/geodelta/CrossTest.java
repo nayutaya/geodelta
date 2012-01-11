@@ -2,11 +2,9 @@
 package jp.nayutaya.geodelta;
 
 import static org.junit.Assert.assertEquals;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
 import org.junit.Test;
 
 public class CrossTest
@@ -39,8 +37,8 @@ public class CrossTest
             final String code2 = GeoDelta.getDeltaCode(randomLat, randomLng, level);
             final double[] center2 = GeoDelta.getCenter(code2);
             assertEquals(ref, code, code2);
-            assertEquals(ref, centerLat, center2[0], 1.0E-13);
-            assertEquals(ref, centerLng, center2[1], 1.0E-15);
+            assertEquals(ref, centerLat, center2[0], 1E-13);
+            assertEquals(ref, centerLng, center2[1], 1E-15);
         }
 
         fr.close();

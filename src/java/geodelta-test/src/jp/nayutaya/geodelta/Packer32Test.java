@@ -3,6 +3,7 @@ package jp.nayutaya.geodelta;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
+import java.util.Random;
 import org.junit.Test;
 
 public class Packer32Test
@@ -155,15 +156,28 @@ public class Packer32Test
         // @formatter:on
     }
 
-    // TODO: test_pack_and_unpack
-    /*
-     * def test_pack_and_unpack
-     * 1000.times {
-     * ids1 = [rand(8)] + ((13 - 1).times.map { rand(4) })[0, rand(13)]
-     * packed = @packer.pack(ids1)
-     * ids2 = @packer.unpack(packed)
-     * assert_equal(ids1, ids2)
-     * }
-     * end
-     */
+    @Test
+    public void randamPackAndUnpack()
+    {
+        final Random r = new Random();
+
+        for ( int i = 0; i < 1000; i++ )
+        {
+            final byte[] ids1 = createRandomDeltaIds(r, 13);
+            final byte[] ids2 = Packer32.unpack(Packer32.pack(ids1));
+            assertArrayEquals(ids1, ids2);
+        }
+    }
+
+    // FIXME: refactoring
+    private byte[] createRandomDeltaIds(final Random random, final int level)
+    {
+        final byte[] ids = new byte[random.nextInt(level) + 1];
+        ids[0] = (byte)random.nextInt(8);
+        for ( int i = 1; i < ids.length; i++ )
+        {
+            ids[i] = (byte)random.nextInt(4);
+        }
+        return ids;
+    }
 }

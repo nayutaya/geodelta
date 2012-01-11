@@ -1,14 +1,17 @@
 
 package jp.nayutaya.geodelta;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * デルタID列とGeoDeltaコードを相互変換するクラス。
  */
 public class Encoder
 {
+    private static final char[] WORLD_DELTA_TABLE = {'Z', 'Y', 'X', 'W', 'V', 'T', 'S', 'R'};
+    private static final String[] SUB_DELTA_TABLE1 = {"K", "M", "N", "P"};
+    private static final String[][] SUB_DELTA_TABLE2 = { {"2", "3", "4", "5"}, {"6", "7", "8", "A"}, {"B", "C", "D", "E"}, {"F", "G", "H", "J"}};
+
     private Encoder()
     {
         // nop
@@ -22,26 +25,11 @@ public class Encoder
      */
     /* package */static char encodeWorldDelta(final byte id)
     {
-        switch ( id )
+        if ( id < 0 || id > 7 )
         {
-        case 0:
-            return 'Z';
-        case 1:
-            return 'Y';
-        case 2:
-            return 'X';
-        case 3:
-            return 'W';
-        case 4:
-            return 'V';
-        case 5:
-            return 'T';
-        case 6:
-            return 'S';
-        case 7:
-            return 'R';
+            throw new IllegalArgumentException("id");
         }
-        throw new IllegalArgumentException("id");
+        return WORLD_DELTA_TABLE[id];
     }
 
     /**
@@ -52,27 +40,14 @@ public class Encoder
      */
     /* package */static byte decodeWorldDelta(final char code)
     {
-        switch ( code )
+        for ( int i = 0; i < WORLD_DELTA_TABLE.length; i++ )
         {
-        case 'Z':
-            return 0;
-        case 'Y':
-            return 1;
-        case 'X':
-            return 2;
-        case 'W':
-            return 3;
-        case 'V':
-            return 4;
-        case 'T':
-            return 5;
-        case 'S':
-            return 6;
-        case 'R':
-            return 7;
-        default:
-            throw new IllegalArgumentException();
+            if ( WORLD_DELTA_TABLE[i] == code )
+            {
+                return (byte)i;
+            }
         }
+        throw new IllegalArgumentException();
     }
 
     /**
@@ -83,6 +58,10 @@ public class Encoder
      */
     /* package */static String encodeSubDelta(final byte[] ids)
     {
+        if ( ids == null || ids.length == 0 )
+        {
+            throw new IllegalArgumentException();
+        }
         return encodeSubDelta(ids, 0);
     }
 
@@ -95,84 +74,27 @@ public class Encoder
      */
     private static String encodeSubDelta(final byte[] ids, final int start)
     {
-        final int rest = ids.length - start;
-        if ( rest < 1 )
+        final StringBuilder sb = new StringBuilder();
+        for ( int i = start, len = ids.length; i < len; i += 2 )
         {
-            return "";
-        }
-        else if ( rest == 1 )
-        {
-            switch ( ids[start] )
+            final int rest = len - i;
+            try
             {
-            case 0:
-                return "K";
-            case 1:
-                return "M";
-            case 2:
-                return "N";
-            case 3:
-                return "P";
+                if ( rest == 1 )
+                {
+                    sb.append(SUB_DELTA_TABLE1[ids[i]]);
+                }
+                else
+                {
+                    sb.append(SUB_DELTA_TABLE2[ids[i]][ids[i + 1]]);
+                }
+            }
+            catch ( ArrayIndexOutOfBoundsException e )
+            {
+                throw new IllegalArgumentException();
             }
         }
-        else
-        {
-            switch ( ids[start] )
-            {
-            case 0:
-                switch ( ids[start + 1] )
-                {
-                case 0:
-                    return "2" + encodeSubDelta(ids, start + 2);
-                case 1:
-                    return "3" + encodeSubDelta(ids, start + 2);
-                case 2:
-                    return "4" + encodeSubDelta(ids, start + 2);
-                case 3:
-                    return "5" + encodeSubDelta(ids, start + 2);
-                }
-                break;
-            case 1:
-                switch ( ids[start + 1] )
-                {
-                case 0:
-                    return "6" + encodeSubDelta(ids, start + 2);
-                case 1:
-                    return "7" + encodeSubDelta(ids, start + 2);
-                case 2:
-                    return "8" + encodeSubDelta(ids, start + 2);
-                case 3:
-                    return "A" + encodeSubDelta(ids, start + 2);
-                }
-                break;
-            case 2:
-                switch ( ids[start + 1] )
-                {
-                case 0:
-                    return "B" + encodeSubDelta(ids, start + 2);
-                case 1:
-                    return "C" + encodeSubDelta(ids, start + 2);
-                case 2:
-                    return "D" + encodeSubDelta(ids, start + 2);
-                case 3:
-                    return "E" + encodeSubDelta(ids, start + 2);
-                }
-                break;
-            case 3:
-                switch ( ids[start + 1] )
-                {
-                case 0:
-                    return "F" + encodeSubDelta(ids, start + 2);
-                case 1:
-                    return "G" + encodeSubDelta(ids, start + 2);
-                case 2:
-                    return "H" + encodeSubDelta(ids, start + 2);
-                case 3:
-                    return "J" + encodeSubDelta(ids, start + 2);
-                }
-                break;
-            }
-        }
-        return null;
+        return sb.toString();
     }
 
     /**
@@ -183,96 +105,52 @@ public class Encoder
      */
     /* package */static byte[] decodeSubDelta(final String code)
     {
-        final List<Byte> ids = new ArrayList<Byte>();
-
-        for ( char ch : code.toCharArray() )
+        if ( code == null || code.isEmpty() )
         {
+            throw new IllegalArgumentException();
+        }
+
+        final byte[] ids = new byte[code.length() * 2];
+        int i = 0;
+
+        for ( final char ch : code.toCharArray() )
+        {
+            // @formatter:off
             switch ( ch )
             {
-            case '2':
-                ids.add((byte)0);
-                ids.add((byte)0);
-                break;
-            case '3':
-                ids.add((byte)0);
-                ids.add((byte)1);
-                break;
-            case '4':
-                ids.add((byte)0);
-                ids.add((byte)2);
-                break;
-            case '5':
-                ids.add((byte)0);
-                ids.add((byte)3);
-                break;
-            case '6':
-                ids.add((byte)1);
-                ids.add((byte)0);
-                break;
-            case '7':
-                ids.add((byte)1);
-                ids.add((byte)1);
-                break;
-            case '8':
-                ids.add((byte)1);
-                ids.add((byte)2);
-                break;
-            case 'A':
-                ids.add((byte)1);
-                ids.add((byte)3);
-                break;
-            case 'B':
-                ids.add((byte)2);
-                ids.add((byte)0);
-                break;
-            case 'C':
-                ids.add((byte)2);
-                ids.add((byte)1);
-                break;
-            case 'D':
-                ids.add((byte)2);
-                ids.add((byte)2);
-                break;
-            case 'E':
-                ids.add((byte)2);
-                ids.add((byte)3);
-                break;
-            case 'F':
-                ids.add((byte)3);
-                ids.add((byte)0);
-                break;
-            case 'G':
-                ids.add((byte)3);
-                ids.add((byte)1);
-                break;
-            case 'H':
-                ids.add((byte)3);
-                ids.add((byte)2);
-                break;
-            case 'J':
-                ids.add((byte)3);
-                ids.add((byte)3);
-                break;
-            case 'K':
-                ids.add((byte)0);
-                break;
-            case 'M':
-                ids.add((byte)1);
-                break;
-            case 'N':
-                ids.add((byte)2);
-                break;
-            case 'P':
-                ids.add((byte)3);
-                break;
+            case '2': ids[i++] = 0; ids[i++] = 0; break;
+            case '3': ids[i++] = 0; ids[i++] = 1; break;
+            case '4': ids[i++] = 0; ids[i++] = 2; break;
+            case '5': ids[i++] = 0; ids[i++] = 3; break;
+            case '6': ids[i++] = 1; ids[i++] = 0; break;
+            case '7': ids[i++] = 1; ids[i++] = 1; break;
+            case '8': ids[i++] = 1; ids[i++] = 2; break;
+            case 'A': ids[i++] = 1; ids[i++] = 3; break;
+            case 'B': ids[i++] = 2; ids[i++] = 0; break;
+            case 'C': ids[i++] = 2; ids[i++] = 1; break;
+            case 'D': ids[i++] = 2; ids[i++] = 2; break;
+            case 'E': ids[i++] = 2; ids[i++] = 3; break;
+            case 'F': ids[i++] = 3; ids[i++] = 0; break;
+            case 'G': ids[i++] = 3; ids[i++] = 1; break;
+            case 'H': ids[i++] = 3; ids[i++] = 2; break;
+            case 'J': ids[i++] = 3; ids[i++] = 3; break;
+            case 'K': ids[i++] = 0; break;
+            case 'M': ids[i++] = 1; break;
+            case 'N': ids[i++] = 2; break;
+            case 'P': ids[i++] = 3; break;
+            default: throw new IllegalArgumentException();
             }
+            // @formatter:on
         }
-        final byte[] ret = new byte[ids.size()];
-        for ( int i = 0, len = ids.size(); i < len; i++ )
+
+        if ( i % 2 == 0 )
         {
-            ret[i] = ids.get(i);
+            return ids;
         }
-        return ret;
+        else
+        {
+            return Arrays.copyOf(ids, ids.length - 1);
+        }
     }
 
     /**
@@ -283,6 +161,11 @@ public class Encoder
      */
     public static String encode(final byte[] ids)
     {
+        if ( ids == null || ids.length == 0 )
+        {
+            throw new IllegalArgumentException();
+        }
+
         final StringBuilder sb = new StringBuilder();
         sb.append(encodeWorldDelta(ids[0]));
         sb.append(encodeSubDelta(ids, 1));
@@ -297,17 +180,24 @@ public class Encoder
      */
     public static byte[] decode(final String code)
     {
-        final List<Byte> ids = new ArrayList<Byte>();
-        ids.add(decodeWorldDelta(code.charAt(0)));
-        for ( byte b : decodeSubDelta(code.substring(1)) )
+        if ( code == null || code.length() == 0 )
         {
-            ids.add(b);
+            throw new IllegalArgumentException();
         }
-        final byte[] ret = new byte[ids.size()];
-        for ( int i = 0, len = ids.size(); i < len; i++ )
+        else if ( code.length() == 1 )
         {
-            ret[i] = ids.get(i);
+            return new byte[] {decodeWorldDelta(code.charAt(0))};
         }
-        return ret;
+        else
+        {
+            final byte[] subIds = decodeSubDelta(code.substring(1));
+            final byte[] ids = new byte[subIds.length + 1];
+            ids[0] = decodeWorldDelta(code.charAt(0));
+            for ( int i = 0, len = subIds.length; i < len; i++ )
+            {
+                ids[i + 1] = subIds[i];
+            }
+            return ids;
+        }
     }
 }

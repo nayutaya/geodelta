@@ -1,9 +1,11 @@
 
 package jp.nayutaya.geodelta;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-
+import static jp.nayutaya.geodelta.Assert.assertArrayArrayEquals;
+import static org.junit.Assert.assertTrue;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
 import org.junit.Test;
 
 public class RegionTest
@@ -105,60 +107,39 @@ public class RegionTest
         }
     }
 
-    // TODO: test_getDeltaIdsInRegion__random
-    // def test_getDeltaIdsInRegion__random
-    // 10.times {
-    // (3..5).each { |level|
-    // x1, x2 = [(rand * 24) - 12, (rand * 24) - 12].sort
-    // y1, y2 = [(rand * 24) - 12, (rand * 24) - 12].sort.reverse
-    // regional_ids = GeoDelta::Region.getDeltaIdsInRegion(x1, y1, x2, y2, level)
-    // 10.times {
-    // cx, cy = [x1 + (rand * (x2 - x1)), y1 - (rand * (y1 - y2))]
-    // test_ids = GeoDelta::DeltaGeometry.get_delta_ids(cx, cy, level)
-    // assert_equal(
-    // {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => true},
-    // {:rect => [[x1, y1], [x2, y2]], :test_ids => test_ids, :include => regional_ids.include?(test_ids)})
-    // }
-    // }
-    // }
-    // end
-
-    private void assertArrayArrayEquals(final byte[][] expecteds, final byte[][] actuals)
+    @Test
+    public void randomGetDeltaIdsInRegion()
     {
-        assertEquals(expecteds.length, actuals.length);
-        for ( int i = 0, len = expecteds.length; i < len; i++ )
-        {
-            assertArrayEquals(expecteds[i], actuals[i]);
-        }
-    }
+        final Random r = new Random();
 
-    @SuppressWarnings("unused")
-    private void assertArrayArrayEqualsWithPrint(final byte[][] expecteds, final byte[][] actuals)
-    {
-        System.out.print("expecteds {");
-        for ( int i = 0; i < expecteds.length; i++ )
+        for ( int level = 3; level <= 5; level++ )
         {
-            System.out.print(" {");
-            for ( int j = 0; j < expecteds[i].length; j++ )
+            for ( int i = 0; i < 10; i++ )
             {
-                System.out.print(" " + expecteds[i][j]);
-            }
-            System.out.print(" }");
-        }
-        System.out.println(" }");
+                final double xx1 = (r.nextDouble() * 24.0) - 12.0;
+                final double xx2 = (r.nextDouble() * 24.0) - 12.0;
+                final double yy1 = (r.nextDouble() * 24.0) - 12.0;
+                final double yy2 = (r.nextDouble() * 24.0) - 12.0;
+                final double x1 = Math.min(xx1, xx2);
+                final double x2 = Math.max(xx1, xx2);
+                final double y1 = Math.max(yy1, yy2);
+                final double y2 = Math.min(yy1, yy2);
 
-        System.out.print("actuals   {");
-        for ( int i = 0; i < actuals.length; i++ )
-        {
-            System.out.print(" {");
-            for ( int j = 0; j < actuals[i].length; j++ )
-            {
-                System.out.print(" " + actuals[i][j]);
-            }
-            System.out.print(" }");
-        }
-        System.out.println(" }");
+                final byte[][] regionalIdArray = Region.getDeltaIdsInRegion(x1, y1, x2, y2, level);
+                final Set<Long> regionalIdSet = new HashSet<Long>();
+                for ( byte[] id : regionalIdArray )
+                {
+                    regionalIdSet.add(Packer64.pack(id));
+                }
 
-        assertArrayArrayEquals(expecteds, actuals);
+                for ( int j = 0; j < 10; j++ )
+                {
+                    final double cx = x1 + (r.nextDouble() * (x2 - x1));
+                    final double cy = y1 - (r.nextDouble() * (y1 - y2));
+                    final byte[] testId = Geometry.getDeltaIds(cx, cy, level);
+                    assertTrue(regionalIdSet.contains(Packer64.pack(testId)));
+                }
+            }
+        }
     }
 }

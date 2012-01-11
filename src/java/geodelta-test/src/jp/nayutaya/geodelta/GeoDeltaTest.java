@@ -1,11 +1,10 @@
 
 package jp.nayutaya.geodelta;
 
+import static jp.nayutaya.geodelta.Assert.assertArrayArrayEquals;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-
 import java.util.Random;
-
 import org.junit.Test;
 
 public class GeoDeltaTest
@@ -55,48 +54,58 @@ public class GeoDeltaTest
     @Test
     public void getCenter_ids()
     {
-        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter(new byte[] {0}), 1.0E-3);
-        assertArrayEquals(new double[] {+46.024, +90.000}, GeoDelta.getCenter(new byte[] {1}), 1.0E-3);
-        assertArrayEquals(new double[] {+71.480, -180.000}, GeoDelta.getCenter(new byte[] {2}), 1.0E-3);
-        assertArrayEquals(new double[] {+46.024, -90.000}, GeoDelta.getCenter(new byte[] {3}), 1.0E-3);
-        assertArrayEquals(new double[] {-71.480, +0.000}, GeoDelta.getCenter(new byte[] {4}), 1.0E-3);
-        assertArrayEquals(new double[] {-46.024, +90.000}, GeoDelta.getCenter(new byte[] {5}), 1.0E-3);
-        assertArrayEquals(new double[] {-71.480, -180.000}, GeoDelta.getCenter(new byte[] {6}), 1.0E-3);
-        assertArrayEquals(new double[] {-46.024, -90.000}, GeoDelta.getCenter(new byte[] {7}), 1.0E-3);
-        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter(new byte[] {0, 0}), 1.0E-3);
-        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter(new byte[] {0, 0, 0}), 1.0E-3);
+        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter(new byte[] {0}), 1E-3);
+        assertArrayEquals(new double[] {+46.024, +90.000}, GeoDelta.getCenter(new byte[] {1}), 1E-3);
+        assertArrayEquals(new double[] {+71.480, -180.000}, GeoDelta.getCenter(new byte[] {2}), 1E-3);
+        assertArrayEquals(new double[] {+46.024, -90.000}, GeoDelta.getCenter(new byte[] {3}), 1E-3);
+        assertArrayEquals(new double[] {-71.480, +0.000}, GeoDelta.getCenter(new byte[] {4}), 1E-3);
+        assertArrayEquals(new double[] {-46.024, +90.000}, GeoDelta.getCenter(new byte[] {5}), 1E-3);
+        assertArrayEquals(new double[] {-71.480, -180.000}, GeoDelta.getCenter(new byte[] {6}), 1E-3);
+        assertArrayEquals(new double[] {-46.024, -90.000}, GeoDelta.getCenter(new byte[] {7}), 1E-3);
+        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter(new byte[] {0, 0}), 1E-3);
+        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter(new byte[] {0, 0, 0}), 1E-3);
     }
 
     @Test
     public void getCenter_code()
     {
-        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("Z"), 1.0E-3);
-        assertArrayEquals(new double[] {+46.024, +90.000}, GeoDelta.getCenter("Y"), 1.0E-3);
-        assertArrayEquals(new double[] {+71.480, -180.000}, GeoDelta.getCenter("X"), 1.0E-3);
-        assertArrayEquals(new double[] {+46.024, -90.000}, GeoDelta.getCenter("W"), 1.0E-3);
-        assertArrayEquals(new double[] {-71.480, +0.000}, GeoDelta.getCenter("V"), 1.0E-3);
-        assertArrayEquals(new double[] {-46.024, +90.000}, GeoDelta.getCenter("T"), 1.0E-3);
-        assertArrayEquals(new double[] {-71.480, -180.000}, GeoDelta.getCenter("S"), 1.0E-3);
-        assertArrayEquals(new double[] {-46.024, -90.000}, GeoDelta.getCenter("R"), 1.0E-3);
-        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("ZK"), 1.0E-3);
-        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("Z2"), 1.0E-3);
+        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("Z"), 1E-3);
+        assertArrayEquals(new double[] {+46.024, +90.000}, GeoDelta.getCenter("Y"), 1E-3);
+        assertArrayEquals(new double[] {+71.480, -180.000}, GeoDelta.getCenter("X"), 1E-3);
+        assertArrayEquals(new double[] {+46.024, -90.000}, GeoDelta.getCenter("W"), 1E-3);
+        assertArrayEquals(new double[] {-71.480, +0.000}, GeoDelta.getCenter("V"), 1E-3);
+        assertArrayEquals(new double[] {-46.024, +90.000}, GeoDelta.getCenter("T"), 1E-3);
+        assertArrayEquals(new double[] {-71.480, -180.000}, GeoDelta.getCenter("S"), 1E-3);
+        assertArrayEquals(new double[] {-46.024, -90.000}, GeoDelta.getCenter("R"), 1E-3);
+        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("ZK"), 1E-3);
+        assertArrayEquals(new double[] {+71.480, +0.000}, GeoDelta.getCenter("Z2"), 1E-3);
     }
 
     @Test
     public void getCoordinates_ids1()
     {
-        final double[][] delta0 = GeoDelta.getCoordinates(new byte[] {0});
-        assertEquals(4, delta0.length);
-        assertArrayEquals(new double[] {+71.480, +0.000}, delta0[0], 1.0E-3);
-        assertArrayEquals(new double[] {+0.000, +0.000}, delta0[1], 1.0E-3);
-        assertArrayEquals(new double[] {+82.467, -90.000}, delta0[2], 1.0E-3);
-        assertArrayEquals(new double[] {+82.467, +90.000}, delta0[3], 1.0E-3);
-
-        final double[][] delta4 = GeoDelta.getCoordinates(new byte[] {4});
-        assertArrayEquals(new double[] {-71.480, +0.000}, delta4[0], 1.0E-3);
-        assertArrayEquals(new double[] {+0.000, +0.000}, delta4[1], 1.0E-3);
-        assertArrayEquals(new double[] {-82.467, +90.000}, delta4[2], 1.0E-3);
-        assertArrayEquals(new double[] {-82.467, -90.000}, delta4[3], 1.0E-3);
+        {
+            // @formatter:off
+            final double[][] expecteds = {
+                {+71.480,  +0.000},
+                { +0.000,  +0.000},
+                {+82.467, -90.000},
+                {+82.467, +90.000},
+            };
+            // @formatter:on
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates(new byte[] {0}), 1E-3);
+        }
+        {
+            // @formatter:off
+            final double[][] expecteds = {
+                {-71.480,  +0.000},
+                { +0.000,  +0.000},
+                {-82.467, +90.000},
+                {-82.467, -90.000},
+            };
+            // @formatter:on
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates(new byte[] {4}), 1E-3);
+        }
     }
 
     @Test
@@ -108,24 +117,24 @@ public class GeoDeltaTest
             delta[id] = GeoDelta.getCoordinates(new byte[] {(byte)id});
         }
 
-        assertArrayEquals(delta[0][1], delta[1][3], 1.0E-15);
-        assertArrayEquals(delta[0][1], delta[3][2], 1.0E-15);
-        assertArrayEquals(delta[0][1], delta[4][1], 1.0E-15);
-        assertArrayEquals(delta[0][1], delta[5][2], 1.0E-15);
-        assertArrayEquals(delta[0][1], delta[7][3], 1.0E-15);
-        assertArrayEquals(delta[0][2], delta[2][3], 1.0E-15);
-        assertArrayEquals(delta[0][2], delta[3][1], 1.0E-15);
-        assertArrayEquals(delta[0][3], delta[1][1], 1.0E-15);
-        assertArrayEquals(delta[0][3], delta[2][2], 1.0E-15);
-        assertArrayEquals(delta[1][2], delta[2][1], 1.0E-15);
-        assertArrayEquals(delta[1][2], delta[3][3], 1.0E-15);
-        assertArrayEquals(delta[1][2], delta[5][3], 1.0E-15);
-        assertArrayEquals(delta[1][2], delta[6][1], 1.0E-15);
-        assertArrayEquals(delta[1][2], delta[7][2], 1.0E-15);
-        assertArrayEquals(delta[4][3], delta[6][2], 1.0E-15);
-        assertArrayEquals(delta[4][3], delta[7][1], 1.0E-15);
-        assertArrayEquals(delta[4][2], delta[5][1], 1.0E-15);
-        assertArrayEquals(delta[4][2], delta[6][3], 1.0E-15);
+        assertArrayEquals(delta[0][1], delta[1][3], 1E-15);
+        assertArrayEquals(delta[0][1], delta[3][2], 1E-15);
+        assertArrayEquals(delta[0][1], delta[4][1], 1E-15);
+        assertArrayEquals(delta[0][1], delta[5][2], 1E-15);
+        assertArrayEquals(delta[0][1], delta[7][3], 1E-15);
+        assertArrayEquals(delta[0][2], delta[2][3], 1E-15);
+        assertArrayEquals(delta[0][2], delta[3][1], 1E-15);
+        assertArrayEquals(delta[0][3], delta[1][1], 1E-15);
+        assertArrayEquals(delta[0][3], delta[2][2], 1E-15);
+        assertArrayEquals(delta[1][2], delta[2][1], 1E-15);
+        assertArrayEquals(delta[1][2], delta[3][3], 1E-15);
+        assertArrayEquals(delta[1][2], delta[5][3], 1E-15);
+        assertArrayEquals(delta[1][2], delta[6][1], 1E-15);
+        assertArrayEquals(delta[1][2], delta[7][2], 1E-15);
+        assertArrayEquals(delta[4][3], delta[6][2], 1E-15);
+        assertArrayEquals(delta[4][3], delta[7][1], 1E-15);
+        assertArrayEquals(delta[4][2], delta[5][1], 1E-15);
+        assertArrayEquals(delta[4][2], delta[6][3], 1E-15);
     }
 
     @Test
@@ -137,39 +146,29 @@ public class GeoDeltaTest
             delta[id] = GeoDelta.getCoordinates(new byte[] {0, (byte)id});
         }
 
-        assertArrayEquals(delta[0][1], delta[2][3], 1.0E-15);
-        assertArrayEquals(delta[0][1], delta[3][2], 1.0E-15);
-        assertArrayEquals(delta[0][2], delta[1][3], 1.0E-15);
-        assertArrayEquals(delta[0][2], delta[3][1], 1.0E-15);
-        assertArrayEquals(delta[0][3], delta[1][2], 1.0E-15);
-        assertArrayEquals(delta[0][3], delta[2][1], 1.0E-15);
+        assertArrayEquals(delta[0][1], delta[2][3], 1E-15);
+        assertArrayEquals(delta[0][1], delta[3][2], 1E-15);
+        assertArrayEquals(delta[0][2], delta[1][3], 1E-15);
+        assertArrayEquals(delta[0][2], delta[3][1], 1E-15);
+        assertArrayEquals(delta[0][3], delta[1][2], 1E-15);
+        assertArrayEquals(delta[0][3], delta[2][1], 1E-15);
     }
 
     @Test
     public void getCoordinates_code()
     {
         {
-            final double[][] expected = GeoDelta.getCoordinates(new byte[] {0});
-            final double[][] actual = GeoDelta.getCoordinates("Z");
-            assertEquals(4, actual.length);
-            assertArrayEquals(expected[0], actual[0], 1.0E-15);
-            assertArrayEquals(expected[1], actual[1], 1.0E-15);
-            assertArrayEquals(expected[2], actual[2], 1.0E-15);
-            assertArrayEquals(expected[3], actual[3], 1.0E-15);
+            final double[][] expecteds = GeoDelta.getCoordinates(new byte[] {0});
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates("Z"), 1E-15);
         }
-
         {
-            final double[][] expected = GeoDelta.getCoordinates(new byte[] {0, 1, 2});
-            final double[][] actual = GeoDelta.getCoordinates("Z8");
-            assertArrayEquals(expected[0], actual[0], 1.0E-15);
-            assertArrayEquals(expected[1], actual[1], 1.0E-15);
-            assertArrayEquals(expected[2], actual[2], 1.0E-15);
-            assertArrayEquals(expected[3], actual[3], 1.0E-15);
+            final double[][] expecteds = GeoDelta.getCoordinates(new byte[] {0, 1, 2});
+            assertArrayArrayEquals(expecteds, GeoDelta.getCoordinates("Z8"), 1E-15);
         }
     }
 
     @Test
-    public void rush()
+    public void randomGetDeltaCodeAndGetCenter()
     {
         final double latMax = Projector.nyToLat(+12.0);
         final double lngMax = 180.0;
@@ -185,7 +184,7 @@ public class GeoDeltaTest
             final String code2 = GeoDelta.getDeltaCode(latlng2[0], latlng2[1], level);
             final double[] latlng3 = GeoDelta.getCenter(code2);
             assertEquals(code1, code2);
-            assertArrayEquals(latlng2, latlng3, 1.0E-15);
+            assertArrayEquals(latlng2, latlng3, 1E-15);
         }
     }
 }
