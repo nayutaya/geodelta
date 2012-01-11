@@ -83,6 +83,10 @@ public class Encoder
      */
     /* package */static String encodeSubDelta(final byte[] ids)
     {
+        if ( ids == null || ids.length == 0 )
+        {
+            throw new IllegalArgumentException();
+        }
         return encodeSubDelta(ids, 0);
     }
 
@@ -172,7 +176,7 @@ public class Encoder
                 break;
             }
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
     /**
@@ -183,6 +187,11 @@ public class Encoder
      */
     /* package */static byte[] decodeSubDelta(final String code)
     {
+        if ( code == null || code.isEmpty() )
+        {
+            throw new IllegalArgumentException();
+        }
+
         final List<Byte> ids = new ArrayList<Byte>();
 
         for ( char ch : code.toCharArray() )
@@ -265,6 +274,7 @@ public class Encoder
             case 'P':
                 ids.add((byte)3);
                 break;
+            default: throw new IllegalArgumentException();
             }
         }
         final byte[] ret = new byte[ids.size()];
@@ -283,6 +293,11 @@ public class Encoder
      */
     public static String encode(final byte[] ids)
     {
+        if ( ids == null || ids.length == 0 )
+        {
+            throw new IllegalArgumentException();
+        }
+
         final StringBuilder sb = new StringBuilder();
         sb.append(encodeWorldDelta(ids[0]));
         sb.append(encodeSubDelta(ids, 1));
@@ -297,17 +312,24 @@ public class Encoder
      */
     public static byte[] decode(final String code)
     {
-        final List<Byte> ids = new ArrayList<Byte>();
-        ids.add(decodeWorldDelta(code.charAt(0)));
-        for ( byte b : decodeSubDelta(code.substring(1)) )
+        if ( code == null || code.length() == 0 )
         {
-            ids.add(b);
+            throw new IllegalArgumentException();
         }
-        final byte[] ret = new byte[ids.size()];
-        for ( int i = 0, len = ids.size(); i < len; i++ )
+        else if ( code.length() == 1 )
         {
-            ret[i] = ids.get(i);
+            return new byte[] {decodeWorldDelta(code.charAt(0))};
         }
-        return ret;
+        else
+        {
+            final byte[] subIds = decodeSubDelta(code.substring(1));
+            final byte[] ids = new byte[subIds.length + 1];
+            ids[0] = decodeWorldDelta(code.charAt(0));
+            for ( int i = 0, len = subIds.length; i < len; i++ )
+            {
+                ids[i + 1] = subIds[i];
+            }
+            return ids;
+        }
     }
 }

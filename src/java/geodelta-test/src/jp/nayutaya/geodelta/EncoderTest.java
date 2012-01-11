@@ -109,14 +109,29 @@ public class EncoderTest
         assertEquals("3E", Encoder.encodeSubDelta(new byte[] {0, 1, 2, 3}));
     }
 
-    // TODO: test_encode_sub_delta__4
-    /*
-     * def test_encode_sub_delta__4
-     * assert_raise(RuntimeError) { @mod.encode_sub_delta([]) }
-     * assert_raise(RuntimeError) { @mod.encode_sub_delta([-1]) }
-     * assert_raise(RuntimeError) { @mod.encode_sub_delta([4]) }
-     * end
-     */
+    @Test(expected = IllegalArgumentException.class)
+    public void encodeSubDelta__invalidArg1()
+    {
+        Encoder.encodeSubDelta(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void encodeSubDelta__invalidArg2()
+    {
+        Encoder.encodeSubDelta(new byte[0]);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void encodeSubDelta__invalidArg3()
+    {
+        Encoder.encodeSubDelta(new byte[] {-1});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void encodeSubDelta__invalidArg4()
+    {
+        Encoder.encodeSubDelta(new byte[] {4});
+    }
 
     @Test
     public void decodeSubDelta__1()
@@ -157,14 +172,29 @@ public class EncoderTest
         assertArrayEquals(new byte[] {0, 1, 2, 3}, Encoder.decodeSubDelta("3E"));
     }
 
-    // TODO: test_decode_sub_delta__4
-    /*
-     * def test_decode_sub_delta__4
-     * assert_raise(RuntimeError) { @mod.decode_sub_delta("") }
-     * assert_raise(RuntimeError) { @mod.decode_sub_delta("a") }
-     * assert_raise(RuntimeError) { @mod.decode_sub_delta("Z") }
-     * end
-     */
+    @Test(expected = IllegalArgumentException.class)
+    public void decodeSubDelta__invalidArg1()
+    {
+        Encoder.decodeSubDelta(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void decodeSubDelta__invalidArg2()
+    {
+        Encoder.decodeSubDelta("");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void decodeSubDelta__invalidArg3()
+    {
+        Encoder.decodeSubDelta("1");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void decodeSubDelta__invalidArg4()
+    {
+        Encoder.decodeSubDelta("Z");
+    }
 
     // TODO: test_encode_and_decode_sub_delta__1
     /*
@@ -205,7 +235,18 @@ public class EncoderTest
         assertEquals("RP", Encoder.encode(new byte[] {7, 3}));
         assertEquals("RH", Encoder.encode(new byte[] {7, 3, 2}));
         assertEquals("RHM", Encoder.encode(new byte[] {7, 3, 2, 1}));
-        // TODO: assert_raise(RuntimeError) { @mod.encode([]) }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void encode__invalidArg1()
+    {
+        Encoder.encode(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void encode__invalidArg2()
+    {
+        Encoder.encode(new byte[0]);
     }
 
     @Test
@@ -219,7 +260,18 @@ public class EncoderTest
         assertArrayEquals(new byte[] {7, 3}, Encoder.decode("RP"));
         assertArrayEquals(new byte[] {7, 3, 2}, Encoder.decode("RH"));
         assertArrayEquals(new byte[] {7, 3, 2, 1}, Encoder.decode("RHM"));
-        // assert_raise(RuntimeError) { @mod.encode("") }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void decode__invalidArg1()
+    {
+        Encoder.decode(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void decode__invalidArg2()
+    {
+        Encoder.decode("");
     }
 
     // TODO: test_encode_and_decode__rush
